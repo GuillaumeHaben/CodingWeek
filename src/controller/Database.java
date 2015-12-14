@@ -1,9 +1,10 @@
-package controller;
 /**
  * This class allows access and requests to database
  * @author The Coding Bang Fraternity
  * @version 1.0
  */
+
+package controller;
 
 import java.sql.*;
 import com.mysql.jdbc.Connection;
@@ -16,7 +17,7 @@ public class Database {
 	Connection connexion = null;
 
 	/**
-	 * Constructor
+	 * Simple constructor
 	 */
 	public Database() {
 		this.connect();
@@ -50,6 +51,20 @@ public class Database {
 	}
 	
 	/**
+	 * Reinit request and tweet Table
+	 */
+	public void reinit(){
+		Statement statement;
+		try {
+			statement = connexion.createStatement();
+			statement.executeQuery("Truncate request");
+			statement.executeQuery("Truncate tweet");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Make a select request to DB
 	 * @param request
 	 * @return results or null
@@ -61,7 +76,6 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 	
@@ -73,13 +87,11 @@ public class Database {
 	 */
 	public int request(String request){
 		try {
-			/* Création de l'objet gérant les requêtes */
 			Statement statement = connexion.createStatement();
 			return statement.executeUpdate(request);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return 0;
 	}
 	

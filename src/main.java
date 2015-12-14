@@ -4,15 +4,17 @@
  * @version 1.0
  */
 
+/* TO-DO Link methode au bon appel et sous appel */
+
 import java.io.IOException;
 import java.util.Scanner;
+
+import com.sun.xml.internal.bind.v2.runtime.Location;
 
 import controller.Date;
 import controller.Hashtag;
 import controller.KeyWord;
 import controller.Language;
-import controller.Location;
-import controller.User;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -192,6 +194,8 @@ public class main {
 						System.in.read();
 					}
 					if (searchChoice == 4) {
+						System.out.println("[ ----- Coming Soon ----- ]");
+						/*
 						System.out.println("[ ----- Coding bang Fraternity ----- ]");
 						System.out.println("[ -----      Simple search     ----- ]");
 						System.out.println("[ -----        New search      ----- ]");
@@ -201,6 +205,7 @@ public class main {
 						myLocation.startRequest();
 						System.out.println("Press any key to continue...");
 						System.in.read();
+						*/
 					}
 					if (searchChoice == 5) {
 						System.out.println("[ ----- Coding bang Fraternity ----- ]");

@@ -12,6 +12,11 @@ public class KeyWord extends Params {
 
 	private String keyword;
 
+	/**
+	 * Constructor
+	 * @param keyword : Keyword searched
+	 * @param twitter : Twitter object
+	 */
 	public KeyWord(String keyword, Twitter twitter) {
 		super();
 		this.twitter = twitter;
@@ -22,10 +27,9 @@ public class KeyWord extends Params {
 		return keyword;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-
+	/**
+	 *  Get Tweets from a keyword and a keyword
+	 */
 	public void startRequest() {
 		Query query = new Query(keyword);
 		QueryResult result;
