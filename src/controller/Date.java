@@ -6,9 +6,6 @@
 
 package controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -16,26 +13,27 @@ import twitter4j.TwitterException;
 
 public class Date extends Params {
 
-	private Date date ;
+    private Date date;
 
-	public Date getDate() {
-		return date;
+    public Date getDate() {
+	return date;
+    }
+
+    public void setDate(Date date) {
+	this.date = date;
+    }
+
+    @Override
+    public void startRequest() throws TwitterException {
+	// TODO Auto-generated method stub
+
+	Query query = new Query(date);
+	query.setCount(100);
+	QueryResult result = twitter.search(query);
+	for (Status status : result.getTweets()) {
+	    System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    }
 
-	@Override
-	public void startRequest() throws TwitterException {
-		// TODO Auto-generated method stub
-		 
-		Query query = new Query(date);
-		QueryResult result = twitter.search(query);
-		    for (Status status : result.getTweets()) {
-		        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-		    }
-		
-	}
-	
 }
