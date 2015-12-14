@@ -147,6 +147,7 @@ public class main {
 							break;
 						case 2:
 							end = true;
+							System.out.println("");
 							break simpleSearch;
 						case 3:
 							System.out.print("Exiting Program...");
@@ -253,6 +254,7 @@ public class main {
 							String newSearchUser = scan.next();
 							User myUser = new User(newSearchUser, twitter);
 							
+							System.out.println();
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
 							System.out.println("[ -----      Profile search    ----- ]");
 							System.out.println("[ -----        New search      ----- ]");
@@ -269,11 +271,13 @@ public class main {
 							}
 							if (newSearchOption == 2) {
 								myUser.get("Followers");
+								System.out.println();
 								end = true;
 								break;
 							}
 							if (newSearchOption == 3) {
 								myUser.get("Following");
+								System.out.println();
 								end = true;
 								break;
 							}
@@ -289,6 +293,7 @@ public class main {
 							}
 						case 2:
 							end = true;
+							System.out.println();
 							break profileSearch;
 						case 3:
 							System.out.print("Exiting Program...");

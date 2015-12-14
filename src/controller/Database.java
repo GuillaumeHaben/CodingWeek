@@ -31,8 +31,6 @@ public class Database {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connexion = (Connection) DriverManager.getConnection(url, user, password);
-			
-			System.out.println("Connected");
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -90,6 +88,7 @@ public class Database {
 			Statement statement = connexion.createStatement();
 			return statement.executeUpdate(request);
 		} catch (SQLException e) {
+			System.out.println("++++++"+request);
 			e.printStackTrace();
 		}
 		return 0;

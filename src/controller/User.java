@@ -37,40 +37,32 @@ public class User implements Collect {
 	}
 
 	/**
-	 * Get likes from a user
+	 * Get 100 last likes from a user
 	 * @param id_request : ID for the request
 	 */
 	public void getLikes() {
 		try {
-			ResponseList<Status> result = twitter.getFavorites(name, new Paging(1, 100));
-			
 			// Init a DB connection
 			Database db = new Database();
-
+			int id_request = db.autoIncRequest();	
+			
 			// Insert new collect
 			String query = "INSERT INTO request(type, reference) VALUES('tweet','@"
 					+ name.replaceAll("'", "\'") + "')";
 			db.request(query);
 			
-			// Get id_of the request
-			int id_request = db.autoIncRequest();	
+			// Request to Twitter
+			ResponseList<Status> result = twitter.getFavorites(name, new Paging(1, 100));
 			
 			// See tweets liked
 			System.out.println("Likes from @" + name + "\n");
 			for (Status status : result) {
 				
-				String text = "";
-				String sc_name = "";
-				String name = "";
-				try {
-					text = status.getText().replace("\'", "\\'");
-					sc_name = new String(status.getUser().getScreenName().replaceAll("\'", "\\'").getBytes(),"UTF-8");
-					name = status.getUser().getName().replaceAll("\'", "\\'");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}				
+				String text = status.getText().replace("\'", "\\'");
+				String sc_name = status.getUser().getScreenName().replace("\'", "\\'");
+				String name = status.getUser().getName().replace("\'", "\\'");
 
-				// Console
+				// Console log
 				System.out.println(sc_name + " : " + text);
 				
 				query = "INSERT INTO tweet VALUES(" + status.getId()
@@ -94,23 +86,21 @@ public class User implements Collect {
 		try {
 			// Init a DB connection
 			Database db = new Database();
-
+			int id_request = db.autoIncRequest();
+			
 			// Insert new collect
 			String query = "INSERT INTO request(type, reference) VALUES('user','@"
 					+ name.replaceAll("'", "\'") + "')";
-			db.request(query);
-			
-			// Get id_of the request
-			int id_request = db.autoIncRequest();	
+			db.request(query);				
 
 			// Init attributes
 			long cursor = -1;
 			PagableResponseList<twitter4j.User> result;
 			
 			if(follow.compareTo("Followers")==0)
-				System.out.println("Followers of " + name + " :\n");
+				System.out.println("Followers of " + name + " :");
 			else 
-				System.out.println("Following of " + name + " :\n");
+				System.out.println("Following of " + name + " :");
 			
 			do {
 				if(follow.compareTo("Followers")==0)
@@ -120,7 +110,6 @@ public class User implements Collect {
 				
 				for (twitter4j.User status : result) {
 					String name = status.getScreenName().replaceAll("\'", "\\'");
-					
 					System.out.print("\n-" + name);
 				}
 				
@@ -131,36 +120,35 @@ public class User implements Collect {
 	}
 
 	/**
-	 * Catch the 200 first tweets
+	 * Catch the 100 first tweets
 	 */
 	public void startRequest() {
 		try {
-			ResponseList<Status> result = twitter.getUserTimeline(name, new Paging(1, 200));
-
 			// Init a DB connection
 			Database db = new Database();
+			int id_request = db.autoIncRequest();	
 
 			// Insert new collect
-			String query = "INSERT INTO request(type, reference) VALUES('tweet','@ " 
+			String query = "INSERT INTO request(type, reference) VALUES('tweet','@" 
 					+ name.replaceAll("'", "\'") + "')";
-			db.request(query);
-			
-			// Get id_of the request
-			int id_request = db.autoIncRequest();	
+			db.request(query);			
+
+			// Request to Twitter
+			ResponseList<Status> result = twitter.getUserTimeline(name, new Paging(1, 100));
 
 			// See last tweets
 			System.out.println("Last tweets : \n");
 			for (Status status : result) {
 				String text = status.getText().replace("\'", "\\'");
-				String sc_name = status.getUser().getScreenName().replaceAll("\'", "\\'");
-				String name = status.getUser().getName().replaceAll("\'", "\\'");
+				String sc_name = status.getUser().getScreenName().replace("\'", "\\'");
+				String name = status.getUser().getName().replace("\'", "\\'");
 
 				query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','" + sc_name
 						+ "','" + text + "');";
-
+				
 				db.request(query);
 				
-				// Console
+				// Console log
 				System.out.println(sc_name + " : " + text);
 			}
 		} catch (TwitterException | SQLException e) {
