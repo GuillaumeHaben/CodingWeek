@@ -1,4 +1,3 @@
-
 /**
  * This class launch the program
  * @author The Coding Bang Fraternity
