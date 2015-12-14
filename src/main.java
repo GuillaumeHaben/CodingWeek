@@ -1,3 +1,10 @@
+
+/**
+ * This class launch the program
+ * @author The Coding Bang Fraternity
+ * @version 1.0
+ */
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -7,6 +14,32 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
 public class main {
+
+    private static int id_request = 0;
+    private Twitter twitter;
+
+    public main() {
+	twitter = TwitterFactory.getSingleton();
+	twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
+	twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem",
+		"NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
+
+	// Database db = new Database();
+	// java.sql.ResultSet resultset = db.select_request("Select
+	// count(id_request) as id FROM request");
+	// db.close();
+
+	User user = new User("kilian_cuny", twitter);
+	user.get("Followers");
+	// user.startRequest(0);
+    }
+
+    public static void main(String[] args) throws IOException {
+		
+		main main_instance = new main();
+		Scanner scan = new Scanner(System.in);
+		
+		/* --------------------- Global Menu --------------------- */
 
     private static int id_request = 0;
     private Twitter twitter;

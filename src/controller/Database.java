@@ -10,14 +10,13 @@ import com.mysql.jdbc.Connection;
 
 public class Database {
 
-	/* Connexion à la base de données */
 	private final String url = "jdbc:mysql://localhost:3306/coding_week";
 	private final String user = "root";
 	private final String password = "";
 	Connection connexion = null;
 
 	/**
-	 * Init the connection
+	 * Constructor
 	 */
 	public Database() {
 		this.connect();
@@ -30,9 +29,9 @@ public class Database {
 	private void connect() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("Connected");
 			connexion = (Connection) DriverManager.getConnection(url, user, password);
-			System.out.println("good");
+			
+			System.out.println("Connected");
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -57,10 +56,8 @@ public class Database {
 	 */
 	public ResultSet select_request(String request){
 		try {
-			/* Création de l'objet gérant les requêtes */
 			Statement statement = connexion.createStatement();
 			return statement.executeQuery(request);	
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -79,11 +76,10 @@ public class Database {
 			/* Création de l'objet gérant les requêtes */
 			Statement statement = connexion.createStatement();
 			return statement.executeUpdate(request);
-			
 		} catch (SQLException e) {
-			System.out.println("+++"+request);
 			e.printStackTrace();
 		}
+		
 		return 0;
 	}
 	
