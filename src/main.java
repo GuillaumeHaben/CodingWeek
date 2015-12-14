@@ -15,6 +15,7 @@ import controller.Date;
 import controller.Hashtag;
 import controller.KeyWord;
 import controller.Language;
+import controller.User;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -247,16 +248,35 @@ public class main {
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
 							System.out.println("[ -----      Profile search    ----- ]");
 							System.out.println("[ -----        New search      ----- ]");
-							System.out.println("[ (1) By Hashtag                     ]");
-							System.out.println("[ (2) By Date                        ]");
-							System.out.println("[ (3) By Keyword                     ]");
-							System.out.println("[ (4) By Location                    ]");
-							System.out.println("[ (5) By Language                    ]");
-							System.out.print("[ Select a parameter: ");
-							int newSearchParam = scan.nextInt();
-							if (newSearchParam >= 1 && newSearchParam <= 5) {
-								searchChoice = newSearchParam;
+							System.out.print("[ Select a user:");
+							
+							String newSearchUser = scan.next();
+							User myUser = new User(newSearchUser, twitter);
+							
+							System.out.println("[ ----- Coding bang Fraternity ----- ]");
+							System.out.println("[ -----      Profile search    ----- ]");
+							System.out.println("[ -----        New search      ----- ]");
+							System.out.println("[ Select what you want about this user:");
+							System.out.println("[ (1) Tweets                         ]");
+							System.out.println("[ (2) Followers                      ]");
+							System.out.println("[ (3) Following                      ]");
+							System.out.println("[ (4) Tweets Liked                   ]");
+							int newSearchOption = scan.nextInt();
+							if (newSearchOption == 1) {
+								myUser.startRequest();
 								end = true;
+							}
+							if (newSearchOption == 2) {
+								myUser.getFriends_count();
+								end = true;
+							}
+							if (newSearchOption == 3) {
+								myUser.getFollowers_count();
+								end = true;
+							}
+							if (newSearchOption == 4) {
+								end = true;
+								myUser.getLikes();
 							}
 							else {
 								System.out.println("Please enter a valid option \n");
