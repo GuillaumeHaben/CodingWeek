@@ -1,6 +1,6 @@
 /**
  * This class is used to collect tweets posted at a specific date
- * @author The Coding Fang Fraternity
+ * @author The Coding Bang Fraternity
  * @version 1.0
  */
 
