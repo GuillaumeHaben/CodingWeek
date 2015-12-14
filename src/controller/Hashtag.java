@@ -29,16 +29,6 @@ public class Hashtag extends Params {
 	public void setHashtag(String hashtag) {
 		this.hashtag = hashtag;
 	}
-
-	/**
-	public void startRequest() throws TwitterException {
-	    Query query = new Query("#" + hashtag);
-	    QueryResult result = twitter.search(query);
-	    for (Status status : result.getTweets()) {
-	        System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
-	    }
-	}
-	*/
 	
 	public void startRequest() {
 		Query query = new Query("#" + hashtag);

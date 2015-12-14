@@ -22,22 +22,10 @@ public class Location extends Params {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
-	/**
-	public void startRequest() throws TwitterException {
-	 
-		Query query = new Query();
-	    query.setGeoCode(location, radius, unit);
-	    QueryResult result = twitter.search(query);
-	    for (Status status : result.getTweets()) {
-	        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-	    }
-	}
-	*/
 	
 	public void startRequest() {
 		Query query = new Query();
-	    query.setGeoCode(location, 0, 0);
+	    //query.setGeoCode(location, radius, unit);
 		QueryResult result;
 		try {
 			result = twitter.search(query);
