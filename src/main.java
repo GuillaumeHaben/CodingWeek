@@ -3,14 +3,13 @@ import java.util.Scanner;
 
 import controller.Database;
 import controller.User;
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
 public class main {
 	
-	private static int id_request;
+	private static int id_request = 0;
 	private Twitter twitter;
 	
 	public main(){
@@ -19,11 +18,12 @@ public class main {
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem", "NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
 		
 		//Database db = new Database();
-		//db.select_request("Select count(id_request) FROM request");
+		//java.sql.ResultSet resultset = db.select_request("Select count(id_request) as id FROM request");
+		//db.close();
 		
 		
 		User user = new User("kilian_cuny", twitter);
-		user.startRequest();
+		user.startRequest(id_request);
 	}
 	
 	public static void main(String[] args) throws IOException {

@@ -6,17 +6,13 @@
 
 package controller;
 
-import com.mysql.jdbc.DatabaseMetaData;
-import sun.applet.Main;
+import com.mysql.jdbc.ResultSet;
 
 import twitter4j.Paging;
 import twitter4j.ResponseList;
-import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 
 public class User implements Collect {
 
@@ -53,20 +49,29 @@ public class User implements Collect {
 	/**
 	 * Catch all the tweets
 	 */
-	public void startRequest() {
+	public void startRequest(int id_request) {
 		try {
 			ResponseList<Status> result = twitter.getUserTimeline(name, new Paging(1, 200));
 
 			// Init a DB connection
 			Database db = new Database();
+			String query = "INSERT INTO request(type, reference) VALUES('UTW','"+ name.replaceAll("'","\'")+"')";
+			db.request(query);
 
 			for (Status status : result) {
-				System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-				// String query = "INSERT INTO Tweet("
-
+				
+				String text = status.getText().replace("\'","\\'");
+				String sc_name = status.getUser().getScreenName().replaceAll("\'","\\'");
+				String name = status.getUser().getName().replaceAll("\'","\\'");
+				
+				query = "INSERT INTO tweet VALUES("+ status.getId() +","
+						+id_request+",'"+name+"','"+sc_name+"','"+text+"');";
+				db.request(query);
 			}
+			System.out.println("StartRequest: Done inserting");
+			
 		} catch (TwitterException e) {
-			System.out.println("L'utilisateur spécifié est introuvable !");
+			System.out.println("The user doesn't exist :'(");
 		}
 	}
 

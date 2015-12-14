@@ -81,9 +81,9 @@ public class Database {
 			return statement.executeUpdate(request);
 			
 		} catch (SQLException e) {
+			System.out.println("+++"+request);
 			e.printStackTrace();
 		}
-		
 		return 0;
 	}
 	
