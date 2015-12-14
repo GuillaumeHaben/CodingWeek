@@ -248,7 +248,7 @@ public class main {
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
 							System.out.println("[ -----      Profile search    ----- ]");
 							System.out.println("[ -----        New search      ----- ]");
-							System.out.print("[ Select a user:");
+							System.out.print("[ Select a user: ");
 							
 							String newSearchUser = scan.next();
 							User myUser = new User(newSearchUser, twitter);
@@ -265,23 +265,28 @@ public class main {
 							if (newSearchOption == 1) {
 								myUser.startRequest();
 								end = true;
+								break;
 							}
 							if (newSearchOption == 2) {
-								myUser.getFriends_count();
+								myUser.get("Followers");
 								end = true;
+								break;
 							}
 							if (newSearchOption == 3) {
-								myUser.getFollowers_count();
+								myUser.get("Following");
 								end = true;
+								break;
 							}
 							if (newSearchOption == 4) {
-								end = true;
 								myUser.getLikes();
+								end = true;
+								break;
 							}
 							else {
 								System.out.println("Please enter a valid option \n");
+								end = true;
+								break;
 							}
-							break;
 						case 2:
 							end = true;
 							break profileSearch;
@@ -315,8 +320,7 @@ public class main {
 			/* ----------------- Credits ----------------- */
 
 			if (choice == 5) {
-				System.out
-						.println("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN");
+				System.out.println("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN");
 				System.out.println("Press any key to go back...");
 				System.in.read();
 			}
