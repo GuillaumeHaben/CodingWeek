@@ -11,13 +11,13 @@ import twitter4j.*;
 public class KeyWord extends Params {
 
 	private String keyword;
-	
+
 	public KeyWord(String keyword, Twitter twitter) {
 		super();
 		this.twitter = twitter;
 		this.keyword = keyword;
 	}
-	
+
 	public String getKeyword() {
 		return keyword;
 	}
@@ -25,13 +25,19 @@ public class KeyWord extends Params {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	
-	public void startRequest() throws TwitterException {
-	    Query query = new Query(keyword);
-	    QueryResult result = twitter.search(query);
-	    for (Status status : result.getTweets()) {
-	        System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
-	    }
+
+	public void startRequest() {
+		Query query = new Query(keyword);
+		QueryResult result;
+		try {
+			result = twitter.search(query);
+			for (Status status : result.getTweets()) {
+				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
+			}
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+
 	}
-	
+
 }

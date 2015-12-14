@@ -26,16 +26,13 @@ public class Date extends Params {
 		this.date = date;
 	}
 
-	@Override
 	public void startRequest() throws TwitterException {
-		// TODO Auto-generated method stub
-		 
-		Query query = new Query(date);
-		QueryResult result = twitter.search(query);
-		    for (Status status : result.getTweets()) {
-		        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-		    }
-		
+	    Query query = new Query("since:" + date + "until:" + date);
+	    query.setCount(100);
+	    QueryResult result = twitter.search(query);
+	    for (Status status : result.getTweets()) {
+	        System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
+	    }
 	}
 	
 }
