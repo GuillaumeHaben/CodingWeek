@@ -29,6 +29,7 @@ public class main {
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem",
 				"NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
 
+		// TO-Do pour l'historique
 		// Database db = new Database();
 		// java.sql.ResultSet resultset = db.select_request("Select
 		// count(id_request) as id FROM request");

@@ -6,6 +6,9 @@
 
 package controller;
 
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+
 import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
@@ -37,7 +40,7 @@ public class User implements Collect {
 	 * Get likes from a user
 	 * @param id_request : ID for the request
 	 */
-	public void getLikes(int id_request) {
+	public void getLikes() {
 		try {
 			ResponseList<Status> result = twitter.getFavorites(name);
 			
@@ -48,13 +51,24 @@ public class User implements Collect {
 			String query = "INSERT INTO request(type, reference) VALUES('tweet','@"
 					+ name.replaceAll("'", "\'") + "')";
 			db.request(query);
-						
+			
+			// Get id_of the request
+			int id_request = db.autoIncRequest();	
+			
 			// See tweets liked
 			System.out.println("Likes from @" + name + "\n");
 			for (Status status : result) {
-				String text = status.getText().replace("\'", "\\'");
-				String sc_name = status.getUser().getScreenName().replaceAll("\'", "\\'");
-				String name = status.getUser().getName().replaceAll("\'", "\\'");
+				
+				String text = "";
+				String sc_name = "";
+				String name = "";
+				try {
+					text = status.getText().replace("\'", "\\'");
+					sc_name = new String(status.getUser().getScreenName().replaceAll("\'", "\\'").getBytes(),"UTF-8");
+					name = status.getUser().getName().replaceAll("\'", "\\'");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}				
 
 				// Console
 				System.out.println(sc_name + " : " + text);
@@ -67,6 +81,8 @@ public class User implements Collect {
 			}
 		} catch (TwitterException e) {
 			System.out.println("The user doesn't exist :'(");
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 	}
 
@@ -83,6 +99,9 @@ public class User implements Collect {
 			String query = "INSERT INTO request(type, reference) VALUES('user','@"
 					+ name.replaceAll("'", "\'") + "')";
 			db.request(query);
+			
+			// Get id_of the request
+			int id_request = db.autoIncRequest();	
 
 			// Init attributes
 			long cursor = -1;
@@ -106,14 +125,7 @@ public class User implements Collect {
 				}
 				
 			} while((cursor = result.getNextCursor()) != 0);
-
-	   
-	    query = "INSERT INTO request(type, reference) VALUES('UTW','" 
-	    		+ name.replaceAll("'", "\'") + "')";
-	    
-	    db.request(query);
-
-		} catch (TwitterException e) {
+		} catch (TwitterException | SQLException e) {
 			System.out.println("The user doesn't exist.. :'(");
 		}
 	}
@@ -121,7 +133,7 @@ public class User implements Collect {
 	/**
 	 * Catch the 200 first tweets
 	 */
-	public void startRequest(int id_request) {
+	public void startRequest() {
 		try {
 			ResponseList<Status> result = twitter.getUserTimeline(name, new Paging(1, 200));
 
@@ -132,6 +144,9 @@ public class User implements Collect {
 			String query = "INSERT INTO request(type, reference) VALUES('tweet','@ " 
 					+ name.replaceAll("'", "\'") + "')";
 			db.request(query);
+			
+			// Get id_of the request
+			int id_request = db.autoIncRequest();	
 
 			// See last tweets
 			System.out.println("Last tweets : \n");
@@ -148,7 +163,7 @@ public class User implements Collect {
 				// Console
 				System.out.println(sc_name + " : " + text);
 			}
-		} catch (TwitterException e) {
+		} catch (TwitterException | SQLException e) {
 			System.out.println("The user doesn't exist.. :'(");
 		}
 	}
