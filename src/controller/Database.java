@@ -1,3 +1,4 @@
+package controller;
 /**
  * This class allows access and requests to database
  * @author The Coding Bang Fraternity
@@ -11,8 +12,8 @@ public class Database {
 
 	/* Connexion à la base de données */
 	private final String url = "jdbc:mysql://localhost:3306/coding_week";
-	private final String utilisateur = "root";
-	private final String motDePasse = "";
+	private final String user = "root";
+	private final String password = "";
 	Connection connexion = null;
 
 	/**
@@ -30,7 +31,7 @@ public class Database {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connected");
-			connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
+			connexion = (Connection) DriverManager.getConnection(url, user, password);
 			System.out.println("good");
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -88,8 +89,8 @@ public class Database {
 	
 	/**
 	while ( resultat.next() ) {
-    	int idUtilisateur = resultat.getInt( "id" );
-    	String emailUtilisateur = resultat.getString( "email" );
+    	int iduser = resultat.getInt( "id" );
+    	String emailuser = resultat.getString( "email" );
     }
 	*/
 }

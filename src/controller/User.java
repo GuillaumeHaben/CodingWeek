@@ -6,7 +6,11 @@
 
 package controller;
 
+import com.mysql.jdbc.DatabaseMetaData;
 import sun.applet.Main;
+
+import twitter4j.Paging;
+import twitter4j.ResponseList;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -43,21 +47,28 @@ public class User implements Collect {
 
 	}
 
-	public void getTweets() {
-		Query query = new Query("de : Kilian_cuny");
-
-		try {
-			QueryResult result = twitter.search(query);
-			for (Status status : result.getTweets()) {
-				System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-			}
-		} catch (TwitterException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void getLikes() {
 
+	}
+
+	/**
+	 * Catch all the tweets
+	 */
+	public void startRequest() {
+		try {
+			ResponseList<Status> result = twitter.getUserTimeline(name, new Paging(1, 200));
+
+			// Init a DB connection
+			Database db = new Database();
+
+			for (Status status : result) {
+				System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+				// String query = "INSERT INTO Tweet("
+
+			}
+		} catch (TwitterException e) {
+			System.out.println("L'utilisateur spécifié est introuvable !");
+		}
 	}
 
 	/**
@@ -80,12 +91,6 @@ public class User implements Collect {
 		return friends_count;
 	}
 
-	@Override
-	public void startRequest() throws TwitterException {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public int getStatuses_count() {
 		return statuses_count;
 	}

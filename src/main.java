@@ -1,30 +1,32 @@
 import java.io.IOException;
 import java.util.Scanner;
-import controller.KeyWord;
+
+import controller.Database;
 import controller.User;
+import twitter4j.Status;
 import twitter4j.Twitter;
-import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
-import twitter4j.conf.ConfigurationBuilder;
 
 public class main {
 	
-	private ConfigurationBuilder cb;
-	private TwitterFactory tf;
-	private static Twitter twitter;
+	private static int id_request;
+	private Twitter twitter;
 	
 	public main(){
-		
 		twitter = TwitterFactory.getSingleton();
 		twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem", "NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
 		
-		User user = new User("bla", twitter);
-		user.getTweets();
+		//Database db = new Database();
+		//db.select_request("Select count(id_request) FROM request");
+		
+		
+		User user = new User("kilian_cuny", twitter);
+		user.startRequest();
 	}
 	
-	public static void main(String[] args) throws IOException, TwitterException {
+	public static void main(String[] args) throws IOException {
 		
 		main main_instance = new main();
 		Scanner scan = new Scanner(System.in);
@@ -108,10 +110,6 @@ public class main {
 					do {
 						switch (simpleSearchSelection) {
 						case 1:
-							System.out.println("List of the tweets:");
-							KeyWord myKeyWord = new KeyWord("codingweek", twitter);
-							myKeyWord.startRequest();
-							System.out.println("---------------------");
 							end = true;
 							break;
 						case 2:
