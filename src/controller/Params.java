@@ -1,3 +1,9 @@
+/**
+ * This abstract class handle params queries
+ * @author The Coding Bang Fraternity
+ * @version 1.0
+ */
+
 package controller;
 
 import twitter4j.Twitter;

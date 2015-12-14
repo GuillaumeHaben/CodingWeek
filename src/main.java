@@ -1,3 +1,9 @@
+/**
+ * This class launch the program
+ * @author The Coding Bang Fraternity
+ * @version 1.0
+ */
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -23,7 +29,8 @@ public class main {
 		
 		
 		User user = new User("kilian_cuny", twitter);
-		user.startRequest(id_request);
+		user.get("Followers");
+		//user.startRequest(0);
 	}
 	
 	public static void main(String[] args) throws IOException {

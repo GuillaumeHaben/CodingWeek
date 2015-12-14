@@ -6,8 +6,7 @@
 
 package controller;
 
-import com.mysql.jdbc.ResultSet;
-
+import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -28,26 +27,49 @@ public class User implements Collect {
 	 * 
 	 * @param name
 	 *            : User's name
+	 * @param twitter
+	 *            : Object Twitter
 	 */
 	public User(String name, Twitter twitter) {
 		this.name = name;
 		this.twitter = twitter;
 	}
 
-	public void getFollowers() {
+	/**
+	 * Catch all the followers / Following
+	 * @param follow : "Followers" OU "Following"
+	 */
+	public void get(String follow) {
+		try {
+			long cursor = -1;
+			PagableResponseList<twitter4j.User> result;
+			
+			do {
+				if(follow.compareTo("Followers")==0)
+					result = twitter.getFollowersList(name, cursor);
+				else 
+					result = twitter.getFriendsList(name, cursor);
+				
+				for (twitter4j.User status : result) {
+					String name = status.getScreenName().replaceAll("\'", "\\'");
+					System.out.print("\n-" + name);
+				}
+			} while((cursor = result.getNextCursor()) != 0);
 
+		} catch (TwitterException e) {
+			System.out.println("The user doesn't exist.. :'(");
+		}
 	}
-
-	public void getFollowing() {
-
-	}
-
+	
+	/**
+	 * Catch all the likes
+	 */
 	public void getLikes() {
 
 	}
 
 	/**
-	 * Catch all the tweets
+	 * Catch the 200 first tweets
 	 */
 	public void startRequest(int id_request) {
 		try {
@@ -55,30 +77,35 @@ public class User implements Collect {
 
 			// Init a DB connection
 			Database db = new Database();
-			String query = "INSERT INTO request(type, reference) VALUES('UTW','"+ name.replaceAll("'","\'")+"')";
+
+			// Insert new collect
+			String query = "INSERT INTO request(type, reference) VALUES('tweet','@ " + name.replaceAll("'", "\'")
+					+ "')";
 			db.request(query);
 
+			// See tweets
 			for (Status status : result) {
-				
-				String text = status.getText().replace("\'","\\'");
-				String sc_name = status.getUser().getScreenName().replaceAll("\'","\\'");
-				String name = status.getUser().getName().replaceAll("\'","\\'");
-				
-				query = "INSERT INTO tweet VALUES("+ status.getId() +","
-						+id_request+",'"+name+"','"+sc_name+"','"+text+"');";
+				String text = status.getText().replace("\'", "\\'");
+				String sc_name = status.getUser().getScreenName().replaceAll("\'", "\\'");
+				String name = status.getUser().getName().replaceAll("\'", "\\'");
+
+				query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','" + sc_name
+						+ "','" + text + "');";
+
 				db.request(query);
+				System.out.println(sc_name+" : "+text);
 			}
+
 			System.out.println("StartRequest: Done inserting");
-			
+
 		} catch (TwitterException e) {
-			System.out.println("The user doesn't exist :'(");
+			System.out.println("The user doesn't exist.. :'(");
 		}
 	}
 
 	/**
 	 * Getter for all the attribute
 	 */
-
 	public String getName() {
 		return name;
 	}
