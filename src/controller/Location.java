@@ -1,7 +1,7 @@
 /**
  * This class is used to collect tweets posted in a specific location
  * @author The Coding Bang Fraternity
- * @version 1.0
+ * @version 0.0
  */
 
 package controller;
@@ -11,7 +11,7 @@ import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
-public class Location extends Params {
+/*public class Location extends Params {
 
 	private String location ;
 
@@ -39,3 +39,4 @@ public class Location extends Params {
 	}
 	
 }
+*/

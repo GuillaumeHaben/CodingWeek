@@ -26,19 +26,17 @@ public class main {
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem",
 				"NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
 
+		// TO-Do pour l'historique
 		// Database db = new Database();
 		// java.sql.ResultSet resultset = db.select_request("Select
 		// count(id_request) as id FROM request");
 		// db.close();
-
-		User user = new User("kilian_cuny", twitter);
-		user.getLikes(id_request);
-		// user.startRequest(0);
 	}
 	
 	
 
-	public static void main(String[] args) throws IOException {
+	@SuppressWarnings("unused")
+	public static void main(String[] args) {
 
 		main main_instance = new main();
 		Scanner scan = new Scanner(System.in);
@@ -47,6 +45,7 @@ public class main {
 
 		Menu: do {
 
+			// TO-DO : Si tu veux faire les crédits
 			System.out.println("[ ----- Coding bang Fraternity ----- ]");
 			System.out.println("[ (1) Simple search                  ]");
 			System.out.println("[ (2) Profile search                 ]");
@@ -199,10 +198,13 @@ public class main {
 			/* ----------------- Credits ----------------- */
 
 			if (choice == 5) {
-				System.out
-						.println("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN");
+				System.out.println("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN");
 				System.out.println("Press any key to go back...");
-				System.in.read();
+				try {
+					System.in.read();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 		} while (true);

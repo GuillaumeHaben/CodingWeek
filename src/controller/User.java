@@ -33,23 +33,37 @@ public class User implements Collect {
 		this.twitter = twitter;
 	}
 
+	/**
+	 * Get likes from a user
+	 * @param id_request : ID for the request
+	 */
 	public void getLikes(int id_request) {
 		try {
 			ResponseList<Status> result = twitter.getFavorites(name);
 			
-			for (Status status : result) {
+			// Init a DB connection
+			Database db = new Database();
 
+			// Insert new collect
+			String query = "INSERT INTO request(type, reference) VALUES('tweet','@"
+					+ name.replaceAll("'", "\'") + "')";
+			db.request(query);
+						
+			// See tweets liked
+			System.out.println("Likes from @" + name + "\n");
+			for (Status status : result) {
 				String text = status.getText().replace("\'", "\\'");
 				String sc_name = status.getUser().getScreenName().replaceAll("\'", "\\'");
 				String name = status.getUser().getName().replaceAll("\'", "\\'");
 
+				// Console
 				System.out.println(sc_name + " : " + text);
 				
-				Database db = new Database();
-				String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','" + sc_name
+				query = "INSERT INTO tweet VALUES(" + status.getId()
+						+ "," + id_request + ",'" + name + "','" + sc_name
 						+ "','" + text + "');";
-				db.request(query);
 				
+				db.request(query);	
 			}
 		} catch (TwitterException e) {
 			System.out.println("The user doesn't exist :'(");
@@ -62,8 +76,22 @@ public class User implements Collect {
 	 */
 	public void get(String follow) {
 		try {
+			// Init a DB connection
+			Database db = new Database();
+
+			// Insert new collect
+			String query = "INSERT INTO request(type, reference) VALUES('user','@"
+					+ name.replaceAll("'", "\'") + "')";
+			db.request(query);
+
+			// Init attributes
 			long cursor = -1;
 			PagableResponseList<twitter4j.User> result;
+			
+			if(follow.compareTo("Followers")==0)
+				System.out.println("Followers of " + name + " :\n");
+			else 
+				System.out.println("Following of " + name + " :\n");
 			
 			do {
 				if(follow.compareTo("Followers")==0)
@@ -76,11 +104,13 @@ public class User implements Collect {
 					
 					System.out.print("\n-" + name);
 				}
+				
 			} while((cursor = result.getNextCursor()) != 0);
 
-	    // Init a DB connection
-	    Database db = new Database();
-	    String query = "INSERT INTO request(type, reference) VALUES('UTW','" + name.replaceAll("'", "\'") + "')";
+	   
+	    query = "INSERT INTO request(type, reference) VALUES('UTW','" 
+	    		+ name.replaceAll("'", "\'") + "')";
+	    
 	    db.request(query);
 
 		} catch (TwitterException e) {
@@ -99,11 +129,12 @@ public class User implements Collect {
 			Database db = new Database();
 
 			// Insert new collect
-			String query = "INSERT INTO request(type, reference) VALUES('tweet','@ " + name.replaceAll("'", "\'")
-					+ "')";
+			String query = "INSERT INTO request(type, reference) VALUES('tweet','@ " 
+					+ name.replaceAll("'", "\'") + "')";
 			db.request(query);
 
-			// See tweets
+			// See last tweets
+			System.out.println("Last tweets : \n");
 			for (Status status : result) {
 				String text = status.getText().replace("\'", "\\'");
 				String sc_name = status.getUser().getScreenName().replaceAll("\'", "\\'");
@@ -113,11 +144,10 @@ public class User implements Collect {
 						+ "','" + text + "');";
 
 				db.request(query);
+				
+				// Console
 				System.out.println(sc_name + " : " + text);
 			}
-
-			System.out.println("StartRequest: Done inserting");
-
 		} catch (TwitterException e) {
 			System.out.println("The user doesn't exist.. :'(");
 		}
