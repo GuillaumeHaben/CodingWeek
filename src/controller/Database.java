@@ -96,6 +96,20 @@ public class Database {
 	}
 	
 	/**
+	 * Get the Auto Increment of Request Tabke
+	 * @return Auto Increment
+	 * @throws SQLException
+	 */
+	public int autoIncRequest() throws SQLException{
+		String query = "SELECT `AUTO_INCREMENT` as ai FROM INFORMATION_SCHEMA.TABLES "
+				+ "WHERE TABLE_SCHEMA = 'coding_week' AND TABLE_NAME = 'request'";
+		java.sql.ResultSet rs = this.select_request(query);
+		rs.next();
+		return rs.getInt("ai") -1;
+	}
+
+	
+	/**
 	while ( resultat.next() ) {
     	int iduser = resultat.getInt( "id" );
     	String emailuser = resultat.getString( "email" );

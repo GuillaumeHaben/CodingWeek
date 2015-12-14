@@ -31,6 +31,9 @@ public class main {
 		// java.sql.ResultSet resultset = db.select_request("Select
 		// count(id_request) as id FROM request");
 		// db.close();
+		
+		User u = new User("kilian_cuny", twitter);
+		u.startRequest();
 	}
 	
 	
