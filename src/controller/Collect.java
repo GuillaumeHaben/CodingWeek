@@ -1,6 +1,6 @@
 package controller;
 
-import twitter4j.*;
+import twitter4j.TwitterException;
 
 public interface Collect {
 	
