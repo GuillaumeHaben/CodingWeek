@@ -6,6 +6,9 @@
 
 package controller;
 
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 
 public class Location extends Params {
@@ -20,10 +23,31 @@ public class Location extends Params {
 		this.location = location;
 	}
 
-	@Override
+	/**
 	public void startRequest() throws TwitterException {
-		// TODO Auto-generated method stub
-		
+	 
+		Query query = new Query();
+	    query.setGeoCode(location, radius, unit);
+	    QueryResult result = twitter.search(query);
+	    for (Status status : result.getTweets()) {
+	        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+	    }
+	}
+	*/
+	
+	public void startRequest() {
+		Query query = new Query();
+	    query.setGeoCode(location, 0, 0);
+		QueryResult result;
+		try {
+			result = twitter.search(query);
+			for (Status status : result.getTweets()) {
+				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
+			}
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 }
