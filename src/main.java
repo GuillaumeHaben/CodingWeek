@@ -149,6 +149,12 @@ public class main {
 					do {
 						switch (profileSearchSelection) {
 						case 1:
+							System.out.println("Enter a Username");
+							String userNameScan = scan.next();
+							User userName = new User(userNameScan, twitter);
+							userName.getTweets();
+							System.out.println("Press any key to continue...");
+							System.in.read();
 							end = true;
 							break;
 						case 2:
