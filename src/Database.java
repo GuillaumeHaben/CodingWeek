@@ -1,6 +1,6 @@
 /**
  * This class allows access and requests to database
- * @author The Coding Fang Fraternity
+ * @author The Coding Bang Fraternity
  * @version 1.0
  */
 
