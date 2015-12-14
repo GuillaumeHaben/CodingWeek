@@ -6,6 +6,8 @@
 
 package controller;
 
+import twitter4j.TwitterException;
+
 public class User implements Collect {
 
 	private String name ;
@@ -71,6 +73,12 @@ public class User implements Collect {
 	}
 	
 	public void getLikes() {
+		
+	}
+
+	@Override
+	public void startRequest() throws TwitterException {
+		// TODO Auto-generated method stub
 		
 	}
 	
