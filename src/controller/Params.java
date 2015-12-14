@@ -7,7 +7,6 @@ public abstract class Params implements Collect {
 
 	protected Twitter twitter;
 
-	@Override
 	public abstract void startRequest() throws TwitterException;
 
 }
