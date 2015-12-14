@@ -1,6 +1,6 @@
 /**
  * This class is used to collect tweets in a specific language 
- * @author The Coding Fang Fraternity
+ * @author The Coding Bang Fraternity
  * @version 1.0
  */
 

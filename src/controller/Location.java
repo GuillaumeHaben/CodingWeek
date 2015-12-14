@@ -1,6 +1,6 @@
 /**
  * This class is used to collect tweets posted in a specific location
- * @author The Coding Fang Fraternity
+ * @author The Coding Bang Fraternity
  * @version 1.0
  */
 
