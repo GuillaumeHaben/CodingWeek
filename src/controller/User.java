@@ -25,10 +25,8 @@ public class User implements Collect {
 	/**
 	 * Constructor
 	 * 
-	 * @param name
-	 *            : User's name
-	 * @param twitter
-	 *            : Object Twitter
+	 * @param name : User's name
+	 * @param twitter : Object Twitter
 	 */
 	public User(String name, Twitter twitter) {
 		this.name = name;
@@ -62,7 +60,7 @@ public class User implements Collect {
 	}
 	
 	/**
-	 * Catch all the likes
+	 * Catch all the 200 likes
 	 */
 	public void getLikes() {
 
