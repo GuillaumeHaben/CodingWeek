@@ -12,8 +12,12 @@ public class KeyWord extends Params {
 
 	private String keyword ;
 	
-	KeyWord KeyWord = new KeyWord() ;
-
+	public KeyWord(String keyword, Twitter twitter) {
+		super();
+		this.twitter = twitter;
+		this.keyword = keyword;
+	}
+	
 	public String getKeyword() {
 		return keyword;
 	}
@@ -23,11 +27,10 @@ public class KeyWord extends Params {
 	}
 	
 	public void startRequest() throws TwitterException {
-		Twitter twitter = TwitterFactory.getSingleton();
-	    Query query = new Query("source:twitter4j yusukey");
+	    Query query = new Query(keyword);
 	    QueryResult result = twitter.search(query);
 	    for (Status status : result.getTweets()) {
-	        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+	        System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
 	    }
 	}
 	

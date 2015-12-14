@@ -6,6 +6,8 @@
 
 package controller;
 
+import twitter4j.TwitterException;
+
 public class Author extends Params {
 
 	private String name ;
@@ -16,6 +18,12 @@ public class Author extends Params {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public void startRequest() throws TwitterException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -22,8 +22,8 @@ public class main {
 		//db.select_request("Select count(id_request) FROM request");
 		
 		
-		//User user = new User("kilian_cuy", twitter);
-		//user.startRequest();
+		User user = new User("kilian_cuny", twitter);
+		user.startRequest();
 	}
 	
 	public static void main(String[] args) throws IOException {

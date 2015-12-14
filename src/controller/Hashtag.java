@@ -6,6 +6,8 @@
 
 package controller;
 
+import twitter4j.TwitterException;
+
 public class Hashtag extends Params {
 
 	private String hashtag ;
@@ -16,6 +18,12 @@ public class Hashtag extends Params {
 
 	public void setHashtag(String hashtag) {
 		this.hashtag = hashtag;
+	}
+
+	@Override
+	public void startRequest() throws TwitterException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

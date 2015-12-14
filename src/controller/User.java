@@ -7,12 +7,16 @@
 package controller;
 
 import com.mysql.jdbc.DatabaseMetaData;
+import sun.applet.Main;
 
 import twitter4j.Paging;
 import twitter4j.ResponseList;
+import twitter4j.Query;
+import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 
 public class User implements Collect {
 
@@ -44,23 +48,23 @@ public class User implements Collect {
 	}
 
 	public void getLikes() {
-		
+
 	}
-	
+
 	/**
-	 * Catch all the tweets 
+	 * Catch all the tweets
 	 */
 	public void startRequest() {
 		try {
-			ResponseList<Status> result = twitter.getUserTimeline(name ,new Paging(1, 200));
-			
+			ResponseList<Status> result = twitter.getUserTimeline(name, new Paging(1, 200));
+
 			// Init a DB connection
 			Database db = new Database();
-			
+
 			for (Status status : result) {
 				System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-				//String query = "INSERT INTO Tweet("
-			
+				// String query = "INSERT INTO Tweet("
+
 			}
 		} catch (TwitterException e) {
 			System.out.println("L'utilisateur spécifié est introuvable !");

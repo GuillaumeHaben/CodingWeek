@@ -6,6 +6,8 @@
 
 package controller;
 
+import twitter4j.TwitterException;
+
 public class Date extends Params {
 
 	private Date date ;
@@ -16,6 +18,12 @@ public class Date extends Params {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	@Override
+	public void startRequest() throws TwitterException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
