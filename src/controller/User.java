@@ -7,7 +7,6 @@
 package controller;
 
 import twitter4j.PagableResponseList;
-
 import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -26,42 +25,31 @@ public class User implements Collect {
 	/**
 	 * Constructor
 	 * 
-	 * @param name
-	 *            : User's name
-	 * @param twitter
-	 *            : Object Twitter
+	 * @param name : User's name
+	 * @param twitter : Object Twitter
 	 */
 	public User(String name, Twitter twitter) {
 		this.name = name;
 		this.twitter = twitter;
 	}
 
-	public void getLikes() {
+	public void getLikes(int id_request) {
 		try {
-
-			ResponseList<Status> result = twitter.getFavorites();
-
-			/*
-			 * long cursor = -1; ResponseList<User> pagableLikes;
-			 * 
-			 * do { pagableLikes = twitter.getFavorites(name, cursor); for (User
-			 * user : pagableLikes) { listFriends.add(user); // ArrayList<User>
-			 * } } while ((cursor = pagableLikes.getNextCursor()) != 0);
-			 */
-
+			ResponseList<Status> result = twitter.getFavorites(name);
+			
 			for (Status status : result) {
 
 				String text = status.getText().replace("\'", "\\'");
 				String sc_name = status.getUser().getScreenName().replaceAll("\'", "\\'");
 				String name = status.getUser().getName().replaceAll("\'", "\\'");
 
-				System.out.println(result);
-				/*
-				 * query = "INSERT INTO tweet VALUES(" + name + "','" + sc_name
-				 * + "','" + text + "');"; db.request(query);
-				 */
-				// System.out.println("getLikes: Done inserting");
-
+				System.out.println(sc_name + " : " + text);
+				
+				Database db = new Database();
+				String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','" + sc_name
+						+ "','" + text + "');";
+				db.request(query);
+				
 			}
 		} catch (TwitterException e) {
 			System.out.println("The user doesn't exist :'(");
@@ -70,7 +58,7 @@ public class User implements Collect {
 
 	/**
 	 * Catch all the followers / Following
-	 * @param follow : "Followers" OU "Following"
+	 * @param follow : "Followers" OR "Following"
 	 */
 	public void get(String follow) {
 		try {
@@ -85,6 +73,7 @@ public class User implements Collect {
 				
 				for (twitter4j.User status : result) {
 					String name = status.getScreenName().replaceAll("\'", "\\'");
+					
 					System.out.print("\n-" + name);
 				}
 			} while((cursor = result.getNextCursor()) != 0);
@@ -156,5 +145,4 @@ public class User implements Collect {
 	public int getStatuses_count() {
 		return statuses_count;
 	}
-
 }

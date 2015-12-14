@@ -50,6 +50,20 @@ public class Database {
 	}
 	
 	/**
+	 * Reinit request and tweet Table
+	 */
+	public void reinit(){
+		Statement statement;
+		try {
+			statement = connexion.createStatement();
+			statement.executeQuery("Truncate request");
+			statement.executeQuery("Truncate tweet");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Make a select request to DB
 	 * @param request
 	 * @return results or null

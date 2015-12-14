@@ -5,9 +5,12 @@
  * @version 1.0
  */
 
+/* TO-DO Link methode au bon appel et sous appel */
+
 import java.io.IOException;
 import java.util.Scanner;
 
+import controller.Database;
 import controller.User;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -30,9 +33,11 @@ public class main {
 		// db.close();
 
 		User user = new User("kilian_cuny", twitter);
-		user.get("Followers");
+		user.getLikes(id_request);
 		// user.startRequest(0);
 	}
+	
+	
 
 	public static void main(String[] args) throws IOException {
 
@@ -46,9 +51,9 @@ public class main {
 			System.out.println("[ ----- Coding bang Fraternity ----- ]");
 			System.out.println("[ (1) Simple search                  ]");
 			System.out.println("[ (2) Profile search                 ]");
-			System.out.println("[ (3) History                        ]");
+			System.out.println("[ (3) History NOT YET                ]");
 			System.out.println("[ (4) Reset searches                 ]");
-			System.out.println("[ (5) Credits                        ]");
+			System.out.println("[ (5) Credits NOT YET                ]");
 			System.out.println("[ (6) Exit                           ]\n");
 			System.out.print("Selection: ");
 
@@ -78,6 +83,9 @@ public class main {
 				case 4:
 					// Reset Searches
 					choice = 4;
+					Database db = new Database();
+					db.reinit();
+					db.close();
 					end = true;
 					break;
 
