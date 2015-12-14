@@ -1,7 +1,7 @@
 /**
  * This class launch the program
  * @author The Coding Bang Fraternity
- * @version 1.0
+ * @version 2.0
  */
 
 /* TO-DO Link methode au bon appel et sous appel */
@@ -9,8 +9,7 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.sun.xml.internal.bind.v2.runtime.Location;
-
+import controller.Database;
 import controller.Date;
 import controller.Hashtag;
 import controller.KeyWord;
@@ -23,6 +22,7 @@ import twitter4j.auth.AccessToken;
 public class main {
 
 	private static Twitter twitter;
+	private static Database db;
 
 	public main() {
 		twitter = TwitterFactory.getSingleton();
@@ -30,17 +30,15 @@ public class main {
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem",
 				"NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
 
-		// TO-Do pour l'historique
-		// Database db = new Database();
-		// java.sql.ResultSet resultset = db.select_request("Select
-		// count(id_request) as id FROM request");
-		// db.close();
-
-		//User user = new User("kilian_cuny", twitter);
-		//user.get("Followers");
-		// user.startRequest(0);
+		db = new Database();
 	}
 
+	// Ajouter le réutilisation de l'utilisateur
+	// Historique
+	// Simple search location
+	// Hashtag == KeyWord Suppresion ?
+	
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws IOException {
 
 		main main_instance = new main();
@@ -97,6 +95,7 @@ public class main {
 				case 6:
 					// Exit
 					System.out.print("Exiting Program...");
+					db.close();
 					scan.close();
 					System.exit(0);
 
@@ -151,6 +150,7 @@ public class main {
 							break simpleSearch;
 						case 3:
 							System.out.print("Exiting Program...");
+							db.close();
 							scan.close();
 							System.exit(0);
 							break;
@@ -263,6 +263,7 @@ public class main {
 							System.out.println("[ (2) Followers                      ]");
 							System.out.println("[ (3) Following                      ]");
 							System.out.println("[ (4) Tweets Liked                   ]");
+							System.out.print("[ Select a parameter: ");
 							int newSearchOption = scan.nextInt();
 							if (newSearchOption == 1) {
 								myUser.startRequest();
@@ -297,6 +298,7 @@ public class main {
 							break profileSearch;
 						case 3:
 							System.out.print("Exiting Program...");
+							db.close();
 							scan.close();
 							System.exit(0);
 							break;
@@ -319,7 +321,10 @@ public class main {
 			/* ----------------- Reset Searches ----------------- */
 
 			if (choice == 4) {
-
+				db.reinit();
+				System.out.println("Reset over !");
+				System.out.println("Press any key to go back...");
+				System.in.read();
 			}
 
 			/* ----------------- Credits ----------------- */

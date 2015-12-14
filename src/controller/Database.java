@@ -1,7 +1,7 @@
 /**
  * This class allows access and requests to database
  * @author The Coding Bang Fraternity
- * @version 1.0
+ * @version 2.0
  */
 
 package controller;
@@ -14,7 +14,7 @@ public class Database {
 	private final String url = "jdbc:mysql://localhost:3306/coding_week";
 	private final String user = "root";
 	private final String password = "";
-	Connection connexion = null;
+	Connection connection = null;
 
 	/**
 	 * Simple constructor
@@ -25,12 +25,11 @@ public class Database {
 
 	/**
 	 * Init the connection with DB
-	 * Print errors
 	 */
 	private void connect() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connexion = (Connection) DriverManager.getConnection(url, user, password);
+			connection = (Connection) DriverManager.getConnection(url, user, password);
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -40,9 +39,9 @@ public class Database {
 	 * Close connection with DB, should be call at the program ends
 	 */
 	public void close() {
-		if (connexion != null) {
+		if (connection != null) {
 			try {
-				connexion.close();
+				connection.close();
 			} catch (SQLException ignore) {
 			}
 		}
@@ -54,9 +53,10 @@ public class Database {
 	public void reinit(){
 		Statement statement;
 		try {
-			statement = connexion.createStatement();
+			statement = connection.createStatement();
 			statement.executeQuery("Truncate request");
 			statement.executeQuery("Truncate tweet");
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,7 +69,7 @@ public class Database {
 	 */
 	public ResultSet select_request(String request){
 		try {
-			Statement statement = connexion.createStatement();
+			Statement statement = connection.createStatement();
 			return statement.executeQuery(request);	
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,10 +85,10 @@ public class Database {
 	 */
 	public int request(String request){
 		try {
-			Statement statement = connexion.createStatement();
+			Statement statement = connection.createStatement();
 			return statement.executeUpdate(request);
 		} catch (SQLException e) {
-			System.out.println("++++++"+request);
+			System.out.println("ERROR -> "+request);
 			e.printStackTrace();
 		}
 		return 0;
@@ -100,18 +100,11 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public int autoIncRequest() throws SQLException{
-		String query = "SELECT `AUTO_INCREMENT` as ai FROM INFORMATION_SCHEMA.TABLES "
+		String query = "SELECT `AUTO_INCREMENT` as auto FROM INFORMATION_SCHEMA.TABLES "
 				+ "WHERE TABLE_SCHEMA = 'coding_week' AND TABLE_NAME = 'request'";
-		java.sql.ResultSet rs = this.select_request(query);
-		rs.next();
-		return rs.getInt("ai") -1;
+		java.sql.ResultSet res = this.select_request(query);
+		res.next();
+		return res.getInt("auto") -1;
 	}
 
-	
-	/**
-	while ( resultat.next() ) {
-    	int iduser = resultat.getInt( "id" );
-    	String emailuser = resultat.getString( "email" );
-    }
-	*/
 }

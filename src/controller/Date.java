@@ -35,6 +35,12 @@ public class Date extends Params {
 		return keyword;
 	}
 	
+	// TO WRITE
+	public boolean dateIsValid(){
+		return false;
+	}
+	
+	
 	/**
 	 * Get Tweets from a keyword and a date
 	 */

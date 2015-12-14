@@ -1,12 +1,11 @@
 /**
  * This class collects all the informations about a specific user
  * @author The Coding Bang Fraternity
- * @version 1.0
+ * @version 2.0
  */
 
 package controller;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 import twitter4j.PagableResponseList;
@@ -27,7 +26,6 @@ public class User implements Collect {
 
 	/**
 	 * Constructor
-	 * 
 	 * @param name : User's name
 	 * @param twitter : Object Twitter
 	 */
@@ -37,7 +35,7 @@ public class User implements Collect {
 	}
 
 	/**
-	 * Get 100 last likes from a user
+	 * Catch the 100 last likes
 	 * @param id_request : ID for the request
 	 */
 	public void getLikes() {
@@ -47,8 +45,7 @@ public class User implements Collect {
 			int id_request = db.autoIncRequest();	
 			
 			// Insert new collect
-			String query = "INSERT INTO request(type, reference) VALUES('tweet','@"
-					+ name.replaceAll("'", "\'") + "')";
+			String query = "INSERT INTO request(type, reference) VALUES('tweet','@" + name.replaceAll("'", "\'") + "')";
 			db.request(query);
 			
 			// Request to Twitter
