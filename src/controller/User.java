@@ -42,7 +42,7 @@ public class User implements Collect {
 	 */
 	public void getLikes() {
 		try {
-			ResponseList<Status> result = twitter.getFavorites(name);
+			ResponseList<Status> result = twitter.getFavorites(name, new Paging(1, 100));
 			
 			// Init a DB connection
 			Database db = new Database();
