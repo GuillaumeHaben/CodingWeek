@@ -1,7 +1,29 @@
 import java.util.Scanner;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+
 public class main {
+	
+	private ConfigurationBuilder cb;
+	private TwitterFactory tf;
+	private Twitter twitter;
+	
+	public main(){
+		cb = new ConfigurationBuilder();
+		cb.setDebugEnabled(true)
+		  .setOAuthConsumerKey("eGS1wmKed0vp7lfhOK4KH5AH3")
+		  .setOAuthConsumerSecret("KlF5VJOvC0gQWBPhnMBgQmUu6irX3HLOjdnbN0XSPzTenC4MNO")
+		  .setOAuthAccessToken("728437002-umsMNJXthkjEN9y0IfQfaxD7iNHwCPrE1I6LbqQJ")
+		  .setOAuthAccessTokenSecret("5RZptLSdXsieaWZ0YmZ6SuJEGXxQVUka6EsUySCc7JfwF");
+		tf = new TwitterFactory(cb.build());
+		twitter = tf.getInstance();
+	}
+	
 	public static void main(String[] args) {
+		
+		main main_instance = new main();		
 		
 		/* --------------------- Menu --------------------- */
 
