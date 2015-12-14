@@ -6,11 +6,14 @@
 
 package controller;
 
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 
 public class Author extends Params {
 
-	private String name ;
+	private String name;
 
 	public String getName() {
 		return name;
@@ -20,10 +23,12 @@ public class Author extends Params {
 		this.name = name;
 	}
 
-	@Override
 	public void startRequest() throws TwitterException {
-		// TODO Auto-generated method stub
-		
+	    Query query = new Query(name);
+	    QueryResult result = twitter.search(query);
+	    for (Status status : result.getTweets()) {
+	        System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
+	    }
 	}
 	
 }

@@ -25,7 +25,6 @@ public class User implements Collect {
 	private int followers_count;
 	private int friends_count;
 	private int statuses_count;
-
 	private Twitter twitter;
 
 	/**
