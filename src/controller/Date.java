@@ -6,33 +6,49 @@
 
 package controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import twitter4j.Query;
-import twitter4j.QueryResult;
-import twitter4j.Status;
-import twitter4j.TwitterException;
+import twitter4j.*;
 
 public class Date extends Params {
 
-	private Date date ;
-
-	public Date getDate() {
-		return date;
+	private String date;
+	private String keyword;
+	
+	public Date(String keyword, String string, Twitter twitter) {
+		super();
+		this.twitter = twitter;
+		this.date = string;
+		this.keyword = keyword;
 	}
 
-	public void setDate(Date date) {
+	public String getDate() {
+		return date; // doit être sous le format YYYY-MM-DD
+	}
+
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public void startRequest() throws TwitterException {
-	    Query query = new Query("since:" + date + "until:" + date);
-	    query.setCount(100);
-	    QueryResult result = twitter.search(query);
-	    for (Status status : result.getTweets()) {
-	        System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
-	    }
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	
+	public void startRequest() {
+		Query query = new Query(keyword);
+		query.setSince(date);
+		QueryResult result;
+		try {
+			result = twitter.search(query);
+			for (Status status : result.getTweets()) {
+				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText() + " language : " + status.getLang());
+			}
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 }

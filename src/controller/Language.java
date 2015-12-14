@@ -14,12 +14,14 @@ import twitter4j.TwitterException;
 
 public class Language extends Params {
 
-	private String language ;
+	private String language;
+	private String keyword;
 	
-	public Language(String language, Twitter twitter) {
+	public Language(String keyword, String language, Twitter twitter) {
 		super();
 		this.twitter = twitter;
 		this.language = language;
+		this.keyword = keyword;
 	}
 
 	public String getLanguage() {
@@ -29,26 +31,23 @@ public class Language extends Params {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-
-	/**
-	public void startRequest() throws TwitterException {
-		Query query = new Query();
-	    query.setLang(language);
-	    QueryResult result = twitter.search(query);
-	    for (Status status : result.getTweets()) {
-	        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-	    }
-	}
-	*/
 	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
 	public void startRequest() {
-		Query query = new Query("keyword");
+		Query query = new Query(keyword);
 		query.setLang(language);
 		QueryResult result;
 		try {
 			result = twitter.search(query);
 			for (Status status : result.getTweets()) {
-				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
+				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText() + " language : " + status.getLang());
 			}
 		} catch (TwitterException e) {
 			e.printStackTrace();
