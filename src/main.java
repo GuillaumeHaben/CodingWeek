@@ -1,7 +1,9 @@
 import java.util.Scanner;
 
+import controller.User;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class main {
@@ -11,14 +13,13 @@ public class main {
 	private Twitter twitter;
 	
 	public main(){
-		cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true)
-		  .setOAuthConsumerKey("eGS1wmKed0vp7lfhOK4KH5AH3")
-		  .setOAuthConsumerSecret("KlF5VJOvC0gQWBPhnMBgQmUu6irX3HLOjdnbN0XSPzTenC4MNO")
-		  .setOAuthAccessToken("728437002-umsMNJXthkjEN9y0IfQfaxD7iNHwCPrE1I6LbqQJ")
-		  .setOAuthAccessTokenSecret("5RZptLSdXsieaWZ0YmZ6SuJEGXxQVUka6EsUySCc7JfwF");
-		tf = new TwitterFactory(cb.build());
-		twitter = tf.getInstance();
+		
+		twitter = TwitterFactory.getSingleton();
+		twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
+		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem", "NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
+		
+		User user = new User("bla", twitter);
+		user.getTweets();
 	}
 	
 	public static void main(String[] args) {
