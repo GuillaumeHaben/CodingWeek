@@ -1,4 +1,3 @@
-
 /**
  * This class allows access and requests to database
  * @author The Coding Fang Fraternity
