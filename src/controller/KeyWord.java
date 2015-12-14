@@ -30,7 +30,7 @@ public class KeyWord extends Params {
 	    Query query = new Query(keyword);
 	    QueryResult result = twitter.search(query);
 	    for (Status status : result.getTweets()) {
-	        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+	        System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
 	    }
 	}
 	

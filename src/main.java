@@ -12,7 +12,7 @@ public class main {
 	
 	private ConfigurationBuilder cb;
 	private TwitterFactory tf;
-	private Twitter twitter;
+	private static Twitter twitter;
 	
 	public main(){
 		
@@ -24,7 +24,7 @@ public class main {
 		user.getTweets();
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, TwitterException {
 		
 		main main_instance = new main();
 		Scanner scan = new Scanner(System.in);
@@ -108,13 +108,10 @@ public class main {
 					do {
 						switch (simpleSearchSelection) {
 						case 1:
-							KeyWord myKeyWord = new KeyWord();
-							try {
-								myKeyWord.startRequest();
-							} catch (TwitterException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							System.out.println("List of the tweets:");
+							KeyWord myKeyWord = new KeyWord("codingweek", twitter);
+							myKeyWord.startRequest();
+							System.out.println("---------------------");
 							end = true;
 							break;
 						case 2:
