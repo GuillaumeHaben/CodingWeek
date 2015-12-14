@@ -6,6 +6,7 @@
 
 package controller;
 
+
 import twitter4j.*;
 
 public class Date extends Params {
@@ -50,5 +51,4 @@ public class Date extends Params {
 		}
 
 	}
-	
 }
