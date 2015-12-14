@@ -10,7 +10,7 @@ import twitter4j.*;
 
 public class KeyWord extends Params {
 
-	private String keyword ;
+	private String keyword;
 	
 	public KeyWord(String keyword, Twitter twitter) {
 		super();

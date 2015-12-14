@@ -6,6 +6,12 @@
 
 package controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 
 public class Date extends Params {
@@ -23,6 +29,12 @@ public class Date extends Params {
 	@Override
 	public void startRequest() throws TwitterException {
 		// TODO Auto-generated method stub
+		 
+		Query query = new Query(date);
+		QueryResult result = twitter.search(query);
+		    for (Status status : result.getTweets()) {
+		        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+		    }
 		
 	}
 	
