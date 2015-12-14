@@ -6,6 +6,9 @@
 
 package controller;
 
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 
 public class Language extends Params {
@@ -24,6 +27,11 @@ public class Language extends Params {
 	public void startRequest() throws TwitterException {
 		// TODO Auto-generated method stub
 		
+	    Query query = new Query(language);
+	    QueryResult result = twitter.search(query);
+	    for (Status status : result.getTweets()) {
+	        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+	    }
 	}
 	
 }
