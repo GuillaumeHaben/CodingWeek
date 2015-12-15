@@ -86,9 +86,6 @@ public class MainApp extends Application {
             // Set home overview into the center of root layout
             rootLayout.setCenter(profileOverview);
             
-            // Give the controller access to the main app
-            ProfileController controller = loader.getController();
-            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
