@@ -234,45 +234,42 @@ public class main {
 							
 							String newSearchUser = scan.next();
 							User myUser = new User(newSearchUser, twitter);
-							
-							System.out.println();
-							System.out.println("[ ----- Coding bang Fraternity ----- ]");
-							System.out.println("[ -----      Profile search    ----- ]");
-							System.out.println("[ -----        New search      ----- ]");
-							System.out.println("[ Select what you want about this user:");
-							System.out.println("[ (1) Tweets                         ]");
-							System.out.println("[ (2) Followers                      ]");
-							System.out.println("[ (3) Following                      ]");
-							System.out.println("[ (4) Tweets Liked                   ]");
-							System.out.print("[ Select a parameter: ");
-							int newSearchOption = scan.nextInt();
-							if (newSearchOption == 1) {
-								myUser.startRequest();
-								end = true;
-								break;
-							}
-							if (newSearchOption == 2) {
-								myUser.get("Followers");
+							myUser:do {
 								System.out.println();
-								end = true;
-								break;
-							}
-							if (newSearchOption == 3) {
-								myUser.get("Following");
-								System.out.println();
-								end = true;
-								break;
-							}
-							if (newSearchOption == 4) {
-								myUser.getLikes();
-								end = true;
-								break;
-							}
-							else {
-								System.out.println("Please enter a valid option \n");
-								end = true;
-								break;
-							}
+								System.out.println("[ ----- Coding bang Fraternity ----- ]");
+								System.out.println("[ -----      Profile search    ----- ]");
+								System.out.println("[ -----        New search      ----- ]");
+								System.out.println("[ Select what you want about @"+ myUser.getName() +":");
+								System.out.println("[ (1) Tweets                         ]");
+								System.out.println("[ (2) Followers                      ]");
+								System.out.println("[ (3) Following                      ]");
+								System.out.println("[ (4) Tweets Liked                   ]");
+								System.out.println("[ (5) Change User                    ]");
+								System.out.print("[ Select a parameter: ");
+								int newSearchOption = scan.nextInt();
+								if (newSearchOption == 1) {
+									myUser.startRequest();
+								}
+								if (newSearchOption == 2) {
+									myUser.get("Followers");
+									System.out.println();
+								}
+								if (newSearchOption == 3) {
+									myUser.get("Following");
+									System.out.println();
+								}
+								if (newSearchOption == 4) {
+									myUser.getLikes();
+								}
+								if (newSearchOption == 5) {
+									profileSearchSelection = 1;
+									break myUser;
+								}
+								else {
+									System.out.println("Please enter a valid option \n");
+								}
+							} while(true);
+							break;
 						case 2:
 							end = true;
 							System.out.println();
@@ -288,7 +285,6 @@ public class main {
 							profileSearchSelection = scan.nextInt();
 							break;
 						}
-						;
 					} while (!end);
 				} while (true);
 			}
