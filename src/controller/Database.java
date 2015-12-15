@@ -99,7 +99,7 @@ public class Database {
 	 * @return Auto Increment
 	 * @throws SQLException
 	 */
-	public int autoIncRequest() throws SQLException{
+	public int getAutoIncRequest() throws SQLException{
 		String query = "SELECT `AUTO_INCREMENT` as auto FROM INFORMATION_SCHEMA.TABLES "
 				+ "WHERE TABLE_SCHEMA = 'coding_week' AND TABLE_NAME = 'request'";
 		java.sql.ResultSet res = this.select_request(query);

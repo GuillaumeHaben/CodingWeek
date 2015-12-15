@@ -6,8 +6,9 @@
 
 package controller;
 
+import java.sql.SQLException;
+
 import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -24,8 +25,7 @@ public class Language extends Params {
 	 * @param twitter : Twitter object
 	 */
 	public Language(String keyword, String language, Twitter twitter) {
-		super();
-		this.twitter = twitter;
+		super(twitter);
 		this.language = language;
 		this.keyword = keyword;
 	}
@@ -45,15 +45,16 @@ public class Language extends Params {
 	public void startRequest() {
 		Query query = new Query(keyword);
 		query.setLang(language);
-		QueryResult result;
+		
 		try {
-			result = twitter.search(query);
-			for (Status status : result.getTweets()) {
-				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText() + " language : " + status.getLang());
-			}
-		} catch (TwitterException e) {
+			getObjectTweet(twitter.search(query));
+			
+		} catch (TwitterException | SQLException e) {
 			e.printStackTrace();
 		}
-
     }
+	
+	public void logConsole(Status status) {
+		System.out.println("\n@" + status.getUser().getScreenName() + " : " + status.getText() + ", language : " + status.getLang());
+	}
 }

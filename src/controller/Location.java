@@ -1,42 +1,39 @@
 /**
  * This class is used to collect tweets posted in a specific location
  * @author The Coding Bang Fraternity
- * @version 0.0
+ * @version 2.0
  */
 
 package controller;
 
-import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
+import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
-/*public class Location extends Params {
+public class Location extends Params {
 
-	private String location ;
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
+	private String city;
+	private String country;
+	
+	public Location (String city, String country, Twitter twitter) {
+		super(twitter);
+		this.city = city;
+		this.country = country;
 	}
 	
-	public void startRequest() {
-		Query query = new Query();
-	    //query.setGeoCode(location, radius, unit);
-		QueryResult result;
-		try {
-			result = twitter.search(query);
-			for (Status status : result.getTweets()) {
-				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText());
-			}
-		} catch (TwitterException e) {
-			e.printStackTrace();
-		}
-
+	public String getCity() {
+		return city;
 	}
 	
+	public String getCountry() {
+		return country;
+	}
+
+	public void startRequest() throws TwitterException {
+		return;
+	}
+
+	public void logConsole(Status status) {
+		System.out.println("\n@" + status.getUser().getScreenName() + " : " + status.getText());	
+	}	
 }
-*/
