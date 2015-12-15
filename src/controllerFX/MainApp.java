@@ -2,6 +2,7 @@ package controllerFX;
 
 import java.io.IOException;
 
+import controller.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,16 +10,36 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    
+    private Twitter twitter;
+    private Database db;
 
-    @Override
+    public MainApp() {
+		twitter = TwitterFactory.getSingleton();
+		twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
+		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem",
+				"NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
+
+		db = new Database();
+	}
+    
+    public Twitter getTwitter(){
+    	return twitter;
+    }
+    
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Coding Bang Fraternity");
+        
+        
 
         initRootLayout();
 
