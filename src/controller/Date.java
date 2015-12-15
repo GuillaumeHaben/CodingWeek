@@ -6,7 +6,9 @@
 
 package controller;
 
+import java.io.BufferedReader;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import twitter4j.*;
 
@@ -39,9 +41,12 @@ public class Date extends Params {
 		return keyword;
 	}
 
-	// TO WRITE
 	public boolean dateIsValid() {
-		return false;
+		String decomposedDate[] = date.toString().split("-");
+		if (decomposedDate[0].length() != 4 || decomposedDate[1].length() != 2 || decomposedDate[2].length() != 2)
+			return false;			
+		else
+			return true;
 	}
 
 	/**
