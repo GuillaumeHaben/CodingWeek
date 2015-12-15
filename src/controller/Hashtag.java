@@ -4,6 +4,10 @@
  * @version 1.0
  */
 
+
+// TO DELETE ?
+
+
 package controller;
 
 import twitter4j.Query;
@@ -16,6 +20,11 @@ public class Hashtag extends Params {
 
 	private String hashtag ;
 
+	/**
+	 * Constructor
+	 * @param hashtag : Keyword searched
+	 * @param twitter : Twitter object
+	 */
 	public Hashtag(String hashtag, Twitter twitter) {
 		super();
 		this.twitter = twitter;
@@ -26,10 +35,9 @@ public class Hashtag extends Params {
 		return hashtag;
 	}
 
-	public void setHashtag(String hashtag) {
-		this.hashtag = hashtag;
-	}
-	
+	/**
+	 *  Get Tweets from an hashtag
+	 */
 	public void startRequest() {
 		Query query = new Query("#" + hashtag);
 		QueryResult result;
@@ -41,7 +49,5 @@ public class Hashtag extends Params {
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
-
 	}
-	
 }

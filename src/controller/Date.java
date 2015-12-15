@@ -14,10 +14,16 @@ public class Date extends Params {
 	private String date;
 	private String keyword;
 	
-	public Date(String keyword, String string, Twitter twitter) {
+	/**
+	 * COnstructor
+	 * @param keyword : Keyword searched
+	 * @param date : Date of the searching
+	 * @param twitter : Twitter object
+	 */
+	public Date(String keyword, String date, Twitter twitter) {
 		super();
 		this.twitter = twitter;
-		this.date = string;
+		this.date = date;
 		this.keyword = keyword;
 	}
 
@@ -25,18 +31,19 @@ public class Date extends Params {
 		return date; // doit être sous le format YYYY-MM-DD
 	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-
 	public String getKeyword() {
 		return keyword;
 	}
-
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	
+	// TO WRITE
+	public boolean dateIsValid(){
+		return false;
 	}
 	
+	
+	/**
+	 * Get Tweets from a keyword and a date
+	 */
 	public void startRequest() {
 		Query query = new Query(keyword);
 		query.setSince(date);
@@ -49,6 +56,5 @@ public class Date extends Params {
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

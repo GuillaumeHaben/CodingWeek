@@ -17,6 +17,12 @@ public class Language extends Params {
 	private String language;
 	private String keyword;
 	
+	/**
+	 * Constructor
+	 * @param keyword : Keyword searched
+	 * @param language : Language of the Tweeter
+	 * @param twitter : Twitter object
+	 */
 	public Language(String keyword, String language, Twitter twitter) {
 		super();
 		this.twitter = twitter;
@@ -28,18 +34,14 @@ public class Language extends Params {
 		return language;
 	}
 
-	public void setLanguage(String language) {
-		this.language = language;
-	}
 	
 	public String getKeyword() {
 		return keyword;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-
+	/**
+	 *  Get Tweets from a keyword and a language
+	 */
 	public void startRequest() {
 		Query query = new Query(keyword);
 		query.setLang(language);

@@ -1,0 +1,17 @@
+2015-12-14 Day 1  Coding Bang Fraternit
+
+-----------------
+  Console v1.0
+-----------------
+
+	- Console Application working
+	- Simple search by
+		+ Hashtag
+		+ Date
+		+ Language
+		+ Keyword
+	- Profile search for
+		+ User's tweets
+		+ User's followers
+		+ User's followings
+		+ User's likes
