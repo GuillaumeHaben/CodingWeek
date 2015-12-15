@@ -38,7 +38,7 @@ public class main {
 	// Hashtag == KeyWord Suppresion ?
 	
 	@SuppressWarnings("unused")
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		
 		main main_instance = new main();
 		Scanner scan = new Scanner(System.in);
@@ -101,110 +101,115 @@ public class main {
 			} while (!end);
 
 			/* ----------------- Simple Search ----------------- */
-
-			if (choice == 1) {
-				simpleSearch: do {
-
-					System.out.println();
-					System.out.println("[ ----- Coding bang Fraternity ----- ]");
-					System.out.println("[ -----      Simple search     ----- ]");
-					System.out.println("[ (1) New search                     ]");
-					System.out.println("[ (2) Previous                       ]");
-					System.out.println("[ (3) Exit                           ]\n");
-					System.out.print("Selection: ");
-					int searchChoice = 0;
-					int simpleSearchSelection = scan.nextInt();
-					end = false;
-					do {
-						switch (simpleSearchSelection) {
-						case 1:
-							System.out.println();
+			try {
+				if (choice == 1) {
+					simpleSearch: do {
+	
+						System.out.println();
+						System.out.println("[ ----- Coding bang Fraternity ----- ]");
+						System.out.println("[ -----      Simple search     ----- ]");
+						System.out.println("[ (1) New search                     ]");
+						System.out.println("[ (2) Previous                       ]");
+						System.out.println("[ (3) Exit                           ]\n");
+						System.out.print("Selection: ");
+						int searchChoice = 0;
+						int simpleSearchSelection = scan.nextInt();
+						end = false;
+						do {
+							switch (simpleSearchSelection) {
+							case 1:
+								System.out.println();
+								System.out.println("[ ----- Coding bang Fraternity ----- ]");
+								System.out.println("[ -----      Simple search     ----- ]");
+								System.out.println("[ -----        New search      ----- ]");
+								System.out.println("[ (1) By Keyword                     ]");
+								System.out.println("[ (2) By Date                        ]");
+								System.out.println("[ (3) By Language                    ]");
+								System.out.println("[ (4) By Location                    ]");
+								System.out.print("[ Select a parameter: ");
+								int newSearchParam = scan.nextInt();
+								if (newSearchParam >= 1 && newSearchParam <= 5) {
+									searchChoice = newSearchParam;
+									end = true;
+								}
+								else {
+									System.out.println("Please enter a valid option \n");
+								}
+								break;
+							case 2:
+								end = true;
+								System.out.println("");
+								break simpleSearch;
+							case 3:
+								System.out.print("Exiting Program...");
+								db.close();
+								scan.close();
+								System.exit(0);
+								break;
+							default:
+								System.out.print("Enter a valid menu: ");
+								simpleSearchSelection = scan.nextInt();
+								break;
+							}
+							;
+						} while (!end);
+						if (searchChoice == 1) {
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
 							System.out.println("[ -----      Simple search     ----- ]");
 							System.out.println("[ -----        New search      ----- ]");
-							System.out.println("[ (1) By Keyword                     ]");
-							System.out.println("[ (2) By Date                        ]");
-							System.out.println("[ (3) By Language                    ]");
-							System.out.println("[ (4) By Location                    ]");
-							System.out.print("[ Select a parameter: ");
-							int newSearchParam = scan.nextInt();
-							if (newSearchParam >= 1 && newSearchParam <= 5) {
-								searchChoice = newSearchParam;
-								end = true;
-							}
-							else {
-								System.out.println("Please enter a valid option \n");
-							}
-							break;
-						case 2:
-							end = true;
-							System.out.println("");
-							break simpleSearch;
-						case 3:
-							System.out.print("Exiting Program...");
-							db.close();
-							scan.close();
-							System.exit(0);
-							break;
-						default:
-							System.out.print("Enter a valid menu: ");
-							simpleSearchSelection = scan.nextInt();
-							break;
+							System.out.print("[ KeyWord: ");
+							String searchByKeyword = scan.next();
+							KeyWord myKeyword = new KeyWord(searchByKeyword, twitter);
+							myKeyword.startRequest();
+							System.out.println("Press any key to continue...");
+							System.in.read();
+							
 						}
-						;
-					} while (!end);
-					if (searchChoice == 1) {
-						System.out.println("[ ----- Coding bang Fraternity ----- ]");
-						System.out.println("[ -----      Simple search     ----- ]");
-						System.out.println("[ -----        New search      ----- ]");
-						System.out.print("[ KeyWord: ");
-						String searchByKeyword = scan.next();
-						KeyWord myKeyword = new KeyWord(searchByKeyword, twitter);
-						myKeyword.startRequest();
-						System.out.println("Press any key to continue...");
-						System.in.read();
-					}
-					if (searchChoice == 2) {
-						System.out.println("[ ----- Coding bang Fraternity ----- ]");
-						System.out.println("[ -----      Simple search     ----- ]");
-						System.out.println("[ -----        New search      ----- ]");
-						System.out.print("[ Date: ");
-						String searchByDate = scan.next();
-						System.out.print("[ Keyword: ");
-						String searchByKeyword = scan.next();
-						Date myDate = new Date(searchByKeyword, searchByDate, twitter);
-						myDate.startRequest();
-						System.out.println("Press any key to continue...");
-						System.in.read();
-					}
-					if (searchChoice == 3) {
-						System.out.println("[ ----- Coding bang Fraternity ----- ]");
-						System.out.println("[ -----      Simple search     ----- ]");
-						System.out.println("[ -----        New search      ----- ]");
-						System.out.print("[ Language: ");
-						String searchByLanguage = scan.next();
-						System.out.print("[ Keyword: ");
-						String searchByKeyword = scan.next();
-						Language myLanguage = new Language(searchByKeyword, searchByLanguage, twitter);
-						myLanguage.startRequest();
-						System.out.println("Press any key to continue...");
-						System.in.read();
-					}
-					if (searchChoice == 4) {
-						System.out.println("[ ----- Coming Soon ----- ]");
-						/*
-						System.out.println("[ ----- Coding bang Fraternity ----- ]");
-						System.out.println("[ -----      Simple search     ----- ]");
-						System.out.println("[ -----        New search      ----- ]");
-						System.out.print("[ Location: ");
-						String searchByLocation = scan.next();
-						Location myLocation = new Location();
-						myLocation.startRequest();
-						System.out.println("Press any key to continue...");
-						System.in.read();
-						*/
-					}
-				} while (true);
+						if (searchChoice == 2) {
+							System.out.println("[ ----- Coding bang Fraternity ----- ]");
+							System.out.println("[ -----      Simple search     ----- ]");
+							System.out.println("[ -----        New search      ----- ]");
+							System.out.print("[ Date: ");
+							String searchByDate = scan.next();
+							System.out.print("[ Keyword: ");
+							String searchByKeyword = scan.next();
+							Date myDate = new Date(searchByKeyword, searchByDate, twitter);
+							myDate.startRequest();
+							System.out.println("Press any key to continue...");
+							System.in.read();
+						}
+						if (searchChoice == 3) {
+							System.out.println("[ ----- Coding bang Fraternity ----- ]");
+							System.out.println("[ -----      Simple search     ----- ]");
+							System.out.println("[ -----        New search      ----- ]");
+							System.out.print("[ Language: ");
+							String searchByLanguage = scan.next();
+							System.out.print("[ Keyword: ");
+							String searchByKeyword = scan.next();
+							Language myLanguage = new Language(searchByKeyword, searchByLanguage, twitter);
+							myLanguage.startRequest();
+							System.out.println("Press any key to continue...");
+							System.in.read();
+						}
+						if (searchChoice == 4) {
+							System.out.println("[ ----- Coming Soon ----- ]");
+							/*
+							System.out.println("[ ----- Coding bang Fraternity ----- ]");
+							System.out.println("[ -----      Simple search     ----- ]");
+							System.out.println("[ -----        New search      ----- ]");
+							System.out.print("[ Location: ");
+							String searchByLocation = scan.next();
+							Location myLocation = new Location();
+							myLocation.startRequest();
+							System.out.println("Press any key to continue...");
+							System.in.read();
+							*/
+						}
+					} while (true);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 			/* ----------------- Profile Search ----------------- */
@@ -290,22 +295,25 @@ public class main {
 			}
 
 			/* ----------------- Reset Searches ----------------- */
-
-			if (choice == 3) {
-				db.reinit();
-				System.out.println("Reset over !");
-				System.out.println("Press any key to go back...");
-				System.in.read();
+			try {
+				if (choice == 3) {
+					db.reinit();
+					System.out.println("Reset over !");
+					System.out.println("Press any key to go back...");
+					System.in.read();
+				}
+	
+				/* ----------------- Credits ----------------- */
+	
+				if (choice == 4) {
+					System.out.println("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN");
+					System.out.println("Press any key to go back...");
+					System.in.read();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			/* ----------------- Credits ----------------- */
-
-			if (choice == 4) {
-				System.out.println("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN");
-				System.out.println("Press any key to go back...");
-				System.in.read();
-			}
-
 		} while (true);
 	}
 }

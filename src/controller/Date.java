@@ -6,6 +6,7 @@
 
 package controller;
 
+import java.sql.SQLException;
 
 import twitter4j.*;
 
@@ -13,16 +14,19 @@ public class Date extends Params {
 
 	private String date;
 	private String keyword;
-	
+
 	/**
 	 * COnstructor
-	 * @param keyword : Keyword searched
-	 * @param date : Date of the searching
-	 * @param twitter : Twitter object
+	 * 
+	 * @param keyword
+	 *            : Keyword searched
+	 * @param date
+	 *            : Date of the searching
+	 * @param twitter
+	 *            : Twitter object
 	 */
 	public Date(String keyword, String date, Twitter twitter) {
-		super();
-		this.twitter = twitter;
+		super(twitter);
 		this.date = date;
 		this.keyword = keyword;
 	}
@@ -34,27 +38,32 @@ public class Date extends Params {
 	public String getKeyword() {
 		return keyword;
 	}
-	
+
 	// TO WRITE
-	public boolean dateIsValid(){
+	public boolean dateIsValid() {
 		return false;
 	}
-	
-	
+
 	/**
 	 * Get Tweets from a keyword and a date
 	 */
 	public void startRequest() {
-		Query query = new Query(keyword);
-		query.setSince(date);
-		QueryResult result;
-		try {
-			result = twitter.search(query);
-			for (Status status : result.getTweets()) {
-				System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText() + " language : " + status.getLang());
+		if (dateIsValid()) {
+			Query query = new Query(keyword);
+			query.setSince(date);
+			try {
+				getObjectTweet(twitter.search(query));
+
+			} catch (TwitterException | SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (TwitterException e) {
-			e.printStackTrace();
+		} else {
+			System.out.println("Date format is not valid !");
 		}
+	}
+
+	public void logConsole(Status status) {
+		System.out.println(
+				"\n@" + status.getUser().getScreenName() + ":" + status.getText() + " language : " + status.getLang());
 	}
 }

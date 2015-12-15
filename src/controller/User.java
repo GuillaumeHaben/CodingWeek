@@ -46,7 +46,7 @@ public class User implements Collect {
 	 */
 	public void get(String follow) {
 		try {
-			int id_request = db.autoIncRequest();
+			int id_request = db.getAutoIncRequest();
 
 			// Insert new collect
 			String query = "INSERT INTO request(type, reference) VALUES('user','@" + screen_name + "')";
@@ -133,8 +133,9 @@ public class User implements Collect {
 	 * @param result : Tweet obtenus
 	 * @throws SQLException
 	 */
+	@SuppressWarnings("deprecation")
 	private void getObjectTweet(ResponseList<Status> result) throws SQLException {
-		int id_request = db.autoIncRequest();
+		int id_request = db.getAutoIncRequest();
 
 		for (Status status : result) {
 
