@@ -30,11 +30,6 @@ public class Main_app {
 		db = new Database();
 	}
 
-	// Ajouter le réutilisation de l'utilisateur
-	// Historique
-	// Simple search location
-	// Hashtag == KeyWord Suppresion ?
-	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		
@@ -124,15 +119,14 @@ public class Main_app {
 								System.out.println("[ (2) By Date                        ]");
 								System.out.println("[ (3) By Language                    ]");
 								System.out.println("[ (4) By Location                    ]");
+								System.out.println("[ (5) With more than 1 parameter     ]");
 								System.out.print("[ Select a parameter: ");
 								int newSearchParam = scan.nextInt();
 								if (newSearchParam >= 1 && newSearchParam <= 5) {
 									searchChoice = newSearchParam;
 									end = true;
 								}
-								else {
-									System.out.println("Please enter a valid option \n");
-								}
+								else System.out.println("Please enter a valid option \n");
 								break;
 							case 2:
 								end = true;
@@ -148,10 +142,10 @@ public class Main_app {
 								System.out.print("Enter a valid menu: ");
 								simpleSearchSelection = scan.nextInt();
 								break;
-							}
-							;
+							};
 						} while (!end);
 						if (searchChoice == 1) {
+							System.out.println();
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
 							System.out.println("[ -----      Simple search     ----- ]");
 							System.out.println("[ -----        New search      ----- ]");
@@ -159,24 +153,26 @@ public class Main_app {
 							String searchByKeyword = scan.next();
 							KeyWord myKeyword = new KeyWord(searchByKeyword, twitter);
 							myKeyword.startRequest();
-							System.out.println("Press any key to continue...");
+							System.out.println("\nPress any key to continue...");
 							System.in.read();
 							
 						}
 						if (searchChoice == 2) {
+							System.out.println();
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
-							System.out.println("[ -----      Simple search     ----- ]");
+							System.out.println("[ -----      Simple s1earch     ----- ]");
 							System.out.println("[ -----        New search      ----- ]");
-							System.out.print("[ Date: ");
+							System.out.print("[ Date (YYYY-MM-DD): ");
 							String searchByDate = scan.next();
 							System.out.print("[ Keyword: ");
 							String searchByKeyword = scan.next();
 							Date myDate = new Date(searchByKeyword, searchByDate, twitter);
 							myDate.startRequest();
-							System.out.println("Press any key to continue...");
+							System.out.println("\nPress any key to continue...");
 							System.in.read();
 						}
 						if (searchChoice == 3) {
+							System.out.println();
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
 							System.out.println("[ -----      Simple search     ----- ]");
 							System.out.println("[ -----        New search      ----- ]");
@@ -186,10 +182,11 @@ public class Main_app {
 							String searchByKeyword = scan.next();
 							Language myLanguage = new Language(searchByKeyword, searchByLanguage, twitter);
 							myLanguage.startRequest();
-							System.out.println("Press any key to continue...");
+							System.out.println("\nPress any key to continue...");
 							System.in.read();
 						}
 						if (searchChoice == 4) {
+							System.out.println();
 							System.out.println("[ ----- Coming Soon ----- ]");
 							/*
 							System.out.println("[ ----- Coding bang Fraternity ----- ]");
@@ -202,6 +199,10 @@ public class Main_app {
 							System.out.println("Press any key to continue...");
 							System.in.read();
 							*/
+						}
+						if (searchChoice == 5) {
+							System.out.println();
+							System.out.println("[ ----- Coming Soon ----- ]");
 						}
 					} while (true);
 				}
@@ -241,34 +242,46 @@ public class Main_app {
 								System.out.println("[ ----- Coding bang Fraternity ----- ]");
 								System.out.println("[ -----      Profile search    ----- ]");
 								System.out.println("[ -----        New search      ----- ]");
-								System.out.println("[ Select what you want about @"+ myUser.getName() +":");
+								System.out.println("[ Select what you want about @"+ myUser.getScreen_name() +":");
 								System.out.println("[ (1) Tweets                         ]");
 								System.out.println("[ (2) Followers                      ]");
 								System.out.println("[ (3) Following                      ]");
 								System.out.println("[ (4) Tweets Liked                   ]");
-								System.out.println("[ (5) Change User                    ]");
+								System.out.println("[ (5) Description                    ]");
+								System.out.println("[ (6) Change User                    ]");
 								System.out.print("[ Select a parameter: ");
 								int newSearchOption = scan.nextInt();
-								if (newSearchOption == 1) {
+								
+								switch(newSearchOption) {
+								case 1:
 									myUser.startRequest();
-								}
-								if (newSearchOption == 2) {
+									break;
+									
+								case 2:
 									myUser.get("Followers");
 									System.out.println();
-								}
-								if (newSearchOption == 3) {
+									break;
+									
+								case 3:
 									myUser.get("Following");
 									System.out.println();
-								}
-								if (newSearchOption == 4) {
+									break;
+									
+								case 4:
 									myUser.getLikes();
-								}
-								if (newSearchOption == 5) {
+									break;
+									
+								case 5:
+									myUser.getInformation();
+									break;
+									
+								case 6:
 									profileSearchSelection = 1;
 									break myUser;
-								}
-								else {
+								
+								default:
 									System.out.println("Please enter a valid option \n");
+									break;
 								}
 							} while(true);
 							break;

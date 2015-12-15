@@ -1,7 +1,7 @@
 /**
  * This class is used to collect tweets in a specific language 
  * @author The Coding Bang Fraternity
- * @version 1.0
+ * @version 2.0
  */
 
 package controller;
@@ -43,6 +43,9 @@ public class Language extends Params {
 	 *  Get Tweets from a keyword and a language
 	 */
 	public void startRequest() {
+		String q = "INSERT INTO request(type, reference) VALUES('user','" + keyword + "," + language + "')";
+		db.request(q);
+		
 		Query query = new Query(keyword);
 		query.setLang(language);
 		

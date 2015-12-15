@@ -35,6 +35,9 @@ public class KeyWord extends Params {
 	 * Get Tweets from a keyword and a keyword
 	 */
 	public void startRequest() {
+		String q = "INSERT INTO request(type, reference) VALUES('user','" + keyword + "')";
+		db.request(q);
+		
 		Query query = new Query(keyword);
 		try {
 			getObjectTweet(twitter.search(query));
