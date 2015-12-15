@@ -5,8 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
 public class ProfilController {
 
@@ -31,6 +33,19 @@ public class ProfilController {
     	userList = new ListView<User>();
     	userObservable =FXCollections.observableArrayList();
     	userList.setItems(userObservable);
+    	
+    	userList.setCellFactory(new Callback<ListView<User>, ListCell<User>>(){
+             public ListCell<User> call(ListView<User> p) {
+                 ListCell<User> cell = new ListCell<User>(){
+                     protected void updateItem(User u, boolean bln) {
+                         super.updateItem(u, bln);
+                         if (u != null)
+                             setText(u.getName() + " : @" + u.getScreen_name());
+                     }
+                 };
+                 return cell;
+             }
+    	});
     }
     
     /**
