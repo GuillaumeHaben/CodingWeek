@@ -2,7 +2,6 @@ package controllerFX;
 
 import java.io.IOException;
 
-import controller.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,13 +18,16 @@ import twitter4j.conf.ConfigurationBuilder;
 public class MainApp extends Application {
 
     private Stage primaryStage;
-    private BorderPane rootLayout;
+    private BorderPane rootLayout; 
     
-    private Twitter twitter;
+    private Twitter twitter; // Twitter object
+    
     /**
-     * Constructor
+     * Constructor of the main application
      */
     public MainApp() {
+    	
+    	/* Configuration for twitter */
 		ConfigurationBuilder contractor = new ConfigurationBuilder();
 		contractor.setOAuthConsumerKey("qz06S2cROTQm1KYmuyNxFTEcr");
 		contractor.setOAuthConsumerSecret("ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
@@ -33,29 +35,30 @@ public class MainApp extends Application {
 		TwitterFactory factory = new TwitterFactory(configuration);
 		twitter = factory.getInstance();
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem", "NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
-		
-		new Database();
 	}
     
+    /**
+     * This method is call by launch()
+     */
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Coding Bang Fraternity");        
 
         initRootLayout();
-
         showProfileOverview();
     }
 
     /**
-     * Initializes the root layout.
+     * Initializes the root layout
      */
     public void initRootLayout() {
         try {
-            // Load root layout from fxml file.
+            // Load root layout from fxml file
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
-            // Show the scene containing the root layout.
+            
+            // Show the scene containing the root layout
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.setMinHeight(400);
@@ -64,22 +67,23 @@ public class MainApp extends Application {
             primaryStage.setMaxWidth(600);
             primaryStage.getIcons().add(new Image("file:logo.png"));
             primaryStage.show();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Shows the home overview inside the root layout.
+     * Shows the home overview inside the root layout
      */
     public void showProfileOverview() {
         try {
-            // Load home overview.
+            // Load home overview
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("ProfileOverview.fxml"));
             AnchorPane profileOverview = (AnchorPane) loader.load();
             
-            // Set home overview into the center of root layout.
+            // Set home overview into the center of root layout
             rootLayout.setCenter(profileOverview);
             
             // Give the controller access to the main app
@@ -92,7 +96,7 @@ public class MainApp extends Application {
 
     /**
      * Returns the main stage
-     * @return
+     * @return primaryStage
      */
     public Stage getPrimaryStage() {
         return primaryStage;

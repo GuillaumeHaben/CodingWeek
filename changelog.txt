@@ -9,9 +9,25 @@
 		+ Hashtag
 		+ Date
 		+ Language
-		+ Keyword
 	- Profile search for
 		+ User's tweets
 		+ User's followers
 		+ User's followings
 		+ User's likes
+		
+-----------------
+  Console v2.0
+-----------------
+ 
+	- Simple search by
+		+ Multiparameters
+	- Profile search for
+		+ User's description
+	- Save data into DB
+	- Reinit of the Database
+	- Optimisations
+
+-----------------------
+  User Interface v2.0
+-----------------------	
+	- Models
