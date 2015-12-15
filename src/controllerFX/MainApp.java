@@ -53,7 +53,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/view/RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -76,7 +76,7 @@ public class MainApp extends Application {
         try {
             // Load home overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/view/HomeOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource("HomeOverview.fxml"));
             AnchorPane homeOverview = (AnchorPane) loader.load();
             // Set home overview into the center of root layout.
             rootLayout.setCenter(homeOverview);
