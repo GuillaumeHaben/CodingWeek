@@ -258,7 +258,7 @@ public class main {
 								System.out.println("[ ----- Coding bang Fraternity ----- ]");
 								System.out.println("[ -----      Profile search    ----- ]");
 								System.out.println("[ -----        New search      ----- ]");
-								System.out.println("[ Select what you want about "+ myUser +":");
+								System.out.println("[ Select what you want about @"+ myUser.getName() +":");
 								System.out.println("[ (1) Tweets                         ]");
 								System.out.println("[ (2) Followers                      ]");
 								System.out.println("[ (3) Following                      ]");
@@ -281,12 +281,14 @@ public class main {
 									myUser.getLikes();
 								}
 								if (newSearchOption == 5) {
+									profileSearchSelection = 1;
 									break myUser;
 								}
 								else {
 									System.out.println("Please enter a valid option \n");
 								}
 							} while(true);
+							break;
 						case 2:
 							end = true;
 							System.out.println();
