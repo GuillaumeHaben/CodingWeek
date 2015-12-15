@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 public class MainApp extends Application {
 
@@ -20,25 +22,24 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     
     private Twitter twitter;
-    private Database db;
-
     /**
      * Constructor
      */
     public MainApp() {
-		twitter = TwitterFactory.getSingleton();
-		twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
-		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem",
-				"NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
-
-		db = new Database();
+		ConfigurationBuilder contractor = new ConfigurationBuilder();
+		contractor.setOAuthConsumerKey("qz06S2cROTQm1KYmuyNxFTEcr");
+		contractor.setOAuthConsumerSecret("ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
+		Configuration configuration = contractor.build();
+		TwitterFactory factory = new TwitterFactory(configuration);
+		twitter = factory.getInstance();
+		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem", "NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
+		
+		new Database();
 	}
     
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Coding Bang Fraternity");
-        
-        
+        this.primaryStage.setTitle("Coding Bang Fraternity");        
 
         initRootLayout();
 
