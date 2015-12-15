@@ -10,7 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
-public class ProfileController {
+public class SimpleController {
 
 	@FXML
 	private ListView<User> userList;
@@ -29,7 +29,7 @@ public class ProfileController {
 	/**
      * The constructor is called before the initialize() method.
      */
-    public ProfileController() {
+    public SimpleController() {
     	userList = new ListView<User>();
     	userObservable =FXCollections.observableArrayList();
     	userList.setItems(userObservable);
@@ -63,7 +63,6 @@ public class ProfileController {
 	private void initialize() {
 		// Initialize the person table with the two columns.
 	}
-
 
 	 public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
