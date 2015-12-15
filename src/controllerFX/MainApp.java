@@ -22,6 +22,9 @@ public class MainApp extends Application {
     private Twitter twitter;
     private Database db;
 
+    /**
+     * Constructor
+     */
     public MainApp() {
 		twitter = TwitterFactory.getSingleton();
 		twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
@@ -30,10 +33,6 @@ public class MainApp extends Application {
 
 		db = new Database();
 	}
-    
-    public Twitter getTwitter(){
-    	return twitter;
-    }
     
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -87,13 +86,21 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns the main stage.
+     * Returns the main stage
      * @return
      */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * Get Twitter Object
+     * @return twitter
+     */
+    public Twitter getTwitter(){
+    	return twitter;
+    }
+    
     public static void main(String[] args) {
         launch(args);
     }
