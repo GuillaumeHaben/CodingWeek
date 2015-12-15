@@ -1,31 +1,44 @@
 package controllerFX;
 
-import controller.Database;
+import controller.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 public class ProfilController {
 
 	@FXML
-	private ListView<String> userList;
+	private ListView<User> userList;
+	
 	@FXML
-	private ObservableList<String> items;
+	private ObservableList<User> userObservable;
+	
 	@FXML
 	private Label NameLabel;
+	
+	@FXML
+	private TextField username;
+	
+	private MainApp mainApp;
 
 	/**
-     * The constructor.
      * The constructor is called before the initialize() method.
      */
     public ProfilController() {
-    	userList = new ListView<String>();
-    	items =FXCollections.observableArrayList (
-    		    "Single", "Double", "Suite", "Family App");
-    	
-    	userList.setItems(items);
+    	userList = new ListView<User>();
+    	userObservable =FXCollections.observableArrayList();
+    	userList.setItems(userObservable);
+    }
+    
+    /**
+     * Returns the data as an observable list of User
+     * @return userObservable
+     */
+    public ObservableList<User> getUserData() {
+        return userObservable;
     }
 
 	/**
@@ -35,14 +48,11 @@ public class ProfilController {
 	@FXML
 	private void initialize() {
 		// Initialize the person table with the two columns.
-		//NameColumn.setCellValueFactory(cellData -> cellData.getValue().NameProperty());
-		//ScreenNameColumn.setCellValueFactory(cellData -> cellData.getValue().ScreenNameProperty());
 	}
 
-	
-	public void setData(int id_request) {
-
-		// Add observable list data to the table
-		//userTable.setItems(...);
+	@FXML
+	public void setData() {
+		User u = new User(username.getText(), mainApp.getTwitter());
+		userObservable.add(u);
 	}
 }
