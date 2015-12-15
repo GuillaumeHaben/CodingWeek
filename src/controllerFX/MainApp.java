@@ -42,7 +42,7 @@ public class MainApp extends Application {
 
         initRootLayout();
 
-        showPersonOverview();
+        showProfileOverview();
     }
 
     /**
@@ -71,14 +71,19 @@ public class MainApp extends Application {
     /**
      * Shows the home overview inside the root layout.
      */
-    public void showPersonOverview() {
+    public void showProfileOverview() {
         try {
             // Load home overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("HomeOverview.fxml"));
-            AnchorPane homeOverview = (AnchorPane) loader.load();
+            loader.setLocation(MainApp.class.getResource("ProfileOverview.fxml"));
+            AnchorPane profileOverview = (AnchorPane) loader.load();
+            
             // Set home overview into the center of root layout.
-            rootLayout.setCenter(homeOverview);
+            rootLayout.setCenter(profileOverview);
+            
+            // Give the controller access to the main app
+            ProfileController controller = loader.getController();
+            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
