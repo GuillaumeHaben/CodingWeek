@@ -1,15 +1,16 @@
 package controller;
 
+import java.sql.SQLException;
+
 import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
 public class Multiparams extends Params {
 
-	private String language = "";
 	private String keyword;
+	private String language = "";
 	private String date = "";
 	private String screen_name = "";
 	
@@ -22,10 +23,9 @@ public class Multiparams extends Params {
 	 * @param twitter : Twitter object
 	 */
 	public Multiparams(String keyword, String language, String date, String screen_name, Twitter twitter) {
-		super();
-		this.twitter = twitter;
-		this.language = language;
+		super(twitter);
 		this.keyword = keyword;
+		this.language = language;
 		this.date = date;
 		this.screen_name = screen_name;
 	}
@@ -48,33 +48,34 @@ public class Multiparams extends Params {
 	}
 
 	/**
-	 *  Get Tweets from a keyword, a language and a date
+	 *  Get Tweets from a keyword, a language, a date, an author
 	 */
 	public void startRequest() {
 		Query query = null;
+		assert keyword != "";
+		
 		if (keyword != "") {
 			String request = keyword;
-			if (screen_name != "") {
+			if (screen_name != "")
 				request += " from:" + screen_name;
-			}
+			
 			query = new Query(request);
-			if (language != "") {
+			if (language != "")
 				query.setLang(language);
-			}
-			if (date != "") {
+			
+			if (date != "")
 				query.setSince(date);
-			}
-			QueryResult result;
+			
 			try {
-				result = twitter.search(query);
-				for (Status status : result.getTweets()) {
-					System.out.println("\n@" + status.getUser().getScreenName() + ":" + status.getText() + " language : " + status.getLang());
-				}
-			} catch (TwitterException e) {
+				getObjectTweet(twitter.search(query));
+				
+			} catch (TwitterException | SQLException e) {
 				e.printStackTrace();
 			}
-		} else {
-			return;
-		}
+		} else return;
     }
+
+	public void logConsole(Status status) {
+		System.out.println("\n@" + status.getUser().getScreenName() + " : " + status.getText());		
+	}
 }

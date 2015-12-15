@@ -4,8 +4,6 @@
  * @version 2.0
  */
 
-/* TO-DO Link methode au bon appel et sous appel */
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -18,12 +16,12 @@ import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
-public class main {
+public class Main_app {
 
 	private static Twitter twitter;
 	private static Database db;
 
-	public main() {
+	public Main_app() {
 		twitter = TwitterFactory.getSingleton();
 		twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem",
@@ -40,7 +38,7 @@ public class main {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		
-		main main_instance = new main();
+		Main_app main_instance = new Main_app();
 		Scanner scan = new Scanner(System.in);
 
 
@@ -208,7 +206,6 @@ public class main {
 					} while (true);
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -311,7 +308,6 @@ public class main {
 					System.in.read();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} while (true);
