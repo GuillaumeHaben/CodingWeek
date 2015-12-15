@@ -59,6 +59,7 @@ public class ProfileController{
         return userObservable;
     }
 
+
     /**
      * Launch a request for a specific author
      */
