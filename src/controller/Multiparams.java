@@ -1,3 +1,9 @@
+/**
+ * This class is used to collect tweets posted with specifics params
+ * @author The Coding Bang Fraternity
+ * @version 2.0
+ */
+
 package controller;
 
 import java.sql.SQLException;
@@ -51,6 +57,9 @@ public class Multiparams extends Params {
 	 *  Get Tweets from a keyword, a language, a date, an author
 	 */
 	public void startRequest() {
+		String q = "INSERT INTO request(type, reference) VALUES('user','" + keyword + ", multiparameters ')";
+		db.request(q);
+		
 		Query query = null;
 		assert keyword != "";
 		

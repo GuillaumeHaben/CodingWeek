@@ -189,11 +189,9 @@ public class User implements Collect {
 				id = user.getId();
 			}
 
-			System.out.println("Information du profil : ");
-			System.out.println(
-					"\nName : " + name + "\nDescription : " + description + "\nNumber of followers : " + followers_count
+			System.out.println("\nInformations : ");
+			System.out.println("Name : " + name + "\nDescription : " + description + "\nNumber of followers : " + followers_count
 							+ "\nNumber of followings : " + friends_count + "\nNumber of tweets : " + statuses_count);
-			System.out.println();
 
 		} catch (TwitterException e) {
 			e.printStackTrace();

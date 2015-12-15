@@ -6,10 +6,7 @@
 
 package controller;
 
-import java.io.BufferedReader;
 import java.sql.SQLException;
-import java.util.Scanner;
-
 import twitter4j.*;
 
 public class Date extends Params {
@@ -54,6 +51,9 @@ public class Date extends Params {
 	 */
 	public void startRequest() {
 		if (dateIsValid()) {
+			String q = "INSERT INTO request(type, reference) VALUES('user','" + keyword + "," + date + "')";
+			db.request(q);
+			
 			Query query = new Query(keyword);
 			query.setSince(date);
 			try {
