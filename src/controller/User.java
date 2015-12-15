@@ -6,19 +6,15 @@
 
 package controller;
 
+import twitter4j.*;
 import java.sql.SQLException;
 
-import twitter4j.PagableResponseList;
-import twitter4j.Paging;
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
 
 public class User implements Collect {
 
 	private String name;
 	private String screen_name;
+	private String description;
 	private int followers_count;
 	private int friends_count;
 	private int statuses_count;
@@ -152,6 +148,30 @@ public class User implements Collect {
 			System.out.println("The user doesn't exist.. :'(");
 		}
 	}
+	
+	/**
+	public void getInformation(String name, Twitter twitter) {
+		Query query = new Query("from:" + name);
+		QueryResult result;
+		try {
+			result = twitter.searchUsers(query);
+			for (User user : result.showUser()) {
+				System.out.println("\n Screen name : " + user.getScreen_name() + ", Description : " + user.getDescription() + ", Number of followers : " + user.getFollowers_count() + ", Number of followings : " + user.getFriends_count() + ", Number of tweets : " + user.getStatuses_count());
+			}
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+	}
+	*/
+	
+	public void getInformation(String screen_name, Twitter twitter) {
+		try {
+			User user = showUser(screen_name);
+			System.out.println("\n Screen name : " + user.getScreen_name() + ", Description : " + user.getDescription() + ", Number of followers : " + user.getFollowers_count() + ", Number of followings : " + user.getFriends_count() + ", Number of tweets : " + user.getStatuses_count());
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Getter for all the attribute
@@ -163,7 +183,11 @@ public class User implements Collect {
 	public String getScreen_name() {
 		return screen_name;
 	}
-
+		
+	public String getDescription() {
+		return description;
+	}
+	
 	public int getFollowers_count() {
 		return followers_count;
 	}
