@@ -65,7 +65,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Tweets" GridPane.columnIndex="1">
+                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Tweets" GridPane.columnIndex="1">
                            <toggleGroup>
                               <ToggleGroup fx:id="Choice" />
                            </toggleGroup></RadioButton>
