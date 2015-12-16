@@ -1,5 +1,6 @@
 package controllerFX;
 
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -55,7 +56,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
             
             // Show the scene containing the root layout
@@ -80,15 +81,12 @@ public class MainApp extends Application {
         try {
             // Load home overview
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("ProfileOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/MainOverview.fxml"));
             AnchorPane profileOverview = (AnchorPane) loader.load();
             
             // Set home overview into the center of root layout
             rootLayout.setCenter(profileOverview);
             
-            // Give the controller access to the main app
-            ProfileController controller = loader.getController();
-            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

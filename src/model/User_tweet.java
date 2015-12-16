@@ -1,9 +1,11 @@
 package model;
 
+import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.util.Callback;
 
 public class User_tweet {
 
@@ -37,5 +39,15 @@ public class User_tweet {
     
     public IntegerProperty id_requestProperty() {
         return id_request;
+    }
+    
+    public static Callback<User_tweet, Observable[]> extractor() {
+	    return (User_tweet u) -> new Observable[]{
+	    		u.nameProperty(), u.screenNameProperty(), u.id_requestProperty()
+	    };
+    }
+    
+    public String stringValue() {
+    	return String.format("%s : @%s", getName(), getScreenName());
     }
 }
