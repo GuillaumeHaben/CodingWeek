@@ -51,7 +51,7 @@ public class User_tweet {
 	public User_tweet(Long id, String name, String sc_name) {
 		this.id = new SimpleLongProperty(id);
 		this.name = new SimpleStringProperty(name);
-		this.screen_name = new SimpleStringProperty();
+		this.screen_name = new SimpleStringProperty(sc_name);
 	}
 
 	/**
@@ -99,8 +99,10 @@ public class User_tweet {
 				
 				return id_request;
 			}
-		} catch (TwitterException | SQLException e) {
+		} catch (TwitterException e) {
 			System.out.println("The user doesn't exist.. :'(");
+		} catch ( SQLException e){
+			
 		}
 		return -1;
 	}

@@ -88,7 +88,7 @@ public class ProfileController extends ControllerFX {
 				int id_request = user_tweet.get("Followers");
 				
 				rs = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
-				userList.setItems(createUsers(rs));
+				createUsers(rs, userList);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
