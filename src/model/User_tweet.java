@@ -81,6 +81,13 @@ public class User_tweet {
 				db.request(query);
 				
 				do {
+					if(cursor != -1){
+						if (follow.compareTo("Followers") == 0)
+							result = twitter.getFollowersList(screen_name.get(), cursor);
+						else
+							result = twitter.getFriendsList(screen_name.get(), cursor);
+					}
+					
 					for (twitter4j.User user : result) {
 						String name = user.getName().replace("\'", "\\'");
 						String sc_name = user.getScreenName().replace("\'", "\\'");
@@ -88,7 +95,6 @@ public class User_tweet {
 						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name + "');";
 						db.request(query);
 					}
-	
 				} while ((cursor = result.getNextCursor()) != 0);
 				
 				return id_request;

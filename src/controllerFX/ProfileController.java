@@ -77,19 +77,18 @@ public class ProfileController extends ControllerFX {
      */
 	@FXML
 	public void handleRequest() {
-		System.out.println("LOL");
 		this.user_tweet = new User_tweet(username.getText(), this.mainApp.getTwitter());
 		
 		ResultSet rs = db.select_request("SELECT id_request FROM request WHERE reference = '@" + user_tweet.screenNameProperty().get() 
-				+ "' AND req = 'timeline' LIMIT 1");
+				+ "' AND req = 'Followers' LIMIT 1");
 		try {
-			if (rs.getFetchSize() != 0)
+			if (rs.next())
 				System.out.println("find");
 			else {
 				int id_request = user_tweet.get("Followers");
 				
 				rs = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
-				createUsers(rs, userList);
+				userList.setItems(createUsers(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
