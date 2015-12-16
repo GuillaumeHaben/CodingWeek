@@ -1,29 +1,21 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+# The coding bang fraternity #
 
-### What is this repository for? ###
+## Presentation ##
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+The application is able to search and collect date from tweets. Data is collected according to hashtags, keywords, dates, geolocalisation, name or limit of time (1h,24h) and is stored in a database.
 
-### How do I get set up? ###
+The added value is the treatments processing the data collected and interpreting them.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+## Installation ##
 
-### Contribution guidelines ###
+Download the java files and run it on an IDE or using the following command: 
+nananananana
 
-* Writing tests
-* Code review
-* Other guidelines
+## How it works ? ##
 
-### Who do I talk to? ###
+After running the app, a very nice and beautiful (maybe wild) window appears and from this, you can follow this instruction to get the information you need from the app.
 
-* Repo owner or admin
-* Other community or team contact
+
+Developped by The coding bang fraternity.
