@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import twitter4j.GeoLocation;
 import twitter4j.PagableResponseList;
 import twitter4j.Paging;
@@ -24,7 +25,7 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
-public class User_tweet {
+public class User {
 
 	private LongProperty id;
 
@@ -42,13 +43,13 @@ public class User_tweet {
 	 * @param name : User's name
 	 * @param twitter : Object Twitter
 	 */
-	public User_tweet(String sc_name, Twitter twitter) {
+	public User(String sc_name, Twitter twitter) {
 		this.screen_name = new SimpleStringProperty(sc_name);
 		this.twitter = twitter;
 		db = new Database();
 	}
 	
-	public User_tweet(Long id, String name, String sc_name) {
+	public User(Long id, String name, String sc_name) {
 		this.id = new SimpleLongProperty(id);
 		this.name = new SimpleStringProperty(name);
 		this.screen_name = new SimpleStringProperty(sc_name);
@@ -102,7 +103,7 @@ public class User_tweet {
 		} catch (TwitterException e) {
 			System.out.println("The user doesn't exist.. :'(");
 		} catch ( SQLException e){
-			
+			e.printStackTrace();
 		}
 		return -1;
 	}
@@ -222,7 +223,7 @@ public class User_tweet {
 		return name;
 	}
 
-	public StringProperty screenNameProperty() {
+	public StringProperty screen_nameProperty() {
 		return screen_name;
 	}
 

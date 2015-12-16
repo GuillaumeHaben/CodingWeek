@@ -1,5 +1,10 @@
-package controllerFX;
+/**
+ * Main application, launch the program and init the layouts
+ * @author The Coding Bang Fraternity
+ * @version 3.0
+ */
 
+package controllerFX;
 
 import java.io.IOException;
 

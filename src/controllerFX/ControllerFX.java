@@ -1,3 +1,11 @@
+/**
+ * This class collects supervise the other controller
+ * Give some generic methods
+ * 
+ * @author The Coding Bang Fraternity
+ * @version 3.0
+ */
+
 package controllerFX;
 
 import java.sql.ResultSet;
@@ -5,7 +13,8 @@ import java.sql.SQLException;
 
 import controller.Database;
 import javafx.scene.control.ListView;
-import model.User_tweet;
+import model.Tweet;
+import model.User;
 
 public abstract class ControllerFX {
 	
@@ -16,10 +25,33 @@ public abstract class ControllerFX {
 		db = new Database();
 	}
 	
-	protected void createUsers(ResultSet rs, ListView<User_tweet> list){
+	/**
+	 * Create a User's object list
+	 * @param rs : query results
+	 * @param list : ListView
+	 */
+	protected void createUsers(ResultSet rs, ListView<User> list){
 		try {
 			while(rs.next()){
-				list.getItems().add(new User_tweet(rs.getLong("id_user"), rs.getString("name"), rs.getString("screen_name")));
+				list.getItems().add(new User(rs.getLong("id_user"), rs.getString("name"), rs.getString("screen_name")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Create a User's object list
+	 * @param rs : query results
+	 * @param list : ListView
+	 */
+	protected void createTweets(ResultSet rs, ListView<Tweet> list){
+		try {
+			while(rs.next()){
+				Tweet tweet = new Tweet(rs.getLong("id_tweet"), rs.getString("name"), rs.getString("screen_name"), 
+						rs.getString("text"), rs.getInt("retweet"), rs.getString("city"), rs.getString("country"),
+						rs.getInt("latitude"), rs.getInt("longitude"), rs.getDate("date_tweet"));
+				list.getItems().add(tweet);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -27,10 +59,27 @@ public abstract class ControllerFX {
 	}
 
     /**
+     * Clean a User List
+     * @param list
+     */
+    protected void cleanUser_tweetScreen(ListView<User> list) {
+            list.getItems().clear();
+    }
+
+    /**
+     * Clean a Tweet List
+     * @param list
+     */
+    protected void cleanTweetScreen(ListView<Tweet> list) {
+            list.getItems().clear();
+    }
+
+    /**
      * Link the main app object
      * @param ma : MainApp Object
      */
-    public void setMainApp(MainApp mapp){
+    @SuppressWarnings("static-access")
+	public void setMainApp(MainApp mapp){
     	this.mainApp = mapp;
     }
 }

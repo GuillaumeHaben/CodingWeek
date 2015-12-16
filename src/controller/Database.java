@@ -1,20 +1,16 @@
 /**
  * This class allows access and requests to database
  * @author The Coding Bang Fraternity
- * @version 2.0
+ * @version 3.0
  */
 
 package controller;
 
 import java.sql.*;
-import com.mysql.jdbc.Connection;
 
 public class Database {
 
-	private final String url = "jdbc:mysql://localhost:3306/coding_week";
-	private final String user = "root";
-	private final String password = "";
-	Connection connection = null;
+	java.sql.Connection connection = null;
 
 	/**
 	 * Simple constructor
@@ -28,8 +24,34 @@ public class Database {
 	 */
 	private void connect() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = (Connection) DriverManager.getConnection(url, user, password);
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:mydb.db");
+			
+			Statement stmt = connection.createStatement();
+		    String sql = "CREATE TABLE IF NOT EXISTS `tweet` ( `id_tweet` bigint(20) NOT NULL," +
+		      "`id_request` int(5) NOT NULL, `name` varchar(25) NOT NULL, `screenName` varchar(25) NOT NULL, " +
+		      "`text` varchar(170) NOT NULL, `retweet` int(8) NOT NULL, `city` varchar(40) DEFAULT NULL, " +
+		      "`country` varchar(30) DEFAULT NULL, `latitude` double NOT NULL,  `longitude` double NOT NULL, " +
+		      "`date_tweet` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY " +
+		      "(`id_tweet`,`id_request`))"; 
+		    stmt.executeUpdate(sql);
+		    stmt.close();
+		    
+		    sql = "CREATE TABLE IF NOT EXISTS `user` ( `id_user` bigint(20) NOT NULL, `id_request` int(5) NOT NULL, " +
+		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
+		    		")";
+			stmt.executeUpdate(sql);
+			
+			sql = "CREATE TABLE IF NOT EXISTS `user` ( `id_user` bigint(20) NOT NULL, `id_request` int(5) NOT NULL, " +
+		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
+		    		")";
+			stmt.executeUpdate(sql);
+
+			sql = "CREATE TABLE IF NOT EXISTS `request` ( `id_request` INTEGER PRIMARY KEY NOT NULL, `type` varchar(10) " +
+					"NOT NULL, `reference` varchar(30) NOT NULL, `req` varchar(20) NOT NULL)";
+			stmt.executeUpdate(sql);
+			stmt.close();
+		      
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -50,16 +72,18 @@ public class Database {
 	/**
 	 * Reinit request and tweet Table
 	 */
-	public void reinit(){
-		Statement statement;
+	public int reinit(){
 		try {
-			statement = connection.createStatement();
-			statement.executeQuery("Truncate request");
-			statement.executeQuery("Truncate tweet");
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("DELETE FROM request");
+			statement.executeUpdate("DELETE FROM tweet");
+			statement.executeUpdate("DELETE FROM user");
+			statement.executeUpdate("VACUUM");
 			statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return -1;
 		}
+		return 0;
 	}
 	
 	/**
@@ -100,11 +124,13 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public int getAutoIncRequest() throws SQLException{
-		String query = "SELECT `AUTO_INCREMENT` as auto FROM INFORMATION_SCHEMA.TABLES "
-				+ "WHERE TABLE_SCHEMA = 'coding_week' AND TABLE_NAME = 'request'";
-		java.sql.ResultSet res = this.select_request(query);
-		res.next();
-		return res.getInt("auto") -1;
+		String query = " SELECT last_insert_rowid() as auto FROM request";
+		ResultSet res = this.select_request(query);
+		
+		if(!res.next()){
+			return 0;
+		}
+		return res.getInt("auto");
 	}
 
 }

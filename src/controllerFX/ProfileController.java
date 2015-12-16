@@ -1,3 +1,9 @@
+/**
+ * Controller for ProfileOverview
+ * @author The Coding Bang Fraternity
+ * @version 3.0
+ */
+
 package controllerFX;
 
 import java.sql.ResultSet;
@@ -9,76 +15,197 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.util.Callback;
+import model.Tweet;
+import model.User;
 
-import model.User_tweet;
-	
 public class ProfileController extends ControllerFX {
 
-	@FXML private ListView<User_tweet> userList;
-	
-	@FXML private ObservableList<User_tweet> userObservable;
-	
-	@FXML private Label NameLabel;
-	
-	@FXML private TextField username;
-	
-	private User_tweet user_tweet;
+	@FXML
+	private ListView<User> userList;
+	@FXML
+	private ListView<Tweet> tweetList;
+	@FXML
+	private ObservableList<User> userObservable;
+	@FXML
+	private ObservableList<Tweet> tweetObservable;
+	@FXML
+	private Label NameLabel;
+	@FXML
+	private TextField username;
+	@FXML
+	private ToggleGroup choice;
+	@FXML
+	private RadioButton tweets;
+	@FXML
+	private RadioButton likes;
+	@FXML
+	private RadioButton followers;
+	@FXML
+	private RadioButton following;
+	@FXML
+	private RadioButton informations;
+
+	private User User;
+	private Tweet Tweet;
 
 	/**
-     * The constructor is called before the initialize() method.
-     */
-    public ProfileController() {
-    	super();
-    	userObservable = FXCollections.observableArrayList();
-    	userList = new ListView<User_tweet>(userObservable); 
-    }
-    
-    /**
-     * Initialize cell format and list
-     */
-    public void initialize(){
-    	userList.setItems(userObservable);
-    	userList.setCellFactory(new Callback<ListView<User_tweet>, ListCell<User_tweet>>(){
-            public ListCell<User_tweet> call(ListView<User_tweet> p) {
-                return new ListCell<User_tweet>(){
-                    protected void updateItem(User_tweet item, boolean empty) { 
-                        super.updateItem(item, empty); 
-                        if (item != null) 
-                        	this.setText(item.screenNameProperty().get());
-                    }
-                };
-        }});	
-    }
-    
-    /**
-     * Returns the data as an observable list of User
-     * @return userObservable
-     */
-    public ObservableList<User_tweet> getUserData() {
-        return userList.getItems();
-    }
-    
-    /**
-     * Launch a request for on a specific author
-     */
-	@FXML public void handleRequest() {
-		this.user_tweet = new User_tweet(username.getText(), this.mainApp.getTwitter());
-		
-		ResultSet rs = db.select_request("SELECT id_request FROM request WHERE reference = '@" + user_tweet.screenNameProperty().get() 
-				+ "' AND req = 'Followers' LIMIT 1");
-		try {
-			if (rs.next())
-				System.out.println("find");
-			else {
-				int id_request = user_tweet.get("Followers");
-				
-				rs = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
-				createUsers(rs, userList);
+	 * The constructor is called before the initialize() method.
+	 */
+	public ProfileController() {
+		super();
+		userObservable = FXCollections.observableArrayList();
+		userList = new ListView<User>(userObservable);
+		tweetList = new ListView<Tweet>(tweetObservable);
+	}
+
+	/**
+	 * Initialize cell format and list
+	 */
+	public void initialize() {
+		userList.setItems(userObservable);
+		tweetList.setItems(tweetObservable);
+
+		userList.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
+			public ListCell<User> call(ListView<User> p) {
+				return new ListCell<User>() {
+					protected void updateItem(User item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null)
+							this.setText(item.screen_nameProperty().get());
+					}
+				};
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
+		});
+
+		tweetList.setCellFactory(new Callback<ListView<Tweet>, ListCell<Tweet>>() {
+			public ListCell<Tweet> call(ListView<Tweet> p) {
+				return new ListCell<Tweet>() {
+					protected void updateItem(Tweet item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null)
+							this.setText(item.textProperty().get());
+					}
+				};
+			}
+		});
+	}
+
+	/**
+	 * Returns the data as an observable list of User
+	 * 
+	 * @return userObservable
+	 */
+	public ObservableList<User> getUserData() {
+		return userList.getItems();
+	}
+
+	/**
+	 * Returns the data as an observable list of Tweet
+	 * 
+	 * @return tweetObservable
+	 */
+	public ObservableList<Tweet> getTweetData() {
+		return tweetList.getItems();
+	}
+
+	/**
+	 * Launch a request for on a specific author
+	 */
+	@FXML
+	public void handleRequest() {
+		User = new User(username.getText(), mainApp.getTwitter());
+		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
+
+		case "tweets":
+			ResultSet tweetsResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
+			try {
+				int id_request = 0;
+				if (tweetsResult.next()) {
+					id_request = tweetsResult.getInt(0);	
+				} else {
+					id_request = User.get("Likes");
+				}
+				
+				tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+				cleanTweetScreen(tweetList);
+				createTweets(tweetsResult, tweetList);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case "likes":
+			
+			ResultSet likesResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
+			try {
+				int id_request = 0;
+				if (likesResult.next()) {
+					id_request = likesResult.getInt(0);
+				} else {
+					id_request = User.get("Likes");
+				}
+				
+				likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+				cleanTweetScreen(tweetList);
+				createTweets(likesResult, tweetList);
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case "followers":
+			ResultSet followersResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+					+ username.getText() + "' AND req = 'Followers' LIMIT 1");
+			try {
+				int id_request = 0;
+				if (followersResult.next())
+					id_request = followersResult.getInt(0);
+				else {
+					id_request = User.get("Followers");
+				}
+				
+				followersResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
+				cleanUser_tweetScreen(userList);
+				createUsers(followersResult, userList);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case "following":
+			ResultSet followingResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+					+ username.getText() + "' AND req = 'Following' LIMIT 1");
+			try {
+				int id_request = 0;
+				if (followingResult.next()) {
+					id_request = followingResult.getInt(0);
+				} else {
+					id_request = User.get("Following");
+				}
+				
+				followingResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
+				cleanUser_tweetScreen(userList);
+				createUsers(followingResult, userList);
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+			//TODO Infomation
+		case "informations":
+			break;
+		default:
+			break;
+		}
 	}
 }
