@@ -1,170 +1,127 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.function.Consumer;
-import java.util.logging.Level;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
-import com.sun.istack.internal.logging.Logger;
-
-import twitter4j.JSONArray;
-import twitter4j.JSONObject;
-import twitter4j.JSONTokener;
-
-// http://tweettracker.fulton.asu.edu/tda/TwitterDataAnalytics.pdf
-
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 
 public class Tweet {
-	
-	/*public JSONArray GetFollowers ( String username ) {
-	
-		// Step 1: Create the API request using the supplied username
-		URL url = new URL(" https :// api . twitter . com /1.1/followers / list . json ? screen_name ="+ username +"&cursor =" + cursor ) ;
-		HttpURLConnection huc = ( HttpURLConnection ) url .openConnection ();
-		huc . setReadTimeout (5000);
-		
-		// Step 2: Sign the request using the OAuth Secret
-		Consumer . sign (huc) ;
-		huc . connect ();
-		
-		/** Step 3: If the requests have been exhausted ,
-		* then wait until the quota is renewed*/
-		if( huc . getResponseCode ()==429) {
-			try {
-				Thread . sleep ( this . GetWaitTime ("/followers / list "));
-			} catch ( InterruptedException ex) {
-				Logger.getLogger ( RESTApiExample . class. getName ()). log ( Level .SEVERE ,null , ex) ;
-			}
-		}
-		
-		// Step 4: Retrieve the followers list from Twitter
-		bRead = new BufferedReader (new InputStreamReader ((InputStream ) huc. getContent ()));
-		StringBuilder content = new StringBuilder ();
-		String temp = "";
-		while(( temp = bRead . readLine ())!=null) {
-			content . append ( temp ) ;
-		}
-		try {
-			JSONObject jobj = new JSONObject ( content .toString ());
-		}
-		
-		// Step 5: Retrieve the token for the next request
-		cursor = jobj . getLong (" next_cursor ") ;
-		JSONArray idlist = jobj . getJSONArray (" users ");
-		for ( int i=0;i< idlist . length ();i ++) {
-			followers . put( idlist . getJSONObject (i)) ;
-		}
 
-		return followers ;
+    private IntegerProperty id_t;
+    private IntegerProperty id_r;
+    private StringProperty n;
+    private StringProperty sn;
+    private StringProperty t;
+    private IntegerProperty rt;
+    private StringProperty cit;
+    private StringProperty co;
+    private IntegerProperty lat;
+    private IntegerProperty lon;
+    private ObjectProperty<LocalDate> d;
+
+    public Tweet(ResultSet res) throws SQLException {
+
+	this.id_t = (IntegerProperty) res.getArray(0);
+	this.id_r = (IntegerProperty) res.getArray(1);
+	this.n = (StringProperty) res.getArray(2);
+	this.sn = (StringProperty) res.getArray(3);
+	this.t = (StringProperty) res.getArray(4);
+	this.rt = (IntegerProperty) res.getArray(5);
+	this.cit = (StringProperty) res.getArray(6);
+	this.co = (StringProperty) res.getArray(7);
+	this.lat = (IntegerProperty) res.getArray(8);
+	this.lon = (IntegerProperty) res.getArray(9);
+	this.d = (ObjectProperty<LocalDate>) res.getArray(10);
+    }
+
+    public IntegerProperty getId_t() {
+	return id_t;
+    }
+
+    public void setId_t(IntegerProperty id_t) {
+	this.id_t = id_t;
+    }
+
+    public IntegerProperty getId_r() {
+	return id_r;
+    }
+
+    public void setId_r(IntegerProperty id_r) {
+	this.id_r = id_r;
+    }
+
+    public StringProperty getN() {
+	return n;
+    }
+
+    public void setN(StringProperty n) {
+	this.n = n;
+    }
+
+    public StringProperty getSn() {
+	return sn;
+    }
+
+    public void setSn(StringProperty sn) {
+	this.sn = sn;
+    }
+
+    public StringProperty getT() {
+	return t;
+    }
+
+    public void setT(StringProperty t) {
+	this.t = t;
+    }
+
+    public IntegerProperty getRt() {
+	return rt;
+    }
+
+    public void setRt(IntegerProperty rt) {
+	this.rt = rt;
+    }
+
+    public StringProperty getCit() {
+	return cit;
+    }
+
+    public void setCit(StringProperty cit) {
+	this.cit = cit;
+    }
+
+    public StringProperty getCo() {
+	return co;
+    }
+
+    public void setCo(StringProperty co) {
+	this.co = co;
+    }
+
+    public IntegerProperty getLat() {
+	return lat;
+    }
+
+    public void setLat(IntegerProperty lat) {
+	this.lat = lat;
+    }
+
+    public IntegerProperty getLon() {
+	return lon;
+    }
+
+    public void setLon(IntegerProperty lon) {
+	this.lon = lon;
+    }
+
+    public ObjectProperty<LocalDate> getD() {
+	return d;
+    }
+
+    public void setD(ObjectProperty<LocalDate> d) {
+	this.d = d;
+    }
 }
-	
-public JSONArray GetFriends ( String username ) {
-		
-		JSONArray friends = new JSONArray ();
-		
-		// Step 1: Create the API request using the supplied username
-		URL url = new URL(" https :// api . twitter . com /1.1/friends / list . json ? screen_name ="+ username +"& cursor="+ cursor ) ;
-		HttpURLConnection huc = ( HttpURLConnection ) url .openConnection ();
-		huc . setReadTimeout (5000);
-		
-		// Step 2: Sign the request using the OAuth Secret
-		Consumer . sign (huc) ;
-		huc . connect ();
-		
-		/** Step 3: If the requests have been exhausted ,
-		* then wait until the quota is renewed
-		*/
-		if( huc . getResponseCode ()==429) {
-			try {
-				Thread . sleep ( this . GetWaitTime ("/friends / list "));
-			} catch ( InterruptedException ex) {
-			Logger . getLogger ( RESTApiExample . class. getName ()). log ( Level .SEVERE ,null , ex) ;
-			}
-		}
-		
-		// Step 4: Retrieve the friends list from Twitter
-		bRead = new BufferedReader (new InputStreamReader ((InputStream ) huc. getContent ()));
-		JSONObject jobj = new JSONObject ( content . toString ());
-		
-		// Step 5: Retrieve the token for the next request
-		cursor = jobj . getLong (" next_cursor ") ;
-		JSONArray userlist = jobj . getJSONArray (" users ") ;
-		for ( int i=0;i< userlist . length ();i ++) {
-			friends .put ( userlist . get(i));
-		}
-		
-		return friends ;
-}
-
-public JSONArray GetStatuses ( String username ) {
-
-	// Step 1: Create the API request using the supplied username
-	// Use ( max_id -1) to avoid getting redundant Tweets .
-	url = new URL (" https :// api . twitter . com /1.1/ statuses /user_timeline . json ? screen_name =" + username +"&include_rts ="+ include_rts +"& count ="+ tweetcount +"&max_id ="+( maxid -1));
-	HttpURLConnection huc = ( HttpURLConnection ) url .openConnection ();
-	huc . setReadTimeout (5000);
-	
-	// Step 2: Sign the request using the OAuth Secret
-	Consumer . sign (huc) ;
-
-	/** Step 3: If the requests have been exhausted ,
-	 * * then wait until the quota is renewed */
-
-	// Step 4: Retrieve the Tweets from Twitter
-	bRead = new BufferedReader (new InputStreamReader ((InputStream ) huc. getInputStream ()));
-	for ( int i=0;i< statusarr . length ();i ++) {
-		JSONObject jobj = statusarr . getJSONObject (i) ;
-		statuses . put( jobj ) ;
-	}
-	
-	// Step 5: Get the id of the oldest Tweet IDas max_id to retrieve the next batch of Tweets
-	if(! jobj . isNull ("id")) {
-		maxid = jobj . getLong ("id") ;
-	}
-	
-	return statuses ;
-}
-	
-public JSONArray GetSearchResults ( String query ) {
-		
-		try {
-		
-			// Step 1:
-			String URL_PARAM_SEPERATOR = "&";
-			StringBuilder url = new StringBuilder ();
-			url . append (" https :// api. twitter . com /1.1/ search / tweets. json ?q=") ;
-		
-			// query needs to be encoded
-			url . append ( URLEncoder . encode (query , "UTF -8"));
-			url . append ( URL_PARAM_SEPERATOR ) ;
-			url . append (" count =100 ") ;
-			URL navurl = new URL ( url . toString ());
-			HttpURLConnection huc = ( HttpURLConnection ) navurl .openConnection ();
-			huc . setReadTimeout (5000);
-			Consumer . sign (huc) ;
-			huc . connect ();
-
-			// Step 2: Read the retrieved search results
-			BufferedReader bRead = new BufferedReader (new InputStreamReader (( InputStream ) huc .getInputStream ()));
-			String temp ;
-			StringBuilder page = new StringBuilder ();
-			while( ( temp = bRead . readLine ())!=null) {
-				page . append ( temp ) ;
-			}
-			JSONTokener jsonTokener = new JSONTokener ( page .toString ());
-		
-			try {
-				JSONObject json = new JSONObject ( jsonTokener ) ;
-				
-			// Step 4: Extract the Tweet objects as an array
-				JSONArray results = json . getJSONArray (" statuses ") ;
-		
-			return results ;
-
-			}
-}
-		*/
