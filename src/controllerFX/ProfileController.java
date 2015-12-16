@@ -118,7 +118,6 @@ public class ProfileController extends ControllerFX {
 	@FXML
 	public void handleRequest() {
 		db.init();
-		
 		User = new User(username.getText(), mainApp.getTwitter());
 		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
 
