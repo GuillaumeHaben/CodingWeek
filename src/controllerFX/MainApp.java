@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import sun.java2d.cmm.ProfileDataVerifier;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -33,6 +34,7 @@ public class MainApp extends Application {
 		contractor.setOAuthConsumerKey("qz06S2cROTQm1KYmuyNxFTEcr");
 		contractor.setOAuthConsumerSecret("ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
 		Configuration configuration = contractor.build();
+		
 		TwitterFactory factory = new TwitterFactory(configuration);
 		twitter = factory.getInstance();
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem", "NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
@@ -79,13 +81,14 @@ public class MainApp extends Application {
      */
     public void showProfileOverview() {
         try {
-            // Load home overview
+            // Load profile overview
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/MainOverview.fxml"));
             AnchorPane profileOverview = (AnchorPane) loader.load();
             
-            // Set home overview into the center of root layout
             rootLayout.setCenter(profileOverview);
+            ProfileController controller = loader.getController();
+            controller.setMainApp(this);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,6 +110,7 @@ public class MainApp extends Application {
     public Twitter getTwitter(){
     	return twitter;
     }
+    
     
     public static void main(String[] args) {
         launch(args);

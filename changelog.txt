@@ -1,7 +1,7 @@
 2015-12-14 Day 1  Coding Bang Fraternit
 
 -----------------
-  Console v1.0
+      v1.0
 -----------------
 
 	- Console Application working
@@ -16,18 +16,19 @@
 		+ User's likes
 		
 -----------------
-  Console v2.0
+       v2.0
 -----------------
  
 	- Simple search by
 		+ Multiparameters
 	- Profile search for
 		+ User's description
-	- Save data into DB
-	- Reinit of the Database
-	- Optimisations
-
------------------------
-  User Interface v2.0
------------------------	
-	- Models
+		
+	- Save data into DataBase
+	- Reinit of the DataBase
+	- Some Optimisations
+	
+	- Simple GUI interface
+	- Model for GUI
+	- Link controller with view
+	- Distinct packaging

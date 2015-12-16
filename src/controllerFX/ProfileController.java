@@ -1,5 +1,8 @@
 package controllerFX;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,9 +11,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
+
 import model.User_tweet;
 	
-public class ProfileController{
+public class ProfileController extends ControllerFX {
 
 	@FXML
 	private ListView<User_tweet> userList;
@@ -23,17 +27,20 @@ public class ProfileController{
 	
 	@FXML
 	private TextField username;
+	
+	private User_tweet user_tweet;
 
 	/**
      * The constructor is called before the initialize() method.
      */
     public ProfileController() {
+    	super();
     	userObservable = FXCollections.observableArrayList();
     	userList = new ListView<User_tweet>(userObservable); 
     }
     
     /**
-     * Initialize cell format
+     * Initialize cell format and list
      */
     public void initialize(){
     	userList.setItems(userObservable);
@@ -42,13 +49,11 @@ public class ProfileController{
                 return new ListCell<User_tweet>(){
                     protected void updateItem(User_tweet item, boolean empty) { 
                         super.updateItem(item, empty); 
-                        if (item != null) { 
+                        if (item != null) 
                         	this.setText(item.screenNameProperty().get());
-                        }
                     }
                 };
-            }
-        });	
+        }});	
     }
     
     /**
@@ -56,16 +61,38 @@ public class ProfileController{
      * @return userObservable
      */
     public ObservableList<User_tweet> getUserData() {
-        return userObservable;
+        return userList.getItems();
     }
 
-
+    /**
+     * Link the main app object
+     * @param ma : MainApp Object
+     */
+    public void setMainApp(MainApp mapp){
+    	this.mainApp = mapp;
+    }
+    
     /**
      * Launch a request for a specific author
      */
 	@FXML
-	public void setData() {
-		User_tweet u = new User_tweet("Kilian", username.getText(), 20);
-		this.userList.getItems().add(u);
+	public void handleRequest() {
+		System.out.println("LOL");
+		this.user_tweet = new User_tweet(username.getText(), this.mainApp.getTwitter());
+		
+		ResultSet rs = db.select_request("SELECT id_request FROM request WHERE reference = '@" + user_tweet.screenNameProperty().get() 
+				+ "' AND req = 'timeline' LIMIT 1");
+		try {
+			if (rs.getFetchSize() != 0)
+				System.out.println("find");
+			else {
+				int id_request = user_tweet.get("Followers");
+				
+				rs = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
+				createUsers(rs, userList);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
 	}
 }
