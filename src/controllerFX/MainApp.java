@@ -47,7 +47,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Coding Bang Fraternity");        
 
         initRootLayout();
-        showProfileOverview();
+        showMainOverview();
     }
 
     /**
@@ -78,7 +78,7 @@ public class MainApp extends Application {
     /**
      * Shows the home overview inside the root layout
      */
-    public void showProfileOverview() {
+    public void showMainOverview() {
         try {
             // Load profile overview
             FXMLLoader loader = new FXMLLoader();
@@ -86,7 +86,7 @@ public class MainApp extends Application {
             AnchorPane profileOverview = (AnchorPane) loader.load();
             
             rootLayout.setCenter(profileOverview);
-            ProfileController controller = loader.getController();
+            MainController controller = loader.getController();
             controller.setMainApp(this);
             
         } catch (IOException e) {

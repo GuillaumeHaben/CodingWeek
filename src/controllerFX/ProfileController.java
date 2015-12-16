@@ -63,14 +63,6 @@ public class ProfileController extends ControllerFX {
     public ObservableList<User_tweet> getUserData() {
         return userList.getItems();
     }
-
-    /**
-     * Link the main app object
-     * @param ma : MainApp Object
-     */
-    public void setMainApp(MainApp mapp){
-    	this.mainApp = mapp;
-    }
     
     /**
      * Launch a request for a specific author

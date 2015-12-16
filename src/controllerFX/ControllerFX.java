@@ -9,7 +9,7 @@ import model.User_tweet;
 
 public abstract class ControllerFX {
 	
-	protected MainApp mainApp;
+	protected static MainApp mainApp;
 	protected Database db;
 	
 	protected ControllerFX(){
@@ -25,4 +25,12 @@ public abstract class ControllerFX {
 			e.printStackTrace();
 		}
 	}
+
+    /**
+     * Link the main app object
+     * @param ma : MainApp Object
+     */
+    public void setMainApp(MainApp mapp){
+    	this.mainApp = mapp;
+    }
 }
