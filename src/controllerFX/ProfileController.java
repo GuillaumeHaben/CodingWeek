@@ -16,17 +16,13 @@ import model.User_tweet;
 	
 public class ProfileController extends ControllerFX {
 
-	@FXML
-	private ListView<User_tweet> userList;
+	@FXML private ListView<User_tweet> userList;
 	
-	@FXML
-	private ObservableList<User_tweet> userObservable;
+	@FXML private ObservableList<User_tweet> userObservable;
 	
-	@FXML
-	private Label NameLabel;
+	@FXML private Label NameLabel;
 	
-	@FXML
-	private TextField username;
+	@FXML private TextField username;
 	
 	private User_tweet user_tweet;
 
@@ -73,10 +69,9 @@ public class ProfileController extends ControllerFX {
     }
     
     /**
-     * Launch a request for a specific author
+     * Launch a request for on a specific author
      */
-	@FXML
-	public void handleRequest() {
+	@FXML public void handleRequest() {
 		this.user_tweet = new User_tweet(username.getText(), this.mainApp.getTwitter());
 		
 		ResultSet rs = db.select_request("SELECT id_request FROM request WHERE reference = '@" + user_tweet.screenNameProperty().get() 
