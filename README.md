@@ -4,14 +4,13 @@
 
 ## Presentation ##
 
-The application is able to search and collect date from tweets. Data is collected according to hashtags, keywords, dates, geolocalisation, name or limit of time (1h,24h) and is stored in a database.
+The application is able to search and collect data from tweets. Data are collected according to hashtags, keywords, dates, geolocalisation, username with a potential period (1h,24h) and are saved in a database.
 
-The added value is the treatments processing the data collected and interpreting them.
+The added value of our application is the treatments processing the data collected and interpreting them (map).
 
 ## Installation ##
 
-Download the java files and run it on an IDE or using the following command: 
-nananananana
+Download the java files and run it on an IDE
 
 ## How it works ? ##
 
