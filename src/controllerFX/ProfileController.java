@@ -117,16 +117,18 @@ public class ProfileController extends ControllerFX {
 	 */
 	@FXML
 	public void handleRequest() {
+		db.init();
+		
 		User = new User(username.getText(), mainApp.getTwitter());
 		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
 
 		case "tweets":
-			ResultSet tweetsResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
 			try {
 				int id_request = 0;
 				if (tweetsResult.next()) {
-					id_request = tweetsResult.getInt(0);	
+					id_request = tweetsResult.getInt("id") -1;	
 				} else {
 					id_request = User.get("Likes");
 				}
@@ -142,12 +144,12 @@ public class ProfileController extends ControllerFX {
 			
 		case "likes":
 			
-			ResultSet likesResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+			ResultSet likesResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
 			try {
 				int id_request = 0;
 				if (likesResult.next()) {
-					id_request = likesResult.getInt(0);
+					id_request = likesResult.getInt("id") -1;
 				} else {
 					id_request = User.get("Likes");
 				}
@@ -162,12 +164,12 @@ public class ProfileController extends ControllerFX {
 			break;
 			
 		case "followers":
-			ResultSet followersResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+			ResultSet followersResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'Followers' LIMIT 1");
 			try {
 				int id_request = 0;
 				if (followersResult.next())
-					id_request = followersResult.getInt(0);
+					id_request = followersResult.getInt("id") -1;
 				else {
 					id_request = User.get("Followers");
 				}
@@ -182,12 +184,12 @@ public class ProfileController extends ControllerFX {
 			break;
 			
 		case "following":
-			ResultSet followingResult = db.select_request("SELECT id_request FROM request WHERE reference = '@"
+			ResultSet followingResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'Following' LIMIT 1");
 			try {
 				int id_request = 0;
 				if (followingResult.next()) {
-					id_request = followingResult.getInt(0);
+					id_request = followingResult.getInt("id") -1;
 				} else {
 					id_request = User.get("Following");
 				}
@@ -207,5 +209,6 @@ public class ProfileController extends ControllerFX {
 		default:
 			break;
 		}
+		db.close();
 	}
 }

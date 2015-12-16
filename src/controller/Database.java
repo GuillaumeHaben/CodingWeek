@@ -51,12 +51,24 @@ public class Database {
 					"NOT NULL, `reference` varchar(30) NOT NULL, `req` varchar(20) NOT NULL)";
 			stmt.executeUpdate(sql);
 			stmt.close();
+			close();
 		      
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Init a connection
+	 */
+	public void init() {
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:mydb.db");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Close connection with DB, should be call at the program ends
 	 */
@@ -74,12 +86,14 @@ public class Database {
 	 */
 	public int reinit(){
 		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:mydb.db");
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("DELETE FROM request");
 			statement.executeUpdate("DELETE FROM tweet");
 			statement.executeUpdate("DELETE FROM user");
 			statement.executeUpdate("VACUUM");
 			statement.close();
+			close();
 		} catch (SQLException e) {
 			return -1;
 		}
@@ -93,6 +107,8 @@ public class Database {
 	 */
 	public ResultSet select_request(String request){
 		try {
+			if (connection.isClosed())
+				init();
 			Statement statement = connection.createStatement();
 			return statement.executeQuery(request);	
 		} catch (SQLException e) {
@@ -109,6 +125,8 @@ public class Database {
 	 */
 	public int request(String request){
 		try {
+			if (connection.isClosed())
+				init();
 			Statement statement = connection.createStatement();
 			return statement.executeUpdate(request);
 		} catch (SQLException e) {
@@ -124,7 +142,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public int getAutoIncRequest() throws SQLException{
-		String query = " SELECT last_insert_rowid() as auto FROM request";
+		String query = " SELECT count(id_request) as auto FROM request";
 		ResultSet res = this.select_request(query);
 		
 		if(!res.next()){
@@ -132,5 +150,4 @@ public class Database {
 		}
 		return res.getInt("auto");
 	}
-
 }

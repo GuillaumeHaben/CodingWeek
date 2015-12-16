@@ -67,6 +67,7 @@ public class User {
 			long cursor = -1;
 			PagableResponseList<twitter4j.User> result;
 			
+			db.init();
 			int id_request = db.getAutoIncRequest();
 			
 			// Twitter request
@@ -89,13 +90,17 @@ public class User {
 							result = twitter.getFriendsList(screen_name.get(), cursor);
 					}
 					
+					
 					for (twitter4j.User user : result) {
 						String name = user.getName().replace("\'", "\\'");
 						String sc_name = user.getScreenName().replace("\'", "\\'");
 	
 						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name + "');";
+						
 						db.request(query);
+						
 					}
+					db.close();
 				} while ((cursor = result.getNextCursor()) != 0);
 				
 				return id_request;
@@ -115,7 +120,7 @@ public class User {
 		try {
 			// Request to Twitter
 			ResponseList<Status> result = twitter.getFavorites(screen_name.get(), new Paging(1, 100));
-
+			
 			if(result.size() != 0){
 				// Insert new collect
 				String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'likes')";
@@ -158,8 +163,10 @@ public class User {
 	 */
 	@SuppressWarnings("deprecation")
 	private int getObjectTweet(ResponseList<Status> result) throws SQLException {
+		
+		db.init();
 		int id_request = db.getAutoIncRequest();
-
+		
 		for (Status status : result) {
 
 			// Fetch all the available informations
@@ -191,6 +198,7 @@ public class User {
 					+ ", " + longitude + ", STR_TO_DATE('" + date_tweet.toGMTString() + "','%d %b %Y %H:%i:%s GMT'));";
 			db.request(query);
 		}
+		db.close();
 		return id_request;
 	}
 
