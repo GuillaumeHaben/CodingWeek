@@ -65,11 +65,14 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Tweets" GridPane.columnIndex="1" />
-                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Likes" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Followers" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Following" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Informations" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Tweets" GridPane.columnIndex="1">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="Choice" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Likes" toggleGroup="$Choice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Followers" toggleGroup="$Choice" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Following" toggleGroup="$Choice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <RadioButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Informations" toggleGroup="$Choice" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <GridPane layoutY="219.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
