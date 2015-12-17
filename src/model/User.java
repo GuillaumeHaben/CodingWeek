@@ -9,7 +9,6 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.Database;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -95,7 +94,6 @@ public class User {
 						else
 							result = twitter.getFriendsList(screen_name.get(), cursor);
 					}
-					
 					
 					for (twitter4j.User user : result) {
 						String name = user.getName().replace("\'", "\'\'");

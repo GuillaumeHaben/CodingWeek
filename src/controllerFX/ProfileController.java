@@ -9,8 +9,6 @@ package controllerFX;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Tweet;
