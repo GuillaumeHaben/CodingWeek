@@ -89,6 +89,7 @@ public class Database {
 			statement.executeUpdate("DELETE FROM tweet");
 			statement.executeUpdate("DELETE FROM user");
 			statement.executeUpdate("VACUUM");
+			Media.deleteMedia("./SavedMedia/");;
 			statement.close();
 			close();
 		} catch (SQLException e) {
