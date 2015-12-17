@@ -1,7 +1,7 @@
 /**
  * This class allows access and requests to database
  * @author The Coding Bang Fraternity
- * @version 3.0
+ * @version 4.0
  */
 
 package model;
@@ -32,13 +32,13 @@ public class Database {
 		      "`id_request` int(5) NOT NULL, `name` varchar(25) NOT NULL, `screenName` varchar(25) NOT NULL, " +
 		      "`text` varchar(170) NOT NULL, `retweet` int(8) NOT NULL, `city` varchar(40) DEFAULT NULL, " +
 		      "`country` varchar(30) DEFAULT NULL, `latitude` double NOT NULL,  `longitude` double NOT NULL, " +
-		      "`date_tweet` long NOT NULL, `content` varchar(150) NOT NULL, PRIMARY KEY " +
+		      "`date_tweet` long NOT NULL, `profile` varchar(150) NOT NULL, `content` varchar(150) NOT NULL, PRIMARY KEY " +
 		      "(`id_tweet`,`id_request`))"; 
 		    stmt.executeUpdate(sql);
 		    stmt.close();
 		    
 		    sql = "CREATE TABLE IF NOT EXISTS `user` ( `id_user` bigint(20) NOT NULL, `id_request` int(5) NOT NULL, " +
-		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
+		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, `profil` varchar(150), PRIMARY KEY (`id_user`,`id_request`) " +
 		    		")";
 			stmt.executeUpdate(sql);
 		
@@ -89,6 +89,7 @@ public class Database {
 			statement.executeUpdate("DELETE FROM tweet");
 			statement.executeUpdate("DELETE FROM user");
 			statement.executeUpdate("VACUUM");
+			Media.deleteMedia("./SavedMedia/");;
 			statement.close();
 			close();
 		} catch (SQLException e) {
@@ -107,7 +108,8 @@ public class Database {
 			if (connection.isClosed())
 				init();
 			Statement statement = connection.createStatement();
-			return statement.executeQuery(request);	
+			ResultSet rs = statement.executeQuery(request);	
+			return rs;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -125,12 +127,13 @@ public class Database {
 			if (connection.isClosed())
 				init();
 			Statement statement = connection.createStatement();
-			return statement.executeUpdate(request);
+			int res = statement.executeUpdate(request);
+			return res;
 		} catch (SQLException e) {
 			System.out.println("ERROR -> "+request);
 			e.printStackTrace();
+			return -1;
 		}
-		return 0;
 	}
 	
 	/**

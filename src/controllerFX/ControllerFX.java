@@ -3,7 +3,7 @@
  * Give some generic methods
  * 
  * @author The Coding Bang Fraternity
- * @version 3.0
+ * @version 4.0
  */
 
 package controllerFX;
@@ -35,7 +35,7 @@ public abstract class ControllerFX {
 	protected void createUsers(ResultSet rs, ListView<User> list){
 		try {
 			while(rs.next()){
-				list.getItems().add(new User(rs.getLong("id_user"), rs.getString("name"), rs.getString("screen_name")));
+				list.getItems().add(new User(rs.getLong("id_user"), rs.getString("name"), rs.getString("screen_name"), rs.getString("profil")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public abstract class ControllerFX {
 			while(rs.next()){
 				Tweet tweet = new Tweet(rs.getLong("id_tweet"), rs.getString("name"), rs.getString("screenName"), 
 						rs.getString("text"), rs.getInt("retweet"), rs.getString("city"), rs.getString("country"),
-						rs.getInt("latitude"), rs.getInt("longitude"), rs.getLong("date_tweet"), rs.getString("content"));
+						rs.getInt("latitude"), rs.getInt("longitude"), rs.getLong("date_tweet"), rs.getString("profile"),rs.getString("content"));
 		    	if (list.getItems() != null) {
 		    		list.getItems().add(tweet);
 		    	} else {

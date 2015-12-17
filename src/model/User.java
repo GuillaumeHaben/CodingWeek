@@ -36,6 +36,8 @@ public class User {
 	private IntegerProperty followers_count;
 	private IntegerProperty friends_count;
 	private IntegerProperty statuses_count;
+	private IntegerProperty favourites_count;
+	private StringProperty image_URL;
 	
 	private int tweet_range = 1;
 	private int like_range = 1;
@@ -54,10 +56,11 @@ public class User {
 		db = new Database();
 	}
 	
-	public User(Long id, String name, String sc_name) {
+	public User(Long id, String name, String sc_name, String image) {
 		this.id = new SimpleLongProperty(id);
 		this.name = new SimpleStringProperty(name);
 		this.screen_name = new SimpleStringProperty(sc_name);
+		this.image_URL = new SimpleStringProperty(image);
 	}
 
 	/**
@@ -67,13 +70,11 @@ public class User {
 	 */
 	public int get(String follow) {
 		try {
-			
 			// Init attributes
 			long cursor = -1;
 			int nb_cursor = 0;
 			PagableResponseList<twitter4j.User> result;
 			
-			db.init();
 			int id_request = db.getAutoIncRequest();
 			
 			// Twitter request
@@ -85,8 +86,9 @@ public class User {
 
 			if(result.size() != 0) {
 				// Insert a new collect
+				
 				String query = "INSERT INTO request(type, reference, req) VALUES('user','@" + screen_name.get() + "', '" + follow +"')";
-				db.request(query);
+				if(db.request(query) == -1) return -1;
 				
 				do {
 					if(cursor != -1){
@@ -99,8 +101,10 @@ public class User {
 					for (twitter4j.User user : result) {
 						String name = user.getName().replace("\'", "\'\'");
 						String sc_name = user.getScreenName().replace("\'", "\'\'");
+						String image = user.getMiniProfileImageURL();
 	
-						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name + "');";
+						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name 
+								+ "', '" + image + "');";
 						
 						db.request(query);
 						
@@ -132,7 +136,7 @@ public class User {
 				if(!more){
 					// Insert new collect
 					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'likes')";
-					db.request(query);
+					if(db.request(query) == -1) return -1;
 				}
 				like_range += 100;
 				
@@ -156,7 +160,7 @@ public class User {
 				if(!more){
 					// Insert new collect
 					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
-					db.request(query);
+					if(db.request(query) == -1) return -1;
 					more = false;
 				}
 				tweet_range += 100;
@@ -174,10 +178,8 @@ public class User {
 	 * @param result : Tweet obtenus
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("deprecation")
 	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, String req) throws SQLException {
 		
-		db.init();
 		int id_request = -1;
 		if(!more_tweet)
 			id_request = db.getAutoIncRequest();
@@ -209,8 +211,12 @@ public class User {
 				country = p.getCountry();
 			}
 			
-//			MediaEntity[] mediaEntity = status.getMediaEntities();
-			String URL = "a";
+			String img_profile = status.getUser().getProfileImageURL();
+			String URL = "";
+			MediaEntity[] mediaEntity = status.getMediaEntities();
+			if(mediaEntity.length > 0){
+				URL = mediaEntity[0].getMediaURL().toString();
+			}
 
 			if (g != null) {
 				latitude = g.getLatitude();
@@ -220,7 +226,7 @@ public class User {
 			// Save the Tweet into DB Sun Aug 16 20:55:42 CEST 2015
 			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
 					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
-					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + URL + "');";
+					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + img_profile + "', '" + URL + "');";
 			db.request(query);
 		}
 		db.close();
@@ -234,13 +240,15 @@ public class User {
 		try {
 			twitter4j.User user = twitter.showUser(screen_name.get());
 
+			image_URL = new SimpleStringProperty(user.getProfileImageURL());
 			name =  new SimpleStringProperty(user.getName());
 			description = new SimpleStringProperty(user.getDescription());
 			followers_count = new SimpleIntegerProperty(user.getFollowersCount());
 			friends_count = new SimpleIntegerProperty(user.getFriendsCount());
 			statuses_count = new SimpleIntegerProperty(user.getStatusesCount());
 			id = new SimpleLongProperty(user.getId());
-			
+			favourites_count = new SimpleIntegerProperty(user.getFavouritesCount());
+
 		} catch (TwitterException e) {
 			return -1;
 		}
@@ -277,5 +285,13 @@ public class User {
 
 	public IntegerProperty statuses_countProperty() {
 		return statuses_count;
+	}
+	
+	public IntegerProperty favourites_countProperty() {
+		return favourites_count;
+	}
+	
+	public StringProperty image_URLProperty() {
+		return image_URL;
 	}
 }

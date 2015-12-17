@@ -1,10 +1,10 @@
 /**
  * This class is used to collect tweets with a specific keyword
  * @author The Coding Bang Fraternity
- * @version 2.0
+ * @version 4.0
  */
 
-package controller;
+package model;
 
 import java.sql.SQLException;
 
@@ -17,10 +17,8 @@ public class KeyWord extends Params {
 	/**
 	 * Constructor
 	 * 
-	 * @param keyword
-	 *            : Keyword searched
-	 * @param twitter
-	 *            : Twitter object
+	 * @param keyword : Keyword searched
+	 * @param twitter : Twitter object
 	 */
 	public KeyWord(String keyword, Twitter twitter) {
 		super(twitter);
