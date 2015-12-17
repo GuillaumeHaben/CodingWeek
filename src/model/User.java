@@ -6,6 +6,7 @@
 
 package model;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -125,8 +126,9 @@ public class User {
 
 	/**
 	 * Catch the 100 last likes
+	 * @throws IOException 
 	 */
-	public int getLikes() {
+	public int getLikes() throws IOException {
 		try {
 			// Request to Twitter
 			ResponseList<Status> result = twitter.getFavorites(screen_name.get(), new Paging(like_range, like_range + 100));
@@ -149,6 +151,7 @@ public class User {
 
 	/**
 	 * Catch the 100 last tweets
+	 * @throws IOException 
 	 */
 	public int startRequest() {
 		try {
@@ -167,7 +170,7 @@ public class User {
 				
 				return getObjectTweet(result, more_tweet, "timeline");
 			}
-		} catch (TwitterException | SQLException e) {
+		} catch (TwitterException | SQLException | IOException e) {
 		}
 		return -1;
 	}
@@ -177,8 +180,9 @@ public class User {
 	 * 
 	 * @param result : Tweet obtenus
 	 * @throws SQLException
+	 * @throws IOException 
 	 */
-	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, String req) throws SQLException {
+	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, String req) throws SQLException, IOException {
 		
 		int id_request = -1;
 		if(!more_tweet)
@@ -216,6 +220,7 @@ public class User {
 			MediaEntity[] mediaEntity = status.getMediaEntities();
 			if(mediaEntity.length > 0){
 				URL = mediaEntity[0].getMediaURL().toString();
+				Media.saveMedia(URL, URL);
 			}
 
 			if (g != null) {
@@ -223,7 +228,6 @@ public class User {
 				longitude = g.getLongitude();
 			}
 
-			// Save the Tweet into DB Sun Aug 16 20:55:42 CEST 2015
 			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
 					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
 					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + img_profile + "', '" + URL + "');";
