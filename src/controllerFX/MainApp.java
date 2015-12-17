@@ -1,5 +1,10 @@
-package controllerFX;
+/**
+ * Main application, launch the program and init the layouts
+ * @author The Coding Bang Fraternity
+ * @version 3.0
+ */
 
+package controllerFX;
 
 import java.io.IOException;
 
@@ -33,6 +38,7 @@ public class MainApp extends Application {
 		contractor.setOAuthConsumerKey("qz06S2cROTQm1KYmuyNxFTEcr");
 		contractor.setOAuthConsumerSecret("ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
 		Configuration configuration = contractor.build();
+		
 		TwitterFactory factory = new TwitterFactory(configuration);
 		twitter = factory.getInstance();
 		twitter.setOAuthAccessToken(new AccessToken("728437002-9mx6LMYTKfIkD0TVnEbv3KwJJXMNdqsVsPe0HWem", "NTFxjn6DKy5ontWdKfTPlklXwQZmYyCvgOZXstBjFBN6I"));
@@ -46,7 +52,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Coding Bang Fraternity");        
 
         initRootLayout();
-        showProfileOverview();
+        showMainOverview();
     }
 
     /**
@@ -77,15 +83,16 @@ public class MainApp extends Application {
     /**
      * Shows the home overview inside the root layout
      */
-    public void showProfileOverview() {
+    public void showMainOverview() {
         try {
-            // Load home overview
+            // Load profile overview
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/MainOverview.fxml"));
             AnchorPane profileOverview = (AnchorPane) loader.load();
             
-            // Set home overview into the center of root layout
             rootLayout.setCenter(profileOverview);
+            MainController controller = loader.getController();
+            controller.setMainApp(this);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,6 +114,7 @@ public class MainApp extends Application {
     public Twitter getTwitter(){
     	return twitter;
     }
+    
     
     public static void main(String[] args) {
         launch(args);

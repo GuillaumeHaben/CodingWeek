@@ -8,6 +8,7 @@ package controller;
 
 import java.sql.SQLException;
 
+import model.Database;
 import twitter4j.GeoLocation;
 import twitter4j.Place;
 import twitter4j.QueryResult;
