@@ -18,9 +18,9 @@
                     <MenuItem mnemonicParsing="false" onAction="#Reinit" text="Reinit DB" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Requests">
+                <Menu mnemonicParsing="false" text="Export">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" text="CSV" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="?">

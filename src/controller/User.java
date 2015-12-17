@@ -9,6 +9,8 @@ package controller;
 import twitter4j.*;
 import java.sql.SQLException;
 
+import model.Database;
+
 public class User implements Collect {
 
 	private long id;

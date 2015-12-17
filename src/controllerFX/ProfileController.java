@@ -9,8 +9,6 @@ package controllerFX;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Tweet;
@@ -204,7 +201,7 @@ public class ProfileController extends ControllerFX {
 				if (tweetsResult.next())
 					id_request = tweetsResult.getInt("id");	
 				else
-					id_request = User.get("Likes");
+					id_request = User.startRequest();
 				
 				if(id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
@@ -231,7 +228,7 @@ public class ProfileController extends ControllerFX {
 				if (likesResult.next())
 					id_request = likesResult.getInt("id");
 				else
-					id_request = User.get("Likes");
+					id_request = User.getLikes();
 				
 				if(id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");

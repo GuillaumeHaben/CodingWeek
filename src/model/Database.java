@@ -4,7 +4,7 @@
  * @version 3.0
  */
 
-package controller;
+package model;
 
 import java.sql.*;
 
