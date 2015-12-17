@@ -129,8 +129,8 @@ public class Database {
 		} catch (SQLException e) {
 			System.out.println("ERROR -> "+request);
 			e.printStackTrace();
+			return -1;
 		}
-		return 0;
 	}
 	
 	/**

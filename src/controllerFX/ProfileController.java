@@ -225,7 +225,7 @@ public class ProfileController extends ControllerFX {
 
 		if (id_request == -1) {
 		    username.setStyle("-fx-border-color: #AC58FA;");
-		    loader.setText("Warning : User unknown");
+		    loader.setText("Warning : User unknow || Error");
 		    return;
 		}
 
@@ -274,7 +274,7 @@ public class ProfileController extends ControllerFX {
 
 		if (id_request == -1) {
 		    username.setStyle("-fx-border-color: #AC58FA;");
-		    loader.setText("Warning : User unknown");
+		    loader.setText("Warning : User unknown || Error");
 		    return;
 		}
 
@@ -323,7 +323,7 @@ public class ProfileController extends ControllerFX {
 
 		if (id_request == -1) {
 		    username.setStyle("-fx-border-color: #AC58FA;");
-		    loader.setText("Warning : User unknown");
+		    loader.setText("Warning : User unknown || Error");
 		    return;
 		}
 
@@ -370,7 +370,7 @@ public class ProfileController extends ControllerFX {
 
 		if (id_request == -1) {
 		    username.setStyle("-fx-border-color: #AC58FA;");
-		    loader.setText("Warning : User unknown");
+		    loader.setText("Warning : User unknown || Error ");
 		    return;
 		}
 

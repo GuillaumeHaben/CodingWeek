@@ -86,8 +86,9 @@ public class User {
 
 			if(result.size() != 0) {
 				// Insert a new collect
+				
 				String query = "INSERT INTO request(type, reference, req) VALUES('user','@" + screen_name.get() + "', '" + follow +"')";
-				db.request(query);
+				if(db.request(query) == -1) return -1;
 				
 				do {
 					if(cursor != -1){
@@ -135,7 +136,7 @@ public class User {
 				if(!more){
 					// Insert new collect
 					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'likes')";
-					db.request(query);
+					if(db.request(query) == -1) return -1;
 				}
 				like_range += 100;
 				
@@ -159,7 +160,7 @@ public class User {
 				if(!more){
 					// Insert new collect
 					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
-					db.request(query);
+					if(db.request(query) == -1) return -1;
 					more = false;
 				}
 				tweet_range += 100;
