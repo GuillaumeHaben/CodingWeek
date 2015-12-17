@@ -7,6 +7,8 @@
 package controller;
 
 import java.sql.SQLException;
+
+import model.Params;
 import twitter4j.*;
 
 public class Date extends Params {

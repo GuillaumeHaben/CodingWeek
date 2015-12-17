@@ -4,12 +4,13 @@
  * @version 2.0
  */
 
-package controller;
+package model;
 
 import java.sql.SQLException;
 
-import model.Database;
+import controller.Collect;
 import twitter4j.GeoLocation;
+import twitter4j.MediaEntity;
 import twitter4j.Place;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -33,7 +34,6 @@ public abstract class Params implements Collect {
 	 * @param result : Tweet obtenus
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("deprecation")
 	protected void getObjectTweet(QueryResult result) throws SQLException {
 		int id_request = db.getAutoIncRequest();
 
@@ -61,15 +61,20 @@ public abstract class Params implements Collect {
 				latitude = g.getLatitude();
 				longitude = g.getLongitude();
 			}
-
-			// Save the Tweet into DB Sun Aug 16 20:55:42 CEST 2015
+			
+			String URL = "";
+			MediaEntity[] mediaEntity = status.getMediaEntities();
+			if(mediaEntity.length > 0){
+				URL = mediaEntity[0].toString();
+			}
+			
 			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
 					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
-					+ ", " + longitude + ", STR_TO_DATE('" + date_tweet.toGMTString() + "','%d %b %Y %H:%i:%s GMT'));";
+					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + URL + "');";
 			db.request(query);
 
 			// Console display
-			this.logConsole(status);
+			//this.logConsole(status);
 		}
 	}
 }

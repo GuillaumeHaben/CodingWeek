@@ -8,6 +8,7 @@ package controller;
 
 import java.sql.SQLException;
 
+import model.Params;
 import twitter4j.Query;
 import twitter4j.Status;
 import twitter4j.Twitter;

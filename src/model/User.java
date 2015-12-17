@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import twitter4j.GeoLocation;
+import twitter4j.MediaEntity;
 import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.Place;
@@ -69,7 +70,6 @@ public class User {
 	 */
 	public int get(String follow) {
 		try {
-			
 			// Init attributes
 			long cursor = -1;
 			int nb_cursor = 0;
@@ -180,7 +180,6 @@ public class User {
 	 */
 	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, String req) throws SQLException {
 		
-		db.init();
 		int id_request = -1;
 		if(!more_tweet)
 			id_request = db.getAutoIncRequest();
@@ -212,8 +211,11 @@ public class User {
 				country = p.getCountry();
 			}
 			
-//			MediaEntity[] mediaEntity = status.getMediaEntities();
-			String URL = "a";
+			String URL = "";
+			MediaEntity[] mediaEntity = status.getMediaEntities();
+			if(mediaEntity.length > 0){
+				URL = mediaEntity[0].getMediaURL().toString();
+			}
 
 			if (g != null) {
 				latitude = g.getLatitude();

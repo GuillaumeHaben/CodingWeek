@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import controller.Date;
-import controller.KeyWord;
 import controller.Language;
 import controller.User;
 import model.Database;
+import model.KeyWord;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;

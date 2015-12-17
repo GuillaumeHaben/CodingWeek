@@ -1,7 +1,7 @@
 /**
  * This class allows access and requests to database
  * @author The Coding Bang Fraternity
- * @version 3.0
+ * @version 4.0
  */
 
 package model;
@@ -107,7 +107,8 @@ public class Database {
 			if (connection.isClosed())
 				init();
 			Statement statement = connection.createStatement();
-			return statement.executeQuery(request);	
+			ResultSet rs = statement.executeQuery(request);	
+			return rs;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -125,7 +126,8 @@ public class Database {
 			if (connection.isClosed())
 				init();
 			Statement statement = connection.createStatement();
-			return statement.executeUpdate(request);
+			int res = statement.executeUpdate(request);
+			return res;
 		} catch (SQLException e) {
 			System.out.println("ERROR -> "+request);
 			e.printStackTrace();
