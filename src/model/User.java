@@ -106,6 +106,7 @@ public class User {
 				return id_request;
 			}
 		} catch (TwitterException e) {
+			e.printStackTrace();
 		} catch ( SQLException e){
 			e.printStackTrace();
 		}

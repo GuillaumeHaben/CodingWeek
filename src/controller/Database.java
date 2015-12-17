@@ -86,6 +86,8 @@ public class Database {
 	 */
 	public int reinit(){
 		try {
+			if (connection.isClosed())
+				init();
 			connection = DriverManager.getConnection("jdbc:sqlite:mydb.db");
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("DELETE FROM request");
@@ -142,6 +144,8 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public int getAutoIncRequest() throws SQLException{
+		if (connection.isClosed())
+			init();
 		String query = " SELECT count(id_request) as auto FROM request";
 		ResultSet res = this.select_request(query);
 		
