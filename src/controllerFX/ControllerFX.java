@@ -11,6 +11,8 @@ package controllerFX;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import model.Database;
 import model.Tweet;
@@ -48,10 +50,15 @@ public abstract class ControllerFX {
 	protected void createTweets(ResultSet rs, ListView<Tweet> list){
 		try {
 			while(rs.next()){
-				Tweet tweet = new Tweet(rs.getLong("id_tweet"), rs.getString("name"), rs.getString("screen_name"), 
+				Tweet tweet = new Tweet(rs.getLong("id_tweet"), rs.getString("name"), rs.getString("screenName"), 
 						rs.getString("text"), rs.getInt("retweet"), rs.getString("city"), rs.getString("country"),
-						rs.getInt("latitude"), rs.getInt("longitude"), rs.getDate("date_tweet"));
-				list.getItems().add(tweet);
+						rs.getInt("latitude"), rs.getInt("longitude"), rs.getLong("date_tweet"), rs.getString("content"));
+		    	if (list.getItems() != null) {
+		    		list.getItems().add(tweet);
+		    	} else {
+		    		ObservableList<Tweet> to = FXCollections.observableArrayList();
+		    		list.setItems(to);
+		    	}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
