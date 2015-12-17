@@ -17,7 +17,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import twitter4j.GeoLocation;
-import twitter4j.MediaEntity;
 import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.Place;
@@ -36,6 +35,8 @@ public class User {
 	private IntegerProperty followers_count;
 	private IntegerProperty friends_count;
 	private IntegerProperty statuses_count;
+	private IntegerProperty favourites_count;
+	private StringProperty image_URL;
 	
 	private int tweet_range = 1;
 	private int like_range = 1;
@@ -174,7 +175,6 @@ public class User {
 	 * @param result : Tweet obtenus
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("deprecation")
 	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, String req) throws SQLException {
 		
 		db.init();
@@ -234,13 +234,15 @@ public class User {
 		try {
 			twitter4j.User user = twitter.showUser(screen_name.get());
 
+			image_URL = new SimpleStringProperty(user.getProfileImageURL());
 			name =  new SimpleStringProperty(user.getName());
 			description = new SimpleStringProperty(user.getDescription());
 			followers_count = new SimpleIntegerProperty(user.getFollowersCount());
 			friends_count = new SimpleIntegerProperty(user.getFriendsCount());
 			statuses_count = new SimpleIntegerProperty(user.getStatusesCount());
 			id = new SimpleLongProperty(user.getId());
-			
+			favourites_count = new SimpleIntegerProperty(user.getFavouritesCount());
+
 		} catch (TwitterException e) {
 			return -1;
 		}
@@ -277,5 +279,13 @@ public class User {
 
 	public IntegerProperty statuses_countProperty() {
 		return statuses_count;
+	}
+	
+	public IntegerProperty favourites_countProperty() {
+		return favourites_count;
+	}
+	
+	public StringProperty image_URLProperty() {
+		return image_URL;
 	}
 }

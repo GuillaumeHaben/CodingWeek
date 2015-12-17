@@ -299,7 +299,6 @@ public class ProfileController extends ControllerFX {
 			}
 			break;
 			
-			//TODO Infomation
 		case "informations":
 			if(User.getInformation() == -1){
 				username.setStyle("-fx-border-color: #AC58FA;");
@@ -308,16 +307,17 @@ public class ProfileController extends ControllerFX {
 			
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle(User.nameProperty().get() + " : @" + User.screen_nameProperty().get());
-				alert.setHeaderText(User.descriptionProperty().get().replaceAll("(.{50})", "$1\n"));
-				alert.setContentText("Number of followers : " + User.followers_countProperty().get()
-						+ "\nNumber of following : " + User.friends_countProperty().get()
-						+ "\nNumber of tweets : " + User.statuses_countProperty().get());
+				alert.setHeaderText(User.descriptionProperty().get().replaceAll("(.{40} )", "$1\n"));
+				alert.setContentText("Followers : " + User.followers_countProperty().get()
+						+ "   \tFollowing : " + User.friends_countProperty().get()
+						+ "\nFavourites : " + User.favourites_countProperty().get()
+						+ "   \tTweets : " + User.statuses_countProperty().get());
 				
-				Image image = new Image("file:logo.png");
+				Image image = new Image(User.image_URLProperty().get());
 				ImageView img = new ImageView(image);
 				alert.setGraphic(img);
 				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-				stage.getIcons().add(image);
+				stage.getIcons().add(new Image("file:logo.png"));
 				
 				alert.showAndWait();
 			}
