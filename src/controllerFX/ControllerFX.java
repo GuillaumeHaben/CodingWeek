@@ -11,8 +11,8 @@ package controllerFX;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.Database;
 import javafx.scene.control.ListView;
+import model.Database;
 import model.Tweet;
 import model.User;
 

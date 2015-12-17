@@ -5,8 +5,8 @@ import java.sql.Statement;
 
 import com.mysql.jdbc.Connection;
 
-import controller.Database;
 import controller.Date;
+import model.Database;
 
 public class TestController {
 
