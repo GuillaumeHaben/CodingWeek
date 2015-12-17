@@ -55,10 +55,11 @@ public class User {
 		db = new Database();
 	}
 	
-	public User(Long id, String name, String sc_name) {
+	public User(Long id, String name, String sc_name, String image) {
 		this.id = new SimpleLongProperty(id);
 		this.name = new SimpleStringProperty(name);
 		this.screen_name = new SimpleStringProperty(sc_name);
+		this.image_URL = new SimpleStringProperty(image);
 	}
 
 	/**
@@ -100,8 +101,10 @@ public class User {
 					for (twitter4j.User user : result) {
 						String name = user.getName().replace("\'", "\'\'");
 						String sc_name = user.getScreenName().replace("\'", "\'\'");
+						String image = user.getMiniProfileImageURL();
 	
-						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name + "');";
+						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name 
+								+ "', '" + image + "');";
 						
 						db.request(query);
 						

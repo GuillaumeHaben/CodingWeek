@@ -35,7 +35,7 @@ public abstract class ControllerFX {
 	protected void createUsers(ResultSet rs, ListView<User> list){
 		try {
 			while(rs.next()){
-				list.getItems().add(new User(rs.getLong("id_user"), rs.getString("name"), rs.getString("screen_name")));
+				list.getItems().add(new User(rs.getLong("id_user"), rs.getString("name"), rs.getString("screen_name"), rs.getString("profil")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

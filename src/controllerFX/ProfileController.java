@@ -60,7 +60,6 @@ public class ProfileController extends ControllerFX {
 	private Button more;
 
 	private User User;
-	private Tweet Tweet;
 
 	/**
 	 * The constructor is called before the initialize() method.
@@ -70,10 +69,6 @@ public class ProfileController extends ControllerFX {
 		userObservable = FXCollections.observableArrayList();
 		userList = new ListView<User>(userObservable);
 		tweetList = new ListView<Tweet>(tweetObservable);
-		
-//		//Hide result panel by default
-//		userList.setVisible(false);
-//		tweetList.setVisible(false);
 	}
 
 	/**
@@ -104,6 +99,7 @@ public class ProfileController extends ControllerFX {
 					protected void updateItem(Tweet item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null)
+							//new Image(User.image_URLProperty().get());
 							this.setText(item.textProperty().get());
 					}
 				};
@@ -169,7 +165,7 @@ public class ProfileController extends ControllerFX {
 			default:
 				break;
 			}
-		} else loader.setText("Invalid input for more results");
+		} else loader.setText("Warning : Username is not valid !");
 	}
 	
 	/**
@@ -186,7 +182,6 @@ public class ProfileController extends ControllerFX {
 		}
 		
 		db.init();
-		
 		
 		User = new User(username.getText(), mainApp.getTwitter());
 		switch (((RadioButton) choice.getSelectedToggle()).getId()) {

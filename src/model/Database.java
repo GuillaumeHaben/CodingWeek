@@ -38,7 +38,7 @@ public class Database {
 		    stmt.close();
 		    
 		    sql = "CREATE TABLE IF NOT EXISTS `user` ( `id_user` bigint(20) NOT NULL, `id_request` int(5) NOT NULL, " +
-		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
+		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, `profil` varchar(150), PRIMARY KEY (`id_user`,`id_request`) " +
 		    		")";
 			stmt.executeUpdate(sql);
 		

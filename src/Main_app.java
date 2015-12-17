@@ -1,8 +1,4 @@
-/**
- * This class launch the program
- * @author The Coding Bang Fraternity
- * @version 2.0
- */
+
 
 import java.io.IOException;
 import java.util.Scanner;
