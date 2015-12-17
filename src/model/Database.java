@@ -41,12 +41,7 @@ public class Database {
 		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
 		    		")";
 			stmt.executeUpdate(sql);
-			
-			sql = "CREATE TABLE IF NOT EXISTS `user` ( `id_user` bigint(20) NOT NULL, `id_request` int(5) NOT NULL, " +
-		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
-		    		")";
-			stmt.executeUpdate(sql);
-
+		
 			sql = "CREATE TABLE IF NOT EXISTS `request` ( `id_request` INTEGER PRIMARY KEY NOT NULL, `type` varchar(10) " +
 					"NOT NULL, `reference` varchar(30) NOT NULL, `req` varchar(20) NOT NULL)";
 			stmt.executeUpdate(sql);
