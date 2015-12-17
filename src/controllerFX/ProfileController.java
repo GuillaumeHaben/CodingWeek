@@ -70,6 +70,10 @@ public class ProfileController extends ControllerFX {
 		userObservable = FXCollections.observableArrayList();
 		userList = new ListView<User>(userObservable);
 		tweetList = new ListView<Tweet>(tweetObservable);
+		
+//		//Hide result panel by default
+//		userList.setVisible(false);
+//		tweetList.setVisible(false);
 	}
 
 	/**
@@ -80,7 +84,8 @@ public class ProfileController extends ControllerFX {
 		
 		userList.setItems(userObservable);
 		tweetList.setItems(tweetObservable);
-
+		tweetList.setVisible(false);
+		userList.setVisible(false);
 		userList.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
 			public ListCell<User> call(ListView<User> p) {
 				return new ListCell<User>() {
@@ -187,8 +192,10 @@ public class ProfileController extends ControllerFX {
 		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
 
 		case "tweets":
+			userList.setVisible(false);
+			tweetList.setVisible(true);
 			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
-					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
+					+ username.getText() + "' AND req = 'timeline' LIMIT 1");
 			try {
 				int id_request = 0;
 				if (tweetsResult.next())
@@ -212,8 +219,10 @@ public class ProfileController extends ControllerFX {
 			break;
 			
 		case "likes":
+			userList.setVisible(false);
+			tweetList.setVisible(true);
 			ResultSet likesResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
-					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
+					+ username.getText() + "' AND req = 'likes' LIMIT 1");
 			try {
 				int id_request = 0;
 				if (likesResult.next())
@@ -237,6 +246,8 @@ public class ProfileController extends ControllerFX {
 			break;
 			
 		case "followers":
+			tweetList.setVisible(false);
+			userList.setVisible(true);
 			ResultSet followersResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'Followers' LIMIT 1");
 			try {
@@ -262,6 +273,8 @@ public class ProfileController extends ControllerFX {
 			break;
 			
 		case "following":
+			tweetList.setVisible(false);
+			userList.setVisible(true);
 			ResultSet followingResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'Following' LIMIT 1");
 			try {
@@ -288,7 +301,6 @@ public class ProfileController extends ControllerFX {
 			
 			//TODO Infomation
 		case "informations":
-			
 			if(User.getInformation() == -1){
 				username.setStyle("-fx-border-color: #AC58FA;");
 				loader.setText("Warning : User unknown");
