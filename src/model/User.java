@@ -101,7 +101,7 @@ public class User {
 					for (twitter4j.User user : result) {
 						String name = user.getName().replace("\'", "\'\'");
 						String sc_name = user.getScreenName().replace("\'", "\'\'");
-						String image = user.getMiniProfileImageURL();
+						String image = user.getProfileImageURL();
 	
 						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name 
 								+ "', '" + image + "');";
@@ -133,7 +133,7 @@ public class User {
 			
 			boolean more_tweet = more;
 			if(result.size() != 0){
-				if(!more){
+				if(more){
 					// Insert new collect
 					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'likes')";
 					if(db.request(query) == -1) return -1;
@@ -153,17 +153,17 @@ public class User {
 	public int startRequest() {
 		try {
 			// Request to Twitter
-			ResponseList<Status> result = twitter.getUserTimeline(screen_name.get(), new Paging(tweet_range, tweet_range +100));
+			ResponseList<Status> result = twitter.getUserTimeline(screen_name.get(), new Paging(tweet_range, tweet_range +50));
 
 			boolean more_tweet = more;
 			if(result.size() != 0){
-				if(!more){
+				if(more){
 					// Insert new collect
 					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
 					if(db.request(query) == -1) return -1;
 					more = false;
 				}
-				tweet_range += 100;
+				tweet_range += 50;
 				
 				return getObjectTweet(result, more_tweet, "timeline");
 			}
