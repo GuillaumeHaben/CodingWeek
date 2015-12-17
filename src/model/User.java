@@ -145,6 +145,7 @@ public class User {
 				return getObjectTweet(result, more_tweet, "likes");
 			}
 		} catch (TwitterException | SQLException | IOException e) {
+			e.printStackTrace();
 		}
 		return -1;
 	}
@@ -171,6 +172,7 @@ public class User {
 				return getObjectTweet(result, more_tweet, "timeline");
 			}
 		} catch (TwitterException | SQLException | IOException e) {
+			e.printStackTrace();
 		}
 		return -1;
 	}
