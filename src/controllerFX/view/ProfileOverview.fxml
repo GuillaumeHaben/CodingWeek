@@ -89,6 +89,7 @@
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRequest" text="Search..." />
                      </children>
                   </GridPane>
+                  <Label fx:id="loader" layoutX="7.0" layoutY="253.0" prefHeight="17.0" prefWidth="190.0" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="210.0" layoutY="6.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="346.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

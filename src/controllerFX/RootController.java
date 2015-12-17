@@ -22,8 +22,11 @@ public class RootController extends ControllerFX {
 		alert.setTitle("Application's Credits");
 		alert.setHeaderText(null);
 		alert.setContentText("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN !");
+		
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image("file:logo.png"));
+
+		alert.setGraphic(null);		
 		alert.showAndWait();
 	}
 	

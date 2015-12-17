@@ -92,8 +92,8 @@ public class User {
 					
 					
 					for (twitter4j.User user : result) {
-						String name = user.getName().replace("\'", "\\'");
-						String sc_name = user.getScreenName().replace("\'", "\\'");
+						String name = user.getName().replace("\'", "\'\'");
+						String sc_name = user.getScreenName().replace("\'", "\'\'");
 	
 						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name + "');";
 						
@@ -106,7 +106,6 @@ public class User {
 				return id_request;
 			}
 		} catch (TwitterException e) {
-			System.out.println("The user doesn't exist.. :'(");
 		} catch ( SQLException e){
 			e.printStackTrace();
 		}
@@ -129,7 +128,6 @@ public class User {
 				return getObjectTweet(result);
 			}
 		} catch (TwitterException | SQLException e) {
-			System.out.println("The user doesn't exist.. :'(");
 		}
 		return -1;
 	}
@@ -150,7 +148,6 @@ public class User {
 				return getObjectTweet(result);
 			}
 		} catch (TwitterException | SQLException e) {
-			System.out.println("The user doesn't exist.. :'(");
 		}
 		return -1;
 	}
@@ -170,9 +167,9 @@ public class User {
 		for (Status status : result) {
 
 			// Fetch all the available informations
-			String text = status.getText().replace("\'", "\\'");
-			String name = status.getUser().getName().replace("\'", "\\'");
-			String sc_name = status.getUser().getScreenName().replace("\'", "\\'");
+			String text = status.getText().replace("\'", "\'\'");
+			String name = status.getUser().getName().replace("\'", "\'\'");
+			String sc_name = status.getUser().getScreenName().replace("\'", "\'\'");
 
 			java.util.Date date_tweet = status.getCreatedAt();
 
@@ -205,7 +202,7 @@ public class User {
 	/**
 	 * Save the profiles informations of the current user
 	 */
-	public void getInformation() {
+	public int getInformation() {
 		try {
 			twitter4j.User user = twitter.showUser(screen_name.get());
 
@@ -215,16 +212,11 @@ public class User {
 			friends_count = new SimpleIntegerProperty(user.getFriendsCount());
 			statuses_count = new SimpleIntegerProperty(user.getStatusesCount());
 			id = new SimpleLongProperty(user.getId());
-		
-
-			System.out.println("\nInformations : ");
-			System.out.println(
-					"Name : " + name + "\nDescription : " + description + "\nNumber of followers : " + followers_count
-							+ "\nNumber of followings : " + friends_count + "\nNumber of tweets : " + statuses_count);
-
+			
 		} catch (TwitterException e) {
-			e.printStackTrace();
+			return -1;
 		}
+		return 0;
 	}
 
 	public StringProperty nameProperty() {

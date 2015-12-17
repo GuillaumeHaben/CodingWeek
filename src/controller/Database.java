@@ -148,6 +148,6 @@ public class Database {
 		if(!res.next()){
 			return 0;
 		}
-		return res.getInt("auto");
+		return res.getInt("auto") +1;
 	}
 }

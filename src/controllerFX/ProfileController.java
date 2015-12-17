@@ -12,12 +12,20 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Tweet;
 import model.User;
@@ -33,7 +41,9 @@ public class ProfileController extends ControllerFX {
 	@FXML
 	private ObservableList<Tweet> tweetObservable;
 	@FXML
-	private Label NameLabel;
+	private Label nameLabel;
+	@FXML
+	private Label loader;
 	@FXML
 	private TextField username;
 	@FXML
@@ -66,6 +76,8 @@ public class ProfileController extends ControllerFX {
 	 * Initialize cell format and list
 	 */
 	public void initialize() {
+		loader.setTextAlignment(TextAlignment.CENTER);
+		
 		userList.setItems(userObservable);
 		tweetList.setItems(tweetObservable);
 
@@ -113,11 +125,20 @@ public class ProfileController extends ControllerFX {
 	}
 
 	/**
-	 * Launch a request for on a specific author
+	 * Launch a request on a specific author
 	 */
 	@FXML
 	public void handleRequest() {
+		if(username.getText().length() < 3) {
+			username.setStyle("-fx-border-color: #AC58FA;");
+			return;
+		} else { 
+			username.setStyle("");
+			loader.setText("");
+		}
+		
 		db.init();
+
 		User = new User(username.getText(), mainApp.getTwitter());
 		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
 
@@ -126,10 +147,15 @@ public class ProfileController extends ControllerFX {
 					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
 			try {
 				int id_request = 0;
-				if (tweetsResult.next()) {
-					id_request = tweetsResult.getInt("id") -1;	
-				} else {
+				if (tweetsResult.next())
+					id_request = tweetsResult.getInt("id");	
+				else
 					id_request = User.get("Likes");
+				
+				if(id_request == -1) {
+					username.setStyle("-fx-border-color: #AC58FA;");
+					loader.setText("Warning : User unknown");
+					return;
 				}
 				
 				tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
@@ -142,15 +168,19 @@ public class ProfileController extends ControllerFX {
 			break;
 			
 		case "likes":
-			
 			ResultSet likesResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'Likes' LIMIT 1");
 			try {
 				int id_request = 0;
-				if (likesResult.next()) {
-					id_request = likesResult.getInt("id") -1;
-				} else {
+				if (likesResult.next())
+					id_request = likesResult.getInt("id");
+				else
 					id_request = User.get("Likes");
+				
+				if(id_request == -1) {
+					username.setStyle("-fx-border-color: #AC58FA;");
+					loader.setText("Warning : User unknown");
+					return;
 				}
 				
 				likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
@@ -168,9 +198,14 @@ public class ProfileController extends ControllerFX {
 			try {
 				int id_request = 0;
 				if (followersResult.next())
-					id_request = followersResult.getInt("id") -1;
-				else {
+					id_request = followersResult.getInt("id");
+				else
 					id_request = User.get("Followers");
+				
+				if(id_request == -1) {
+					username.setStyle("-fx-border-color: #AC58FA;");
+					loader.setText("Warning : User unknown");
+					return;
 				}
 				
 				followersResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
@@ -187,10 +222,15 @@ public class ProfileController extends ControllerFX {
 					+ username.getText() + "' AND req = 'Following' LIMIT 1");
 			try {
 				int id_request = 0;
-				if (followingResult.next()) {
-					id_request = followingResult.getInt("id") -1;
-				} else {
+				if (followingResult.next())
+					id_request = followingResult.getInt("id");
+				else 
 					id_request = User.get("Following");
+				
+				if(id_request == -1) {
+					username.setStyle("-fx-border-color: #AC58FA;");
+					loader.setText("Warning : User unknown");
+					return;
 				}
 				
 				followingResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
@@ -204,6 +244,27 @@ public class ProfileController extends ControllerFX {
 			
 			//TODO Infomation
 		case "informations":
+			
+			if(User.getInformation() == -1){
+				username.setStyle("-fx-border-color: #AC58FA;");
+				loader.setText("Warning : User unknown");
+			} else {
+			
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle(User.nameProperty().get() + " : @" + User.screen_nameProperty().get());
+				alert.setHeaderText(User.descriptionProperty().get().replaceAll("(.{50})", "$1\n"));
+				alert.setContentText("Number of followers : " + User.followers_countProperty().get()
+						+ "\nNumber of following : " + User.friends_countProperty().get()
+						+ "\nNumber of tweets : " + User.statuses_countProperty().get());
+				
+				Image image = new Image("file:logo.png");
+				ImageView img = new ImageView(image);
+				alert.setGraphic(img);
+				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+				stage.getIcons().add(image);
+				
+				alert.showAndWait();
+			}
 			break;
 		default:
 			break;
