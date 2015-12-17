@@ -29,6 +29,20 @@ public class Tweet {
     private StringProperty content;
     private StringProperty profile;
     
+    /**
+     * Full constructor with all parameters
+     * @param id
+     * @param name
+     * @param screen_name
+     * @param text
+     * @param retweet
+     * @param city
+     * @param country
+     * @param latitude
+     * @param longitude
+     * @param date_creation
+     * @param content
+     */
 	public Tweet(Long id, String name, String screen_name, String text,
 			Integer retweet, String city, String country, Integer latitude,
 			Integer longitude, Long date_creation, String profile, String content) {
@@ -46,6 +60,8 @@ public class Tweet {
 		this.profile = new SimpleStringProperty(profile);
 		this.content = new SimpleStringProperty(content);
 	}
+	
+	/** Getter for the ObjectPriority */
 	
 	public LongProperty idProperty() {
 		return id;
