@@ -1,19 +1,15 @@
 /**
  * This class collects create an object Tweet
  * @author The Coding Bang Fraternity
- * @version 3.0
+ * @version 4.0
  */
 
 package model;
 
-import java.sql.Date;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -29,11 +25,12 @@ public class Tweet {
     private StringProperty country;
     private IntegerProperty latitude;
     private IntegerProperty longitude;
-    private ObjectProperty<Date> date_creation;
+    private LongProperty date_creation;
+    private StringProperty content;
     
 	public Tweet(Long id, String name, String screen_name, String text,
 			Integer retweet, String city, String country, Integer latitude,
-			Integer longitude, Date date_creation) {
+			Integer longitude, Long date_creation, String content) {
 		
 		this.id = new SimpleLongProperty(id);
 		this.name = new SimpleStringProperty(name);
@@ -44,7 +41,8 @@ public class Tweet {
 		this.country = new SimpleStringProperty(country);
 		this.latitude = new SimpleIntegerProperty(latitude);
 		this.longitude = new SimpleIntegerProperty(longitude);
-		this.date_creation = new SimpleObjectProperty<Date>(date_creation);
+		this.date_creation = new SimpleLongProperty(date_creation);
+		this.content = new SimpleStringProperty(content);
 	}
 	
 	public LongProperty idProperty() {
@@ -83,8 +81,12 @@ public class Tweet {
 		return longitude;
 	}
 	
-	public ObjectProperty<Date> dateProperty(){
+	public LongProperty dateProperty(){
 		return date_creation;
+	}
+	
+	public StringProperty contentProperty() {
+		return content;
 	}
 }
   

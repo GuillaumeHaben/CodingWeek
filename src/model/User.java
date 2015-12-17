@@ -1,7 +1,7 @@
 /**
- * This class collects all the informations about a specific user
+ * This class collects all the informations about a specific User
  * @author The Coding Bang Fraternity
- * @version 3.0
+ * @version 4.0
  */
 
 package model;
@@ -35,9 +35,11 @@ public class User {
 	private IntegerProperty followers_count;
 	private IntegerProperty friends_count;
 	private IntegerProperty statuses_count;
+	private IntegerProperty favourites_count;
+	private StringProperty image_URL;
 	
-	private int tweet_range = 0;
-	private int like_range = 0;
+	private int tweet_range = 1;
+	private int like_range = 1;
 	private boolean more = false;
 
 	private Twitter twitter;
@@ -154,7 +156,7 @@ public class User {
 			if(result.size() != 0){
 				if(!more){
 					// Insert new collect
-					String query = "INSERT INTO request(type, reference) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
+					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
 					db.request(query);
 					more = false;
 				}
@@ -173,7 +175,6 @@ public class User {
 	 * @param result : Tweet obtenus
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("deprecation")
 	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, String req) throws SQLException {
 		
 		db.init();
@@ -207,6 +208,9 @@ public class User {
 				city = p.getName();
 				country = p.getCountry();
 			}
+			
+//			MediaEntity[] mediaEntity = status.getMediaEntities();
+			String URL = "a";
 
 			if (g != null) {
 				latitude = g.getLatitude();
@@ -216,7 +220,7 @@ public class User {
 			// Save the Tweet into DB Sun Aug 16 20:55:42 CEST 2015
 			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
 					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
-					+ ", " + longitude + ", STR_TO_DATE('" + date_tweet.toGMTString() + "','%d %b %Y %H:%i:%s GMT'));";
+					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + URL + "');";
 			db.request(query);
 		}
 		db.close();
@@ -230,13 +234,15 @@ public class User {
 		try {
 			twitter4j.User user = twitter.showUser(screen_name.get());
 
+			image_URL = new SimpleStringProperty(user.getProfileImageURL());
 			name =  new SimpleStringProperty(user.getName());
 			description = new SimpleStringProperty(user.getDescription());
 			followers_count = new SimpleIntegerProperty(user.getFollowersCount());
 			friends_count = new SimpleIntegerProperty(user.getFriendsCount());
 			statuses_count = new SimpleIntegerProperty(user.getStatusesCount());
 			id = new SimpleLongProperty(user.getId());
-			
+			favourites_count = new SimpleIntegerProperty(user.getFavouritesCount());
+
 		} catch (TwitterException e) {
 			return -1;
 		}
@@ -273,5 +279,13 @@ public class User {
 
 	public IntegerProperty statuses_countProperty() {
 		return statuses_count;
+	}
+	
+	public IntegerProperty favourites_countProperty() {
+		return favourites_count;
+	}
+	
+	public StringProperty image_URLProperty() {
+		return image_URL;
 	}
 }

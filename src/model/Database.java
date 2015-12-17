@@ -32,7 +32,7 @@ public class Database {
 		      "`id_request` int(5) NOT NULL, `name` varchar(25) NOT NULL, `screenName` varchar(25) NOT NULL, " +
 		      "`text` varchar(170) NOT NULL, `retweet` int(8) NOT NULL, `city` varchar(40) DEFAULT NULL, " +
 		      "`country` varchar(30) DEFAULT NULL, `latitude` double NOT NULL,  `longitude` double NOT NULL, " +
-		      "`date_tweet` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY " +
+		      "`date_tweet` long NOT NULL, `content` varchar(150) NOT NULL, PRIMARY KEY " +
 		      "(`id_tweet`,`id_request`))"; 
 		    stmt.executeUpdate(sql);
 		    stmt.close();
@@ -41,12 +41,7 @@ public class Database {
 		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
 		    		")";
 			stmt.executeUpdate(sql);
-			
-			sql = "CREATE TABLE IF NOT EXISTS `user` ( `id_user` bigint(20) NOT NULL, `id_request` int(5) NOT NULL, " +
-		    		"`name` varchar(25) NOT NULL, `screen_name` varchar(25) NOT NULL, PRIMARY KEY (`id_user`,`id_request`) " +
-		    		")";
-			stmt.executeUpdate(sql);
-
+		
 			sql = "CREATE TABLE IF NOT EXISTS `request` ( `id_request` INTEGER PRIMARY KEY NOT NULL, `type` varchar(10) " +
 					"NOT NULL, `reference` varchar(30) NOT NULL, `req` varchar(20) NOT NULL)";
 			stmt.executeUpdate(sql);
@@ -149,9 +144,9 @@ public class Database {
 		String query = " SELECT count(id_request) as auto FROM request";
 		ResultSet res = this.select_request(query);
 		
-		if(!res.next()){
+		if(!res.next())
 			return 0;
-		}
+
 		return res.getInt("auto") +1;
 	}
 }

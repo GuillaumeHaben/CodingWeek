@@ -6,6 +6,8 @@ import java.sql.Statement;
 import com.mysql.jdbc.Connection;
 
 import controller.Date;
+import controller.Language;
+import controller.Location;
 import model.Database;
 
 public class TestController {
@@ -63,6 +65,40 @@ public class TestController {
 	Date d = new Date(str, date, null);
 	assert d.getDate() == date && d.getKeyword() == str : "Error in the getters";
 
+	/**
+	 * Test dateIsValid()
+	 * 
+	 * 
+	 * String validDate = "2014-11-26"; assert validDate.dateIsValid() ==
+	 * true : "The format of the date isn't correct.";
+	 */
+
+	/**
+	 * Test startRequest()
+	 */
+
+	//////////////////////// TEST LANGUAGE/////////////////////////////
+
+	/**
+	 * Test getLanguage()
+	 */
+	Language l = new Language("codingweek", "en", null);
+	assert l.getLanguage() == "en" && l.getKeyword() == "codingweek" : "Error in the getters";
+
+	///////////////////////// TEST LOCATION/////////////////////////////
+
+	/**
+	 * Test getCity() and getCountry()
+	 */
+	Location loc = new Location("Paris", "France", null);
+	assert loc.getCity() == "Paris" && loc.getCountry() == "France" : "Error in the getters";
+
+	//////////////////////// TEST MULTIPARAMS//////////////////////////
+
+	/**
+	 * Test getters Multiparams multi = new Multiparams("codingweek", "en",
+	 * "2015-12-02", "screen_name", null);
+	 */
     }
 
 }
