@@ -9,12 +9,16 @@ package controllerFX;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import controller.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -23,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Tweet;
@@ -103,8 +108,26 @@ public class ProfileController extends ControllerFX {
 				return new ListCell<Tweet>() {
 					protected void updateItem(Tweet item, boolean empty) {
 						super.updateItem(item, empty);
-						if (item != null)
-							this.setText(item.textProperty().get());
+						if (item != null) {
+
+                            HBox box = new HBox();
+                            box.setSpacing(10);
+                            VBox vbox = new VBox();
+                            //Date date = new Date(item.dateProperty().getValue());
+                            VBox currentTweet = new VBox(new Label("@" + item.screen_nameProperty().getValue() + " on " + item.dateProperty().getValue() + "\n" + item.textProperty().getValue()));
+                            
+                            ImageView imageview = new ImageView();
+                            imageview.setFitHeight(50);
+                            imageview.setFitWidth(50);
+                            
+                            //To replace with good url
+                            System.out.println(item.contentProperty().getValue());
+                            
+                            imageview.setImage(new Image("https://pbs.twimg.com/profile_images/473468973947056128/qId9M_Zn_bigger.jpeg"));
+                            box.getChildren().addAll(imageview, vbox, currentTweet);
+                            setGraphic(box);
+							//this.setText(item.textProperty().get());
+						}
 					}
 				};
 			}
