@@ -90,7 +90,10 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("view/MainOverview.fxml"));
             AnchorPane profileOverview = (AnchorPane) loader.load();
             
+            //AnchorPane SimpleOverview = (AnchorPane) loader.load();
+            
             rootLayout.setCenter(profileOverview);
+            
             MainController controller = loader.getController();
             controller.setMainApp(this);
             
