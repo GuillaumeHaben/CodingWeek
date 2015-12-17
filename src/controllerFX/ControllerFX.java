@@ -63,15 +63,19 @@ public abstract class ControllerFX {
      * @param list
      */
     protected void cleanUser_tweetScreen(ListView<User> list) {
+    	if (list.getItems() != null) {
             list.getItems().clear();
-    }
+    	}
+	}
 
     /**
      * Clean a Tweet List
      * @param list
      */
     protected void cleanTweetScreen(ListView<Tweet> list) {
+    	if (list.getItems() != null) {
             list.getItems().clear();
+    	}
     }
 
     /**
