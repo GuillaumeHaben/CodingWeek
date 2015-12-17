@@ -63,7 +63,7 @@ public class Media extends Params {
 			MediaEntity[] mediaEntity = status.getMediaEntities();
 			for (int i = 0; i < mediaEntity.length; i++) {
 				String mediaURL = mediaEntity[i].getMediaURL();
-				String destinationFile = "image" + status.getId() + ".jpg";
+				String destinationFile = mediaEntity[i].getMediaURL();
 				try {
 					saveMedia(mediaURL, destinationFile);
 				} catch (IOException e) {
