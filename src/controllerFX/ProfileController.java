@@ -9,11 +9,14 @@ package controllerFX;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -22,8 +25,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Border;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -58,6 +59,8 @@ public class ProfileController extends ControllerFX {
 	private RadioButton following;
 	@FXML
 	private RadioButton informations;
+	@FXML
+	private Button more;
 
 	private User User;
 	private Tweet Tweet;
@@ -76,7 +79,7 @@ public class ProfileController extends ControllerFX {
 	 * Initialize cell format and list
 	 */
 	public void initialize() {
-		loader.setTextAlignment(TextAlignment.CENTER);
+		more.setDisable(true);
 		
 		userList.setItems(userObservable);
 		tweetList.setItems(tweetObservable);
@@ -123,7 +126,50 @@ public class ProfileController extends ControllerFX {
 	public ObservableList<Tweet> getTweetData() {
 		return tweetList.getItems();
 	}
+	
+	@FXML
+	public void enableMore(){
+		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
+			case "tweets":
+				more.setDisable(false);
+				break;
+			case "likes":
+				more.setDisable(false);
+				break;
+			default:
+				more.setDisable(true);
+				break;
+		}
+	}
 
+	
+	public void moreResult(){
+		if(User != null && User.screen_nameProperty().get().compareTo(username.getText()) == 0){
+			int id_request = 0;
+			switch (((RadioButton) choice.getSelectedToggle()).getId()) {
+			
+			case "tweets":
+				User.setMore(true);
+				User.startRequest();
+				
+				ResultSet tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+				createTweets(tweetsResult, tweetList);
+				break;
+				
+			case "likes":
+				User.setMore(true);
+				User.getLikes();
+				
+				ResultSet likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+				createTweets(likesResult, tweetList);
+				break;
+			
+			default:
+				break;
+			}
+		} else loader.setText("Invalid input for more results");
+	}
+	
 	/**
 	 * Launch a request on a specific author
 	 */
@@ -138,7 +184,8 @@ public class ProfileController extends ControllerFX {
 		}
 		
 		db.init();
-
+		
+		
 		User = new User(username.getText(), mainApp.getTwitter());
 		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
 
