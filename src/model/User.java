@@ -37,8 +37,8 @@ public class User {
 	private IntegerProperty friends_count;
 	private IntegerProperty statuses_count;
 	
-	private int tweet_range = 0;
-	private int like_range = 0;
+	private int tweet_range = 1;
+	private int like_range = 1;
 	private boolean more = false;
 
 	private Twitter twitter;
@@ -155,7 +155,7 @@ public class User {
 			if(result.size() != 0){
 				if(!more){
 					// Insert new collect
-					String query = "INSERT INTO request(type, reference) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
+					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
 					db.request(query);
 					more = false;
 				}
@@ -209,8 +209,8 @@ public class User {
 				country = p.getCountry();
 			}
 			
-			MediaEntity[] mediaEntity = status.getMediaEntities();
-			String URL = mediaEntity[0].getMediaURL();
+//			MediaEntity[] mediaEntity = status.getMediaEntities();
+			String URL = "a";
 
 			if (g != null) {
 				latitude = g.getLatitude();
