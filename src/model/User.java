@@ -128,7 +128,7 @@ public class User {
 	 * Catch the 100 last likes
 	 * @throws IOException 
 	 */
-	public int getLikes() throws IOException {
+	public int getLikes() {
 		try {
 			// Request to Twitter
 			ResponseList<Status> result = twitter.getFavorites(screen_name.get(), new Paging(like_range, like_range + 100));
@@ -144,7 +144,7 @@ public class User {
 				
 				return getObjectTweet(result, more_tweet, "likes");
 			}
-		} catch (TwitterException | SQLException e) {
+		} catch (TwitterException | SQLException | IOException e) {
 		}
 		return -1;
 	}
