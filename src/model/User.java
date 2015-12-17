@@ -75,7 +75,6 @@ public class User {
 			int nb_cursor = 0;
 			PagableResponseList<twitter4j.User> result;
 			
-			db.init();
 			int id_request = db.getAutoIncRequest();
 			
 			// Twitter request

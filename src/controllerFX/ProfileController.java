@@ -8,6 +8,7 @@ package controllerFX;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -79,6 +81,10 @@ public class ProfileController extends ControllerFX {
 		
 		userList.setItems(userObservable);
 		tweetList.setItems(tweetObservable);
+		
+		tweetList.setVisible(false);
+		userList.setVisible(false);
+		
 		tweetList.setVisible(false);
 		userList.setVisible(false);
 		userList.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
@@ -173,126 +179,209 @@ public class ProfileController extends ControllerFX {
 	 */
 	@FXML
 	public void handleRequest() {
-		if(username.getText().length() < 3) {
-			username.setStyle("-fx-border-color: #AC58FA;");
-			return;
-		} else { 
-			username.setStyle("");
-			loader.setText("");
-		}
-		
-		db.init();
-		
-		User = new User(username.getText(), mainApp.getTwitter());
-		switch (((RadioButton) choice.getSelectedToggle()).getId()) {
+	if (username.getText().length() < 3) {
+	    username.setStyle("-fx-border-color: #AC58FA;");
+	    return;
+	} else {
+	    username.setStyle("");
+	    loader.setText("");
+	}
 
-		case "tweets":
-			userList.setVisible(false);
-			tweetList.setVisible(true);
-			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
-					+ username.getText() + "' AND req = 'timeline' LIMIT 1");
-			try {
-				int id_request = 0;
-				if (tweetsResult.next())
-					id_request = tweetsResult.getInt("id");	
-				else
-					id_request = User.startRequest();
-				
-				if(id_request == -1) {
-					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknown");
-					return;
-				}
-				
-				tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
-				cleanTweetScreen(tweetList);
-				createTweets(tweetsResult, tweetList);
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			break;
-			
-		case "likes":
-			userList.setVisible(false);
-			tweetList.setVisible(true);
-			ResultSet likesResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
-					+ username.getText() + "' AND req = 'likes' LIMIT 1");
-			try {
-				int id_request = 0;
-				if (likesResult.next())
-					id_request = likesResult.getInt("id");
-				else
-					id_request = User.getLikes();
-				
-				if(id_request == -1) {
-					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknown");
-					return;
-				}
-				
-				likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
-				cleanTweetScreen(tweetList);
-				createTweets(likesResult, tweetList);
-			
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			break;
-			
-		case "followers":
-			tweetList.setVisible(false);
-			userList.setVisible(true);
-			ResultSet followersResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
-					+ username.getText() + "' AND req = 'Followers' LIMIT 1");
-			try {
-				int id_request = 0;
-				if (followersResult.next())
-					id_request = followersResult.getInt("id");
-				else
-					id_request = User.get("Followers");
-				
-				if(id_request == -1) {
-					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknown");
-					return;
-				}
-				
-				followersResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
-				cleanUser_tweetScreen(userList);
-				createUsers(followersResult, userList);
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			break;
-			
-		case "following":
-			tweetList.setVisible(false);
-			userList.setVisible(true);
-			ResultSet followingResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
-					+ username.getText() + "' AND req = 'Following' LIMIT 1");
-			try {
-				int id_request = 0;
-				if (followingResult.next())
-					id_request = followingResult.getInt("id");
-				else 
-					id_request = User.get("Following");
-				
-				if(id_request == -1) {
-					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknown");
-					return;
-				}
-				
-				followingResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
-				cleanUser_tweetScreen(userList);
-				createUsers(followingResult, userList);
-			
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			break;
+	Alert alertUpdate = new Alert(AlertType.CONFIRMATION);
+	User = new User(username.getText(), mainApp.getTwitter());
+	switch (((RadioButton) choice.getSelectedToggle()).getId()) {
+
+	case "tweets":
+		userList.setVisible(false);
+		tweetList.setVisible(true);
+		
+	    ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
+		    + username.getText() + "' AND req = 'timeline' LIMIT 1");
+	    try {
+		int id_request = 0;
+		if (tweetsResult.next()) {
+		    alertUpdate.setTitle("Confirmation Dialog");
+		    alertUpdate.setHeaderText(null);
+		    alertUpdate.setContentText("   Would do you like to update ?");
+
+		    Image image = new Image("file:logo.png");
+		    ImageView img = new ImageView(image);
+		    alertUpdate.setGraphic(img);
+		    Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
+		    stage.getIcons().add(image);
+
+		    alertUpdate.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+		    Optional<ButtonType> result = alertUpdate.showAndWait();
+
+		    if (result.get() == ButtonType.YES) {
+		    	id_request = User.startRequest();
+		    } else {
+		    	id_request = tweetsResult.getInt("id");
+		    }
+		} else {
+			id_request =User.startRequest();
+		}
+
+		if (id_request == -1) {
+		    username.setStyle("-fx-border-color: #AC58FA;");
+		    loader.setText("Warning : User unknown");
+		    return;
+		}
+
+		tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+		cleanTweetScreen(tweetList);
+		createTweets(tweetsResult, tweetList);
+
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
+	    break;
+
+	case "likes":
+		
+		userList.setVisible(false);
+		tweetList.setVisible(true);
+		
+	    ResultSet likesResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
+		    + username.getText() + "' AND req = 'likes' LIMIT 1");
+	    try {
+		int id_request = 0;
+		if (likesResult.next()) {
+
+		    alertUpdate.setTitle("Confirmation Dialog");
+		    alertUpdate.setHeaderText(null);
+		    alertUpdate.setContentText("   Would do you like to update ?");
+
+		    Image image = new Image("file:logo.png");
+		    ImageView img = new ImageView(image);
+		    alertUpdate.setGraphic(img);
+		    Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
+		    stage.getIcons().add(image);
+
+		    alertUpdate.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+		    Optional<ButtonType> result = alertUpdate.showAndWait();
+
+		    if (result.get() == ButtonType.YES) {
+		    	id_request = User.getLikes();
+		    } else {
+		    	id_request = likesResult.getInt("id");
+		    }
+		} else {
+			id_request =User.getLikes();
+		}
+
+		if (id_request == -1) {
+		    username.setStyle("-fx-border-color: #AC58FA;");
+		    loader.setText("Warning : User unknown");
+		    return;
+		}
+
+		likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+		cleanTweetScreen(tweetList);
+		createTweets(likesResult, tweetList);
+
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
+	    break;
+
+	case "followers":
+		
+		tweetList.setVisible(false);
+		userList.setVisible(true);		
+		
+	    ResultSet followersResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
+		    + username.getText() + "' AND req = 'Followers' LIMIT 1");
+	    try {
+		int id_request = 0;
+		if (followersResult.next()) {
+
+		    alertUpdate.setTitle("Confirmation Dialog");
+		    alertUpdate.setHeaderText(null);
+		    alertUpdate.setContentText("   Would do you like to update ?");
+
+		    Image image = new Image("file:logo.png");
+		    ImageView img = new ImageView(image);
+		    alertUpdate.setGraphic(img);
+		    Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
+		    stage.getIcons().add(image);
+
+		    alertUpdate.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+		    Optional<ButtonType> result = alertUpdate.showAndWait();
+
+		    if (result.get() == ButtonType.YES) {
+		    	id_request = User.get("Followers");
+		    } else {
+		    	id_request = followersResult.getInt("id");
+		    }
+		} else {
+			id_request = User.get("Followers");
+		}
+
+		if (id_request == -1) {
+		    username.setStyle("-fx-border-color: #AC58FA;");
+		    loader.setText("Warning : User unknown");
+		    return;
+		}
+
+		followersResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
+		cleanUser_tweetScreen(userList);
+		createUsers(followersResult, userList);
+
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
+	    break;
+
+	case "following":
+		tweetList.setVisible(false);
+		userList.setVisible(true);
+		
+	    ResultSet followingResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
+		    + username.getText() + "' AND req = 'Following' LIMIT 1");
+	    try {
+		int id_request = 0;
+		if (followingResult.next()) {
+		    alertUpdate.setTitle("Confirmation Dialog");
+		    alertUpdate.setHeaderText(null);
+		    alertUpdate.setContentText("   Would do you like to update ?");
+
+		    Image image = new Image("file:logo.png");
+		    ImageView img = new ImageView(image);
+		    alertUpdate.setGraphic(img);
+		    Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
+		    stage.getIcons().add(image);
+
+		    alertUpdate.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+		    Optional<ButtonType> result = alertUpdate.showAndWait();
+
+		    if (result.get() == ButtonType.YES) {
+		    	id_request = User.get("Following");
+		    } else {
+		    	id_request = followingResult.getInt("id");
+		    }
+		} else {
+			id_request = User.get("Following");
+		}
+
+		if (id_request == -1) {
+		    username.setStyle("-fx-border-color: #AC58FA;");
+		    loader.setText("Warning : User unknown");
+		    return;
+		}
+
+		followingResult = db.select_request("SELECT * FROM user WHERE id_request = " + id_request);
+		cleanUser_tweetScreen(userList);
+		createUsers(followingResult, userList);
+
+	    } catch (SQLException e) {
+		e.printStackTrace();
+	    }
+	    break;
 			
 		case "informations":
 			if(User.getInformation() == -1){
