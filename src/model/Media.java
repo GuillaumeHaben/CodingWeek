@@ -17,6 +17,7 @@ import twitter4j.TwitterException;
 public class Media extends Params {
 
 	private String keyword;
+
 	public Media(String keyword, Twitter twitter) {
 		super(twitter);
 		this.keyword = keyword;
@@ -26,7 +27,7 @@ public class Media extends Params {
 		URL url = new URL(mediaURL);
 		InputStream is = url.openStream();
 		OutputStream os = new FileOutputStream("./SavedMedia/" + destinationFile);
-
+		
 		byte[] b = new byte[2048];
 		int length;
 
@@ -59,7 +60,8 @@ public class Media extends Params {
 			MediaEntity[] mediaEntity = status.getMediaEntities();
 			for (int i = 0; i < mediaEntity.length; i++) {
 				String mediaURL = mediaEntity[i].getMediaURL();
-				String destinationFile = mediaEntity[i].getMediaURL();
+				String destFile[] = mediaEntity[i].getMediaURL().toString().split("/");
+				String destinationFile = destFile[4];
 				try {
 					saveMedia(mediaURL, destinationFile);
 				} catch (IOException e) {
