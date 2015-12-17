@@ -1,7 +1,7 @@
 /**
- * This class collects all the informations about a specific user
+ * This class collects all the informations about a specific User
  * @author The Coding Bang Fraternity
- * @version 3.0
+ * @version 4.0
  */
 
 package model;
@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import twitter4j.GeoLocation;
+import twitter4j.MediaEntity;
 import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.Place;
@@ -207,6 +208,9 @@ public class User {
 				city = p.getName();
 				country = p.getCountry();
 			}
+			
+			MediaEntity[] mediaEntity = status.getMediaEntities();
+			String URL = mediaEntity[0].getMediaURL();
 
 			if (g != null) {
 				latitude = g.getLatitude();
@@ -216,7 +220,8 @@ public class User {
 			// Save the Tweet into DB Sun Aug 16 20:55:42 CEST 2015
 			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
 					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
-					+ ", " + longitude + ", STR_TO_DATE('" + date_tweet.toGMTString() + "','%d %b %Y %H:%i:%s GMT'));";
+					+ ", " + longitude + ", STR_TO_DATE('" + date_tweet.toGMTString() + "','%d %b %Y %H:%i:%s GMT'), '"
+					+ URL + "');";
 			db.request(query);
 		}
 		db.close();
