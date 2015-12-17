@@ -69,7 +69,7 @@
                            <toggleGroup>
                               <ToggleGroup fx:id="choice" />
                            </toggleGroup></RadioButton>
-                        <RadioButton fx:id="likes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#enableMore" text="Favourites" toggleGroup="$choice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <RadioButton fx:id="likes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#enableMore" text="Likes" toggleGroup="$choice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <RadioButton fx:id="followers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#enableMore" text="Followers" toggleGroup="$choice" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <RadioButton fx:id="following" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#enableMore" text="Followings" toggleGroup="$choice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <RadioButton fx:id="informations" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#enableMore" text="Informations" toggleGroup="$choice" GridPane.columnIndex="1" GridPane.rowIndex="4" />

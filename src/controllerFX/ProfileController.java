@@ -20,7 +20,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -30,7 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Tweet;
@@ -188,6 +186,7 @@ public class ProfileController extends ControllerFX {
 				User.startRequest();
 
 				ResultSet tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+				cleanTweetScreen(tweetList);
 				createTweets(tweetsResult, tweetList);
 				break;
 
@@ -196,6 +195,7 @@ public class ProfileController extends ControllerFX {
 				User.getLikes();
 
 				ResultSet likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+				cleanTweetScreen(tweetList);
 				createTweets(likesResult, tweetList);
 				break;
 
@@ -226,7 +226,7 @@ public class ProfileController extends ControllerFX {
 		case "tweets":
 			userList.setVisible(false);
 			tweetList.setVisible(true);
-
+			more.setDisable(false);
 			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
 					+ username.getText() + "' AND req = 'timeline' LIMIT 1");
 			try {
@@ -271,7 +271,7 @@ public class ProfileController extends ControllerFX {
 			break;
 
 		case "likes":
-
+			more.setDisable(false);
 			userList.setVisible(false);
 			tweetList.setVisible(true);
 
