@@ -220,8 +220,7 @@ public class User {
 			// Save the Tweet into DB Sun Aug 16 20:55:42 CEST 2015
 			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
 					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
-					+ ", " + longitude + ", STR_TO_DATE('" + date_tweet.toGMTString() + "','%d %b %Y %H:%i:%s GMT'), '"
-					+ URL + "');";
+					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + URL + "');";
 			db.request(query);
 		}
 		db.close();
