@@ -6,6 +6,7 @@
 
 package controllerFX;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -177,7 +178,7 @@ public class ProfileController extends ControllerFX {
 		}
 	}
 
-	public void moreResult() {
+	public void moreResult() throws IOException {
 		if (User != null && User.screen_nameProperty().get().compareTo(username.getText()) == 0) {
 			int id_request = 0;
 			switch (((RadioButton) choice.getSelectedToggle()).getId()) {
@@ -207,9 +208,10 @@ public class ProfileController extends ControllerFX {
 
 	/**
 	 * Launch a request on a specific author
+	 * @throws IOException 
 	 */
 	@FXML
-	public void handleRequest() {
+	public void handleRequest() throws IOException {
 		if (username.getText().length() < 3) {
 			username.setStyle("-fx-border-color: #AC58FA;");
 			return;
