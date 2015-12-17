@@ -27,10 +27,11 @@ public class Tweet {
     private IntegerProperty longitude;
     private LongProperty date_creation;
     private StringProperty content;
+    private StringProperty profile;
     
 	public Tweet(Long id, String name, String screen_name, String text,
 			Integer retweet, String city, String country, Integer latitude,
-			Integer longitude, Long date_creation, String content) {
+			Integer longitude, Long date_creation, String profile, String content) {
 		
 		this.id = new SimpleLongProperty(id);
 		this.name = new SimpleStringProperty(name);
@@ -42,6 +43,7 @@ public class Tweet {
 		this.latitude = new SimpleIntegerProperty(latitude);
 		this.longitude = new SimpleIntegerProperty(longitude);
 		this.date_creation = new SimpleLongProperty(date_creation);
+		this.profile = new SimpleStringProperty(profile);
 		this.content = new SimpleStringProperty(content);
 	}
 	
@@ -83,6 +85,10 @@ public class Tweet {
 	
 	public LongProperty dateProperty(){
 		return date_creation;
+	}
+	
+	public StringProperty profileProperty() {
+		return profile;
 	}
 	
 	public StringProperty contentProperty() {

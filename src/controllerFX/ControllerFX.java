@@ -52,7 +52,7 @@ public abstract class ControllerFX {
 			while(rs.next()){
 				Tweet tweet = new Tweet(rs.getLong("id_tweet"), rs.getString("name"), rs.getString("screenName"), 
 						rs.getString("text"), rs.getInt("retweet"), rs.getString("city"), rs.getString("country"),
-						rs.getInt("latitude"), rs.getInt("longitude"), rs.getLong("date_tweet"), rs.getString("content"));
+						rs.getInt("latitude"), rs.getInt("longitude"), rs.getLong("date_tweet"), rs.getString("profile"),rs.getString("content"));
 		    	if (list.getItems() != null) {
 		    		list.getItems().add(tweet);
 		    	} else {

@@ -215,6 +215,7 @@ public class User {
 				country = p.getCountry();
 			}
 			
+			String img_profile = status.getUser().getProfileImageURL();
 			String URL = "";
 			MediaEntity[] mediaEntity = status.getMediaEntities();
 			if(mediaEntity.length > 0){
@@ -229,7 +230,7 @@ public class User {
 
 			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
 					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
-					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + URL + "');";
+					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + img_profile + "', '" + URL + "');";
 			db.request(query);
 		}
 		db.close();

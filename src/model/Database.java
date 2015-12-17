@@ -32,7 +32,7 @@ public class Database {
 		      "`id_request` int(5) NOT NULL, `name` varchar(25) NOT NULL, `screenName` varchar(25) NOT NULL, " +
 		      "`text` varchar(170) NOT NULL, `retweet` int(8) NOT NULL, `city` varchar(40) DEFAULT NULL, " +
 		      "`country` varchar(30) DEFAULT NULL, `latitude` double NOT NULL,  `longitude` double NOT NULL, " +
-		      "`date_tweet` long NOT NULL, `content` varchar(150) NOT NULL, PRIMARY KEY " +
+		      "`date_tweet` long NOT NULL, `profile` varchar(150) NOT NULL, `content` varchar(150) NOT NULL, PRIMARY KEY " +
 		      "(`id_tweet`,`id_request`))"; 
 		    stmt.executeUpdate(sql);
 		    stmt.close();
