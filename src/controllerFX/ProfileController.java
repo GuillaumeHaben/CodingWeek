@@ -8,6 +8,7 @@ package controllerFX;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -16,6 +17,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -25,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Tweet;
@@ -92,8 +97,20 @@ public class ProfileController extends ControllerFX {
 				return new ListCell<User>() {
 					protected void updateItem(User item, boolean empty) {
 						super.updateItem(item, empty);
-						if (item != null)
-							this.setText(item.screen_nameProperty().get());
+						if (item != null) {
+
+                            HBox box = new HBox();
+                            box.setSpacing(10);
+                            VBox currentTweet = new VBox(new Label("@" + item.screen_nameProperty().get()));
+                            
+                            ImageView imageview = new ImageView();
+                            imageview.setFitHeight(50);
+                            imageview.setFitWidth(50);
+                            imageview.setImage(new Image(item.image_URLProperty().get()));
+                            
+                            box.getChildren().addAll(imageview, currentTweet);
+                            setGraphic(box);
+						}
 					}
 				};
 			}
@@ -104,9 +121,23 @@ public class ProfileController extends ControllerFX {
 				return new ListCell<Tweet>() {
 					protected void updateItem(Tweet item, boolean empty) {
 						super.updateItem(item, empty);
-						if (item != null)
+						if (item != null) {
+
+                            HBox box = new HBox();
+                            box.setSpacing(10);
+                            Date date = new Date(item.dateProperty().getValue());
+                            VBox currentTweet = new VBox(new Label("@" + item.screen_nameProperty().getValue() + " on " + date + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n")));
+                            
+                            ImageView imageview = new ImageView();
+                            imageview.setFitHeight(50);
+                            imageview.setFitWidth(50);
+                            imageview.setImage(new Image(item.profileProperty().getValue()));
+                            
+                            box.getChildren().addAll(imageview, currentTweet);
+                            setGraphic(box);
+							//this.setText(item.textProperty().get());
 							// new Image(User.image_URLProperty().get());
-							this.setText(item.textProperty().get());
+						}
 					}
 				};
 			}
