@@ -17,10 +17,6 @@ import twitter4j.TwitterException;
 public class Media extends Params {
 
 	private String keyword;
-	private long mediaId;
-	private String mediaURL;
-	private String mediaType;
-
 	public Media(String keyword, Twitter twitter) {
 		super(twitter);
 		this.keyword = keyword;
