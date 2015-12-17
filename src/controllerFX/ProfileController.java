@@ -194,7 +194,7 @@ public class ProfileController extends ControllerFX {
 				if (tweetsResult.next())
 					id_request = tweetsResult.getInt("id");	
 				else
-					id_request = User.get("Likes");
+					id_request = User.startRequest();
 				
 				if(id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
@@ -219,7 +219,7 @@ public class ProfileController extends ControllerFX {
 				if (likesResult.next())
 					id_request = likesResult.getInt("id");
 				else
-					id_request = User.get("Likes");
+					id_request = User.getLikes();
 				
 				if(id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
