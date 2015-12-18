@@ -6,6 +6,7 @@
 
 package model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import twitter4j.*;
@@ -31,16 +32,29 @@ public class KeyWord extends Params {
 	/**
 	 * Get Tweets from a keyword
 	 */
-	public void startRequest() {
-		String q = "INSERT INTO request(type, reference) VALUES('user','" + keyword + "')";
-		db.request(q);
-		
-		Query query = new Query(keyword);
+	public int startRequest() {
 		try {
-			getObjectTweet(twitter.search(query));
+			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '" 
+					+ keyword + "' AND req = 'keyword' LIMIT 1");
+			int id_request = -1;
+			
+			if (tweetsResult.next()) {
+				id_request = tweetsResult.getInt("id");
+			} else {
+				id_request = db.getAutoIncRequest();
+				String query = "INSERT INTO request VALUES(" + id_request + ", 'tweet','" + keyword
+						+ "', 'keyword')";
+				if (db.request(query) == -1)
+					return -1;
+			}		
+			
+			Query query = new Query(keyword);
+			getObjectTweet(twitter.search(query), id_request);
+			return id_request;
 
 		} catch (TwitterException | SQLException e) {
 			e.printStackTrace();
+			return -1;
 		}
 	}
 

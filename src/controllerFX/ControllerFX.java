@@ -17,6 +17,7 @@ import javafx.scene.control.ListView;
 import model.Database;
 import model.Tweet;
 import model.User;
+import twitter4j.Twitter;
 
 public abstract class ControllerFX {
 	
@@ -92,5 +93,14 @@ public abstract class ControllerFX {
     @SuppressWarnings("static-access")
 	public void setMainApp(MainApp mapp){
     	this.mainApp = mapp;
+    }
+    
+    /**
+     * Get Twitter Object
+     * @return Twitter Object
+     */
+    @SuppressWarnings("static-access")
+	public Twitter getTwitter(){
+    	return this.mainApp.getTwitter();
     }
 }

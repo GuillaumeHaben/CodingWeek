@@ -259,6 +259,17 @@ public class ProfileController extends ControllerFX {
 			loader.setText("Warning : Username is not valid !");
 	}
 
+	
+	
+	
+	public void changedText(){
+		System.out.println("click");
+		if(!userList.isDisable())
+			username.setText(userList.getSelectionModel().getSelectedItem().screen_nameProperty().get());
+	}
+	
+	
+	
 	/**
 	 * Launch a request on a specific author
 	 * @throws IOException 
