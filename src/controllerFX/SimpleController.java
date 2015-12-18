@@ -76,6 +76,7 @@ public class SimpleController extends ControllerFX {
 
                             HBox box = new HBox();
                             box.setSpacing(10);
+
                             Date date = new Date(item.dateProperty().getValue());
                             VBox currentTweet;
                             Label tweetView = new Label("@" + item.screen_nameProperty().getValue() + " on " + date.toLocaleString() + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n"));     
