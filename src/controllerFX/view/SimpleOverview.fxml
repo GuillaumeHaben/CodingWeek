@@ -23,6 +23,7 @@
                         <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="100.0" text="Keyword" textAlignment="CENTER">
@@ -31,23 +32,39 @@
                            </GridPane.margin>
                         </Label>
                         <TextField id="keyword" fx:id="keyword" GridPane.columnIndex="1" />
-                        <TextField id="date" fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id="localisation" fx:id="localisation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField id="language" fx:id="language" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="40.0" prefHeight="30.0" prefWidth="100.0" text="Date" textAlignment="CENTER" GridPane.rowIndex="1">
+                        <TextField id="date" fx:id="date" prefHeight="25.0" prefWidth="74.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField id="localisation" fx:id="localisation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField id="language" fx:id="language" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="70.0" prefHeight="30.0" prefWidth="100.0" text="Location" textAlignment="CENTER" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="70.0" prefHeight="30.0" prefWidth="100.0" text="Location" textAlignment="CENTER" GridPane.rowIndex="2">
+                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="100.0" prefHeight="30.0" prefWidth="100.0" text="Language" textAlignment="CENTER" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="100.0" prefHeight="30.0" prefWidth="100.0" text="Language" textAlignment="CENTER" GridPane.rowIndex="3">
+                        <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Date" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Date Format" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="(YYYY-MM-DD)" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
                         </Label>
                      </children>
                   </GridPane>
