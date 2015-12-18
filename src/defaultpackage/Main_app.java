@@ -4,7 +4,6 @@ package defaultpackage;
 import java.io.IOException;
 import java.util.Scanner;
 
-import model.User;
 import model.Database;
 import model.Date;
 import model.KeyWord;

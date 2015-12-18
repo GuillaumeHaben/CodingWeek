@@ -1,6 +1,7 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
 import controllerFX.MainApp;
+import defaultpackage.Main_app;
 
 /**
  * Main application, launch the program or in console or in interface, and init

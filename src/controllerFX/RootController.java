@@ -65,6 +65,8 @@ public class RootController extends ControllerFX {
 					+ "\nIn a tweet, the \"Load media\" button opens a window with the media attached"
 					+ "\nA double click on a user in the profile searches puts the user in the research field "
 					+ "to get informations about him.");
+			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(new Image(getClass().getResource("logo.png").toString()));   
 			alert.showAndWait();
 	}
 	
