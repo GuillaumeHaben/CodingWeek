@@ -6,13 +6,20 @@
 
 package controllerFX;
 
+import java.util.Date;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import model.Tweet;
 import model.User;
@@ -28,10 +35,10 @@ public class SimpleController extends ControllerFX {
 	@FXML
 	private TextField date;
 	@FXML
-	private TextField location;
+	private TextField localisation;
 	@FXML
 	private TextField language;
-
+	
 	/**
 	 * The constructor is called before the initialize() method.
 	 */
@@ -52,9 +59,21 @@ public class SimpleController extends ControllerFX {
 				return new ListCell<Tweet>() {
 					protected void updateItem(Tweet item, boolean empty) {
 						super.updateItem(item, empty);
-						if (item != null)
-							// new Image(User.image_URLProperty().get());
-							this.setText(item.textProperty().get());
+						if (item != null) {
+
+                            HBox box = new HBox();
+                            box.setSpacing(10);
+                            Date date = new Date(item.dateProperty().getValue());
+                            VBox currentTweet = new VBox(new Label("@" + item.screen_nameProperty().getValue() + " on " + date + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n")));
+                            
+                            ImageView imageview = new ImageView();
+                            imageview.setFitHeight(50);
+                            imageview.setFitWidth(50);
+                            imageview.setImage(new Image(item.profileProperty().getValue()));
+                            
+                            box.getChildren().addAll(imageview, currentTweet);
+                            setGraphic(box);
+						}
 					}
 				};
 			}
@@ -102,7 +121,7 @@ public class SimpleController extends ControllerFX {
 	 * Launch a request on a specific author
 	 */
 	@FXML
-	public void handleRequest() {
+	public void handleRequest() {/*
 		if (keyword.getText().length() <= 0) {
 			keyword.setStyle("-fx-border-color: #AC58FA;");
 			return;
@@ -111,7 +130,6 @@ public class SimpleController extends ControllerFX {
 		}
 
 		
-		/*
 		case "tweets":
 			userList.setVisible(false);
 			tweetList.setVisible(true);
