@@ -1,8 +1,8 @@
+package defaultpackage;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
 
 import controllerFX.MainApp;
 
@@ -14,6 +14,8 @@ import controllerFX.MainApp;
  * @version 5.0
  */
 public class Main {
+	
+	private static boolean isConsole = false;
 
 	public static void main(String[] args) {
 
@@ -39,6 +41,7 @@ public class Main {
 		// Launch the application in Console or Interface
 		if (args.length > 0) {
 			if (args[0].compareTo("-console") == 0) {
+				setConsole(true);
 				Main_app main_app = new Main_app();
 				main_app.launchApp();
 			} else {
@@ -51,4 +54,12 @@ public class Main {
 		}
 	}
 
+	public static boolean isConsole() {
+		return isConsole;
+	}
+
+	public static void setConsole(boolean isConsole) {
+		Main.isConsole = isConsole;
+	}
+	
 }
