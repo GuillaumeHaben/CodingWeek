@@ -112,7 +112,7 @@ public class SimpleController extends ControllerFX {
                                                 stage.close();
                                             }
                                         );
-                        				stage.getIcons().add(new Image(getClass().getResource("../logo.png").toString()));   
+                        				stage.getIcons().add(new Image(getClass().getResource("logo.png").toString()));   
 
                                         stage.showAndWait();
                                     }
