@@ -76,8 +76,6 @@ public class User {
 			int nb_cursor = 0;
 			PagableResponseList<twitter4j.User> result;
 			
-			int id_request = db.getAutoIncRequest();
-			
 			// Twitter request
 			if (follow.compareTo("Followers") == 0)
 				result = twitter.getFollowersList(screen_name.get(), cursor);
@@ -87,9 +85,19 @@ public class User {
 
 			if(result.size() != 0) {
 				// Insert a new collect
+				int id_request = -1;
 				
-				String query = "INSERT INTO request(type, reference, req) VALUES('user','@" + screen_name.get() + "', '" + follow +"')";
-				if(db.request(query) == -1) return -1;
+				ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
+					+ screen_name.get() + "' AND req = '" + follow + "' LIMIT 1");
+				
+				if (tweetsResult.next()){
+					id_request = tweetsResult.getInt("id");	
+				}
+				else {
+					id_request = db.getAutoIncRequest();
+					String query = "INSERT INTO request VALUES(" + id_request + ", 'user','@" + screen_name.get() + "', '" + follow +"')";
+					if(db.request(query) == -1) return -1;
+				}
 				
 				do {
 					if(cursor != -1){
@@ -104,15 +112,16 @@ public class User {
 						String sc_name = user.getScreenName().replace("\'", "\'\'");
 						String image = user.getProfileImageURL();
 	
-						query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name 
+						tweetsResult = db.select_request("SELECT * FROM user WHERE id_user = "+ user.getId() + " AND id_request = " + id_request);
+							
+						if (!tweetsResult.next()){
+							String query = "INSERT INTO user VALUES(" + user.getId() + "," + id_request + ",'" + name + "','" + sc_name 
 								+ "', '" + image + "');";
-						
-						db.request(query);
-						
+							db.request(query);
+						}
 					}
 					nb_cursor++;
 				} while ((cursor = result.getNextCursor()) != 0 && nb_cursor <5);
-				db.close();
 				
 				return id_request;
 			}
@@ -133,16 +142,27 @@ public class User {
 			// Request to Twitter
 			ResponseList<Status> result = twitter.getFavorites(screen_name.get(), new Paging(like_range, like_range + 100));
 			
+			int id_request = -1;
 			boolean more_tweet = more;
+			
+			if(!more)
+				id_request = db.getAutoIncRequest();
+			else {
+				ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
+						+ screen_name.get() + "' AND req = 'likes' LIMIT 1");
+				if (tweetsResult.next())
+					id_request = tweetsResult.getInt("id");
+			}
+			
 			if(result.size() != 0){
-				if(more){
+				if(!more){
 					// Insert new collect
-					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'likes')";
+					String query = "INSERT INTO request VALUES(" + id_request + ", 'tweet','@" + screen_name.get() + "', 'likes')";
 					if(db.request(query) == -1) return -1;
 				}
 				like_range += 100;
 				
-				return getObjectTweet(result, more_tweet, "likes");
+				return getObjectTweet(result, more_tweet, id_request);
 			}
 		} catch (TwitterException | SQLException | IOException e) {
 		}
@@ -158,18 +178,26 @@ public class User {
 			// Request to Twitter
 			ResponseList<Status> result = twitter.getUserTimeline(screen_name.get(), new Paging(tweet_range, tweet_range +50));
 
+			int id_request = -1;
 			boolean more_tweet = more;
-			if(result.size() != 0){
-				if(more){
+			
+			if(more)
+				tweet_range += 50;
+			
+			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
+					+ screen_name.get() + "' AND req = 'timeline' LIMIT 1");
+			if (tweetsResult.next())
+				id_request = tweetsResult.getInt("id");	
+			else {
+				id_request = db.getAutoIncRequest();
+				if (result.size() != 0){			
 					// Insert new collect
-					String query = "INSERT INTO request(type, reference, req) VALUES('tweet','@" + screen_name.get() + "', 'timeline')";
+					String query = "INSERT INTO request VALUES(" + id_request + ", 'tweet','@" + screen_name.get() + "', 'timeline')";
 					if(db.request(query) == -1) return -1;
 					more = false;
-				}
-				tweet_range += 50;
-				
-				return getObjectTweet(result, more_tweet, "timeline");
+				}				
 			}
+			return getObjectTweet(result, more_tweet, id_request);
 		} catch (TwitterException | SQLException | IOException e) {
 		}
 		return -1;
@@ -182,18 +210,7 @@ public class User {
 	 * @throws SQLException
 	 * @throws IOException 
 	 */
-	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, String req) throws SQLException, IOException {
-		
-		int id_request = -1;
-		if(!more_tweet)
-			id_request = db.getAutoIncRequest();
-		else {
-			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '@"
-					+ screen_name + "' AND req = '" + req + "' LIMIT 1");
-			if (tweetsResult.next())
-				id_request = tweetsResult.getInt("id");	
-			else return -1;
-		}
+	private int getObjectTweet(ResponseList<Status> result, boolean more_tweet, int id_request) throws SQLException, IOException {
 		
 		for (Status status : result) {
 
