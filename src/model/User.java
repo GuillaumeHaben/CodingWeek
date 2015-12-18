@@ -171,6 +171,7 @@ public class User {
 			}
 			return getObjectTweet(result, more_tweet, id_request);
 		} catch (TwitterException | SQLException | IOException e) {
+			e.printStackTrace();
 		}
 		return -1;
 	}
@@ -213,6 +214,7 @@ public class User {
 			}
 			return getObjectTweet(result, more_tweet, id_request);
 		} catch (TwitterException | SQLException | IOException e) {
+			e.printStackTrace();
 		}
 		return -1;
 	}
