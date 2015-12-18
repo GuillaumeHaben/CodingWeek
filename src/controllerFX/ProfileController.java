@@ -232,29 +232,11 @@ public class ProfileController extends ControllerFX {
 					+ username.getText() + "' AND req = 'timeline' LIMIT 1");
 			try {
 				int id_request = 0;
-				if (tweetsResult.next()) {
-					alertUpdate.setTitle("Confirmation Dialog");
-					alertUpdate.setHeaderText(null);
-					alertUpdate.setContentText("   Would do you like to update ?");
-
-					Image image = new Image("file:logo.png");
-					ImageView img = new ImageView(image);
-					alertUpdate.setGraphic(img);
-					Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
-					stage.getIcons().add(image);
-
-					alertUpdate.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-
-					Optional<ButtonType> result = alertUpdate.showAndWait();
-
-					if (result.get() == ButtonType.YES) {
-						id_request = User.startRequest();
-					} else {
+				if (tweetsResult.next())
 						id_request = tweetsResult.getInt("id");
-					}
-				} else {
+				else
 					id_request = User.startRequest();
-				}
+				
 
 				if (id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
@@ -280,30 +262,10 @@ public class ProfileController extends ControllerFX {
 					+ username.getText() + "' AND req = 'likes' LIMIT 1");
 			try {
 				int id_request = 0;
-				if (likesResult.next()) {
-
-					alertUpdate.setTitle("Confirmation Dialog");
-					alertUpdate.setHeaderText(null);
-					alertUpdate.setContentText("   Would do you like to update ?");
-
-					Image image = new Image("file:logo.png");
-					ImageView img = new ImageView(image);
-					alertUpdate.setGraphic(img);
-					Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
-					stage.getIcons().add(image);
-
-					alertUpdate.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-
-					Optional<ButtonType> result = alertUpdate.showAndWait();
-
-					if (result.get() == ButtonType.YES) {
-						id_request = User.getLikes();
-					} else {
-						id_request = likesResult.getInt("id");
-					}
-				} else {
+				if (!likesResult.next())
 					id_request = User.getLikes();
-				}
+				else
+					id_request = likesResult.getInt("id");
 
 				if (id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
@@ -311,9 +273,9 @@ public class ProfileController extends ControllerFX {
 					return;
 				}
 
-				likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+				ResultSet Result = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
 				cleanTweetScreen(tweetList);
-				createTweets(likesResult, tweetList);
+				createTweets(Result, tweetList);
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -333,7 +295,7 @@ public class ProfileController extends ControllerFX {
 
 					alertUpdate.setTitle("Confirmation Dialog");
 					alertUpdate.setHeaderText(null);
-					alertUpdate.setContentText("   Would do you like to update ?");
+					alertUpdate.setContentText("   Would do you like to update the Follower's list ?");
 
 					Image image = new Image("file:logo.png");
 					ImageView img = new ImageView(image);
@@ -380,7 +342,7 @@ public class ProfileController extends ControllerFX {
 				if (followingResult.next()) {
 					alertUpdate.setTitle("Confirmation Dialog");
 					alertUpdate.setHeaderText(null);
-					alertUpdate.setContentText("   Would do you like to update ?");
+					alertUpdate.setContentText("   Would do you like to update the Following's list ?");
 
 					Image image = new Image("file:logo.png");
 					ImageView img = new ImageView(image);
