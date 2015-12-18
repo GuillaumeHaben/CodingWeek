@@ -5,7 +5,6 @@ import java.sql.Statement;
 
 import com.mysql.jdbc.Connection;
 
-import controller.Location;
 import model.Database;
 import model.Date;
 import model.Language;
@@ -85,13 +84,6 @@ public class TestController {
 	Language l = new Language("codingweek", "en", null);
 	assert l.getLanguage() == "en" && l.getKeyword() == "codingweek" : "Error in the getters";
 
-	///////////////////////// TEST LOCATION/////////////////////////////
-
-	/**
-	 * Test getCity() and getCountry()
-	 */
-	Location loc = new Location("Paris", "France", null);
-	assert loc.getCity() == "Paris" && loc.getCountry() == "France" : "Error in the getters";
 
 	//////////////////////// TEST MULTIPARAMS//////////////////////////
 

@@ -131,7 +131,16 @@ public class ProfileController extends ControllerFX {
 			     }
 			}
 		});
+
+		tweetList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				 if (event.getClickCount() == 2) {
+					 username.setText(tweetList.getSelectionModel().getSelectedItem().screen_nameProperty().get());                     
+			     }
+			}
+		});
 		
+		/** Customize cells */
 		tweetList.setCellFactory(new Callback<ListView<Tweet>, ListCell<Tweet>>() {
 			public ListCell<Tweet> call(ListView<Tweet> p) {
 				return new ListCell<Tweet>() {

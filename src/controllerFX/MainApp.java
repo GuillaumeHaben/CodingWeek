@@ -75,7 +75,8 @@ public class MainApp extends Application {
             primaryStage.setMinWidth(600);
             primaryStage.setMaxHeight(400);
             primaryStage.setMaxWidth(600);
-            primaryStage.getIcons().add(new Image("file:logo.png"));
+            System.out.println(getClass().getResource("/image/logo.png"));
+           // primaryStage.getIcons().add(new Image(this.getClass().getResource("file:logo.png").toString()));
             primaryStage.show();
             
         } catch (IOException e) {

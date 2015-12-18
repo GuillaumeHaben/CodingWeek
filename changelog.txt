@@ -32,3 +32,12 @@
 	- Model for GUI
 	- Link controller with view
 	- Distinct packaging
+	
+-----------------
+       v5.0
+-----------------
+
+	- GUI finished
+	- Multiparameters adapted
+	- Simple search adapted
+	- Content available for display
