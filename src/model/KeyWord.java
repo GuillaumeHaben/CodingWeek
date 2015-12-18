@@ -16,7 +16,6 @@ public class KeyWord extends Params {
 
 	/**
 	 * Constructor
-	 * 
 	 * @param keyword : Keyword searched
 	 * @param twitter : Twitter object
 	 */
@@ -30,7 +29,7 @@ public class KeyWord extends Params {
 	}
 
 	/**
-	 * Get Tweets from a keyword and a keyword
+	 * Get Tweets from a keyword
 	 */
 	public void startRequest() {
 		String q = "INSERT INTO request(type, reference) VALUES('user','" + keyword + "')";

@@ -23,12 +23,22 @@ import twitter4j.TwitterException;
 public class Media extends Params {
 
 	private String keyword;
-
+	
+	/**
+	 * Constructor
+	 * @param keyword
+	 * @param twitter
+	 */
 	public Media(String keyword, Twitter twitter) {
 		super(twitter);
 		this.keyword = keyword;
 	}
-
+	/**
+	 * Save media in the correct directory
+	 * @param mediaURL
+	 * @param destinationFile
+	 * @throws IOException
+	 */
 	public static void saveMedia(String mediaURL, String destinationFile) throws IOException {
 		URL url = new URL(mediaURL);
 		InputStream is = url.openStream();
@@ -44,7 +54,11 @@ public class Media extends Params {
 		is.close();
 		os.close();
 	}
-
+	
+	/**
+	 * Delete the media saved
+	 * @param emplacement
+	 */
 	public static void deleteMedia(String emplacement) {
 		File path = new File(emplacement);
 		if (path.exists()) {
@@ -59,6 +73,9 @@ public class Media extends Params {
 		}
 	}
 
+	/**
+	 * Gets media from tweets for a given keyword
+	 */
 	public void startRequest() throws TwitterException {
 		Query query = new Query(keyword);
 		QueryResult result = twitter.search(query);

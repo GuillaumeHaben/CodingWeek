@@ -64,7 +64,7 @@ public class Database {
 	}
 	
 	/**
-	 * Close connection with DB, should be call at the program ends
+	 * Close connection with DB, should be called at the program ends
 	 */
 	public void close() {
 		if (connection != null) {
@@ -118,8 +118,8 @@ public class Database {
 	/**
 	 * Make an insert request to DB
 	 * @param request
-	 * @return 0 erreur, 1 success on insert request
-	 * @return nb row updated on update and delete request
+	 * @return 0 error, 1 success on insert request
+	 * @return number row updated on update and delete request
 	 */
 	public int request(String request){
 		try {
@@ -136,7 +136,7 @@ public class Database {
 	}
 	
 	/**
-	 * Get the Auto Increment of Request Tabke
+	 * Get the Auto Increment of Request Table
 	 * @return Auto Increment
 	 * @throws SQLException
 	 */

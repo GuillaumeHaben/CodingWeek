@@ -81,7 +81,7 @@ public class SimpleController extends ControllerFX {
 	}
 
 	/**
-	 * Returns the data as an observable list of Tweet
+	 * Returns the data as an observable list of Tweets
 	 * 
 	 * @return tweetObservable
 	 */
