@@ -6,20 +6,27 @@
 
 package controllerFX;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.KeyWord;
 import model.Tweet;
@@ -65,8 +72,53 @@ public class SimpleController extends ControllerFX {
                             HBox box = new HBox();
                             box.setSpacing(10);
                             Date date = new Date(item.dateProperty().getValue());
-                            VBox currentTweet = new VBox(new Label("@" + item.screen_nameProperty().getValue() + " on " + date + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n")));
                             
+                            Label tweetView = new Label("@" + item.screen_nameProperty().getValue() + " on " + date + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n"));
+                           
+                            VBox currentTweet;
+                            if (item.contentProperty().get().compareTo("") != 0) {
+                                Button mediaLoad = new Button("Load Media");
+                                mediaLoad.setStyle("-fx-base: #ecf0f1;");
+                                mediaLoad.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+
+                                        BorderPane pane;
+                                        Scene scene;
+                                        Stage stage;
+                                        File imageFile;
+                                        Image image;
+                                        ImageView imageView;
+                                        
+                                        String destFile[] = item.contentProperty().get().split("/");
+                    					String destinationFile = destFile[4];
+                    					System.out.println("./SavedMedia/" + destinationFile);
+                                        imageFile = new File("./SavedMedia/" + destinationFile);
+                                        
+                                        image = new Image(imageFile.toURI().toString());
+                                        imageView = new ImageView(image);
+                                        pane = new BorderPane();
+                                        pane.setCenter(imageView);
+                                        scene = new Scene(pane);
+                                        stage = new Stage();
+                                        stage.setScene(scene);
+                                        // Without this, the audio won't stop!
+                                        stage.setOnCloseRequest(
+                                            e -> {
+                                                e.consume();
+                                                stage.close();
+                                            }
+                                        );
+                                        stage.getIcons().add(new Image("file:logo.png"));
+                                        stage.showAndWait();
+                                    }
+                                });
+                                currentTweet = new VBox(tweetView, mediaLoad);
+                            }
+                            else {
+                                currentTweet = new VBox(tweetView);
+                            }
+
                             ImageView imageview = new ImageView();
                             imageview.setFitHeight(50);
                             imageview.setFitWidth(50);
@@ -74,6 +126,8 @@ public class SimpleController extends ControllerFX {
                             
                             box.getChildren().addAll(imageview, currentTweet);
                             setGraphic(box);
+							//this.setText(item.textProperty().get());
+							// new Image(User.image_URLProperty().get());
 						}
 					}
 				};
