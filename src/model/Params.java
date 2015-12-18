@@ -31,7 +31,7 @@ public abstract class Params implements Collect {
 	
 	/**
 	 * Insert into DB new Tweet Object - Print 
-	 * @param result : Tweet obtenus
+	 * @param result : obtained tweet
 	 * @throws SQLException
 	 */
 	protected void getObjectTweet(QueryResult result) throws SQLException {
