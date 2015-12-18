@@ -1,7 +1,7 @@
 /**
  * This class collects create an object Tweet
  * @author The Coding Bang Fraternity
- * @version 4.0
+ * @version 5.0
  */
 
 package model;
