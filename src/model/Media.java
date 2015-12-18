@@ -1,3 +1,9 @@
+/**
+ * This class is used to collect medias with a specific keyword
+ * @author The Coding Bang Fraternity
+ * @version 5.0
+ */
+
 package model;
 
 import java.io.File;

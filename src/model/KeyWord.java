@@ -1,7 +1,7 @@
 /**
  * This class is used to collect tweets with a specific keyword
  * @author The Coding Bang Fraternity
- * @version 4.0
+ * @version 5.0
  */
 
 package model;

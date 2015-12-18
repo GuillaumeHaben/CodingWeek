@@ -1,7 +1,7 @@
 /**
  * Main application, launch the program and init the layouts
  * @author The Coding Bang Fraternity
- * @version 4.0
+ * @version 5.0
  */
 
 package controllerFX;
