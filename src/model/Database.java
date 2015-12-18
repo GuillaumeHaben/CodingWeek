@@ -6,6 +6,7 @@
 
 package model;
 
+import java.io.File;
 import java.sql.*;
 
 public class Database {
@@ -85,6 +86,7 @@ public class Database {
 			statement.executeUpdate("DELETE FROM tweet");
 			statement.executeUpdate("DELETE FROM user");
 			statement.executeUpdate("VACUUM");
+			new File("SavedMedia").mkdir(); 
 			Media.deleteMedia("./SavedMedia/");;
 			statement.close();
 			close();

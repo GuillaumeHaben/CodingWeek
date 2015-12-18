@@ -237,7 +237,9 @@ public class User {
 			MediaEntity[] mediaEntity = status.getMediaEntities();
 			if(mediaEntity.length > 0){
 				URL = mediaEntity[0].getMediaURL().toString();
-				Media.saveMedia(URL, URL);
+				String destFile[] = mediaEntity[0].getMediaURL().toString().split("/");
+				String destinationFile = destFile[4];
+				Media.saveMedia(URL, destinationFile);
 			}
 
 			if (g != null) {
