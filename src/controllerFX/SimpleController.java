@@ -31,10 +31,6 @@ public class SimpleController extends ControllerFX {
 	private TextField location;
 	@FXML
 	private TextField language;
-	@FXML
-	private Button more;
-
-	private User User;
 
 	/**
 	 * The constructor is called before the initialize() method.
@@ -49,7 +45,6 @@ public class SimpleController extends ControllerFX {
 	 * Initialize cell format and list
 	 */
 	public void initialize() {
-		more.setDisable(true);
 		tweetList.setItems(tweetObservable);
 
 		tweetList.setCellFactory(new Callback<ListView<Tweet>, ListCell<Tweet>>() {

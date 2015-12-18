@@ -11,7 +11,7 @@
 	<tabs>
 	    <Tab fx:id="simpleController" closable="false" text="Simple Search">
 	       <content>
-	          <fx:include fx:id="simpleoverview" source="SimpleOverview.fxml" />
+	          
 	       </content>
 	    </Tab>
 	    <Tab fx:id="profileController" closable="false" text="Profile Search">
