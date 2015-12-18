@@ -15,7 +15,7 @@ public class Main {
 		Double version = Double.parseDouble(System.getProperty("java.specification.version"));
 
 		if (version < 1.8) {
-		    System.out.println("Your version of java isn't compatible. Please upgrade to Java 1.8 or more.");
+		    System.out.println("Your version of Java isn't compatible. Please upgrade to Java 1.8 or more.");
 		}
 		
 		// Launch the application in Console or Interface
