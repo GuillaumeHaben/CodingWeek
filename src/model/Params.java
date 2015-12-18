@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.Collect;
 import twitter4j.GeoLocation;
 import twitter4j.MediaEntity;
 import twitter4j.Place;

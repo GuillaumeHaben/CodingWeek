@@ -5,10 +5,10 @@ import java.sql.Statement;
 
 import com.mysql.jdbc.Connection;
 
-import controller.Date;
-import controller.Language;
 import controller.Location;
 import model.Database;
+import model.Date;
+import model.Language;
 
 public class TestController {
 

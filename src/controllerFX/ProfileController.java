@@ -18,7 +18,6 @@ import javafx.event.EventHandler;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -37,6 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Tweet;
@@ -123,9 +123,19 @@ public class ProfileController extends ControllerFX {
 			}
 		});
 
+		/** Handle double click */
+		userList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				 if (event.getClickCount() == 2) {
+					 username.setText(userList.getSelectionModel().getSelectedItem().screen_nameProperty().get());                     
+			     }
+			}
+		});
+		
 		tweetList.setCellFactory(new Callback<ListView<Tweet>, ListCell<Tweet>>() {
 			public ListCell<Tweet> call(ListView<Tweet> p) {
 				return new ListCell<Tweet>() {
+					@SuppressWarnings("deprecation")
 					protected void updateItem(Tweet item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
@@ -134,7 +144,7 @@ public class ProfileController extends ControllerFX {
                             box.setSpacing(10);
                             Date date = new Date(item.dateProperty().getValue());
                             
-                            Label tweetView = new Label("@" + item.screen_nameProperty().getValue() + " on " + date + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n"));
+                            Label tweetView = new Label("@" + item.screen_nameProperty().getValue() + " on " + date.toLocaleString() + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n"));
                            
                             VBox currentTweet;
                             if (item.contentProperty().get().compareTo("") != 0) {
@@ -259,17 +269,6 @@ public class ProfileController extends ControllerFX {
 			loader.setText("Warning : Username is not valid !");
 	}
 
-	
-	
-	
-	public void changedText(){
-		System.out.println("click");
-		if(!userList.isDisable())
-			username.setText(userList.getSelectionModel().getSelectedItem().screen_nameProperty().get());
-	}
-	
-	
-	
 	/**
 	 * Launch a request on a specific author
 	 * @throws IOException 
