@@ -1,11 +1,12 @@
 /**
  * Main application, launch the program and init the layouts
  * @author The Coding Bang Fraternity
- * @version 4.0
+ * @version 5.0
  */
 
 package controllerFX;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -38,6 +39,8 @@ public class MainApp extends Application {
 		contractor.setOAuthConsumerKey("qz06S2cROTQm1KYmuyNxFTEcr");
 		contractor.setOAuthConsumerSecret("ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
 		Configuration configuration = contractor.build();
+		
+		new File("SavedMedia").mkdir(); 
 		
 		TwitterFactory factory = new TwitterFactory(configuration);
 		twitter = factory.getInstance();

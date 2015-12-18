@@ -1,7 +1,7 @@
 /**
  * This class allows access and requests to database
  * @author The Coding Bang Fraternity
- * @version 4.0
+ * @version 5.0
  */
 
 package model;
@@ -86,8 +86,8 @@ public class Database {
 			statement.executeUpdate("DELETE FROM tweet");
 			statement.executeUpdate("DELETE FROM user");
 			statement.executeUpdate("VACUUM");
+			Media.deleteMedia("./SavedMedia/");
 			new File("SavedMedia").mkdir(); 
-			Media.deleteMedia("./SavedMedia/");;
 			statement.close();
 			close();
 			

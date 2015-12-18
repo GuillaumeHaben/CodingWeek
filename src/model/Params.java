@@ -1,7 +1,7 @@
 /**
  * This abstract class handle params queries
  * @author The Coding Bang Fraternity
- * @version 2.0
+ * @version 5.0
  */
 
 package model;

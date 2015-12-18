@@ -1,7 +1,7 @@
 /**
  * Controller for ProfileOverview
  * @author The Coding Bang Fraternity
- * @version 4.0
+ * @version 5.0
  */
 
 package controllerFX;
@@ -20,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -240,7 +241,8 @@ public class ProfileController extends ControllerFX {
 
 				if (id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknow || Error");
+					loader.setText("Username unknown");
+					loader.setTextFill(Color.RED);
 					return;
 				}
 
@@ -269,7 +271,8 @@ public class ProfileController extends ControllerFX {
 
 				if (id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknown || Error");
+					loader.setText("Username unknown");
+					loader.setTextFill(Color.RED);
 					return;
 				}
 
@@ -318,7 +321,8 @@ public class ProfileController extends ControllerFX {
 
 				if (id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknown || Error");
+					loader.setText("Username unknown");
+					loader.setTextFill(Color.RED);
 					return;
 				}
 
@@ -365,7 +369,8 @@ public class ProfileController extends ControllerFX {
 
 				if (id_request == -1) {
 					username.setStyle("-fx-border-color: #AC58FA;");
-					loader.setText("Warning : User unknown || Error ");
+					loader.setText("Username unknown");
+					loader.setTextFill(Color.RED);
 					return;
 				}
 
@@ -381,7 +386,8 @@ public class ProfileController extends ControllerFX {
 		case "informations":
 			if (User.getInformation() == -1) {
 				username.setStyle("-fx-border-color: #AC58FA;");
-				loader.setText("Warning : User unknown");
+				loader.setText("Username unknown");
+				loader.setTextFill(Color.RED);
 			} else {
 
 				Alert alert = new Alert(AlertType.INFORMATION);

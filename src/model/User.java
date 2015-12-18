@@ -1,7 +1,7 @@
 /**
  * This class collects all the informations about a specific User
  * @author The Coding Bang Fraternity
- * @version 4.0
+ * @version 5.0
  */
 
 package model;
@@ -171,6 +171,7 @@ public class User {
 			}
 			return getObjectTweet(result, more_tweet, id_request);
 		} catch (TwitterException | SQLException | IOException e) {
+			e.printStackTrace();
 		}
 		return -1;
 	}
@@ -213,6 +214,7 @@ public class User {
 			}
 			return getObjectTweet(result, more_tweet, id_request);
 		} catch (TwitterException | SQLException | IOException e) {
+			e.printStackTrace();
 		}
 		return -1;
 	}
