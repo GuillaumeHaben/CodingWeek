@@ -7,21 +7,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllerFX.MainController">
-   <children>
-      <TabPane layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <tabs>
-            <Tab closable="false" text="Simple Search">
-               <content>
-                  <fx:include fx:id="simpleoverview" source="SimpleOverview.fxml" />
-               </content>
-            </Tab>
-            <Tab closable="false" text="Profile Search">
-               <content>
-                  <fx:include fx:id="profileoverview" source="ProfileOverview.fxml" />
-               </content>
-            </Tab>
-         </tabs>
-      </TabPane>
-   </children>
-</AnchorPane>
+<TabPane fx:id="tabPane" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllerFX.MainController">
+	<tabs>
+	    <Tab fx:id="simpleController" closable="false" text="Simple Search">
+	       <content>
+	          <fx:include fx:id="simpleoverview" source="SimpleOverview.fxml" />
+	       </content>
+	    </Tab>
+	    <Tab fx:id="profileController" closable="false" text="Profile Search">
+	       <content>
+	          <fx:include fx:id="profileoverview" source="ProfileOverview.fxml" />
+	       </content>
+	    </Tab>
+	 </tabs>
+ </TabPane>

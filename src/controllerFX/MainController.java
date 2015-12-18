@@ -7,9 +7,12 @@
 package controllerFX;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
 
 public class MainController extends ControllerFX {
-	@FXML ProfileController ProfileController;
+	@FXML private ProfileController profileController;
+	@FXML private SimpleController simpleController;
+	@FXML private TabPane tabPane;
 	
 	public MainController() {
     	super();
