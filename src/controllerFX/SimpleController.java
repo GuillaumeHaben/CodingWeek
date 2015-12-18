@@ -72,10 +72,8 @@ public class SimpleController extends ControllerFX {
                             HBox box = new HBox();
                             box.setSpacing(10);
                             Date date = new Date(item.dateProperty().getValue());
-                            
-                            Label tweetView = new Label("@" + item.screen_nameProperty().getValue() + " on " + date + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n"));
-                           
                             VBox currentTweet;
+                            Label tweetView = new Label("@" + item.screen_nameProperty().getValue() + " on " + date + "\n" + item.textProperty().getValue().replaceAll("(.{30} )", "$1\n"));
                             if (item.contentProperty().get().compareTo("") != 0) {
                                 Button mediaLoad = new Button("Load Media");
                                 mediaLoad.setStyle("-fx-base: #ecf0f1;");
