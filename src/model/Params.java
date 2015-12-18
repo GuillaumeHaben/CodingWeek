@@ -6,6 +6,8 @@
 
 package model;
 
+import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import controller.Collect;
@@ -21,7 +23,7 @@ public abstract class Params implements Collect {
 
 	protected Twitter twitter;
 	protected Database db;
-	public abstract void startRequest() throws TwitterException;
+	public abstract int startRequest() throws TwitterException;
 	public abstract void logConsole(Status status);
 
 	public Params(Twitter twitter){
@@ -29,52 +31,71 @@ public abstract class Params implements Collect {
 		this.twitter = twitter;
 	}
 	
+	
 	/**
-	 * Insert into DB new Tweet Object - Print 
+	 * Insert into DB new Tweet Object
 	 * @param result : obtained tweet
+	 * @return id_request
 	 * @throws SQLException
 	 */
-	protected void getObjectTweet(QueryResult result) throws SQLException {
-		int id_request = db.getAutoIncRequest();
+	protected int getObjectTweet(QueryResult result, int id_request) throws SQLException {
+		int taille_tot = result.getCount();
+		int compteur = 0;
 
 		for (Status status : result.getTweets()) {
-
-			// Fetch all the available informations
-			String text = status.getText().replace("\'", "\\'");
-			String name = status.getUser().getName().replace("\'", "\\'");
-			String sc_name = status.getUser().getScreenName().replace("\'", "\\'");
-
-			java.util.Date date_tweet = status.getCreatedAt();
-
-			int retweet = status.getRetweetCount();
-			Place p = status.getPlace();
-			GeoLocation g = status.getGeoLocation();
-
-			String city = null, country = null;
-			double latitude = 0, longitude = 0;
-			if (p != null) {
-				city = p.getName();
-				country = p.getCountry();
-			}
-
-			if (g != null) {
-				latitude = g.getLatitude();
-				longitude = g.getLongitude();
-			}
 			
-			String URL = "";
-			MediaEntity[] mediaEntity = status.getMediaEntities();
-			if(mediaEntity.length > 0){
-				URL = mediaEntity[0].toString();
-			}
-			
-			String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
-					+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
-					+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + URL + "');";
-			db.request(query);
+			compteur++;
+			if(compteur > taille_tot - 20){
 
-			// Console display
-			//this.logConsole(status);
+				// Fetch all the available informations
+				String text = status.getText().replace("\'", "\'\'");
+				String name = status.getUser().getName().replace("\'", "\'\'");
+				String sc_name = status.getUser().getScreenName().replace("\'", "\'\'");
+		
+				java.util.Date date_tweet = status.getCreatedAt();
+		
+				int retweet = status.getRetweetCount();
+				Place p = status.getPlace();
+				GeoLocation g = status.getGeoLocation();
+		
+				String city = null, country = null;
+				double latitude = 0, longitude = 0;
+				if (p != null) {
+					city = p.getName();
+					country = p.getCountry();
+				}
+				
+				String img_profile = status.getUser().getProfileImageURL();
+				String URL = "";
+				MediaEntity[] mediaEntity = status.getMediaEntities();
+				if (mediaEntity.length > 0) {
+					URL = mediaEntity[0].getMediaURL().toString();
+					String destFile[] = mediaEntity[0].getMediaURL().toString().split("/");
+					String destinationFile = destFile[4];
+					try {
+						Media.saveMedia(URL, destinationFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+		
+				if (g != null) {
+					latitude = g.getLatitude();
+					longitude = g.getLongitude();
+				}
+				
+				ResultSet Result = db.select_request(
+						"SELECT * FROM tweet WHERE id_tweet = " + status.getId() + " AND id_request = " + id_request);
+	
+				if (!Result.next()) {
+					String query = "INSERT INTO tweet VALUES(" + status.getId() + "," + id_request + ",'" + name + "','"
+							+ sc_name + "','" + text + "', " + retweet + ", '" + city + "', '" + country + "', " + latitude
+							+ ", " + longitude + ", " + date_tweet.getTime() + ", '" + img_profile + "', '" + URL + "');";
+					db.request(query);
+				}
+			}
 		}
+		db.close();
+		return id_request;
 	}
 }

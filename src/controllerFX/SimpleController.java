@@ -6,12 +6,12 @@
 
 package controllerFX;
 
+import java.sql.ResultSet;
 import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -21,8 +21,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import model.KeyWord;
 import model.Tweet;
-import model.User;
 
 public class SimpleController extends ControllerFX {
 
@@ -53,7 +53,8 @@ public class SimpleController extends ControllerFX {
 	 */
 	public void initialize() {
 		tweetList.setItems(tweetObservable);
-
+		localisation.setDisable(true);
+		
 		tweetList.setCellFactory(new Callback<ListView<Tweet>, ListCell<Tweet>>() {
 			public ListCell<Tweet> call(ListView<Tweet> p) {
 				return new ListCell<Tweet>() {
@@ -89,39 +90,11 @@ public class SimpleController extends ControllerFX {
 		return tweetList.getItems();
 	}
 
-	/*public void moreResult() {
-		if (User != null && User.screen_nameProperty().get().compareTo(username.getText()) == 0) {
-			int id_request = 0;
-			switch (((RadioButton) choice.getSelectedToggle()).getId()) {
-
-			case "tweets":
-				User.setMore(true);
-				User.startRequest();
-
-				ResultSet tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
-				createTweets(tweetsResult, tweetList);
-				break;
-
-			case "likes":
-				User.setMore(true);
-				User.getLikes();
-
-				ResultSet likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
-				createTweets(likesResult, tweetList);
-				break;
-
-			default:
-				break;
-			}
-		} else
-			loader.setText("Warning : Username is not valid !");
-	}*/
-
 	/**
-	 * Launch a request on a specific author
+	 * Launch a request on a keyword with parameters
 	 */
 	@FXML
-	public void handleRequest() {/*
+	public void handleRequest() {
 		if (keyword.getText().length() <= 0) {
 			keyword.setStyle("-fx-border-color: #AC58FA;");
 			return;
@@ -129,7 +102,15 @@ public class SimpleController extends ControllerFX {
 			keyword.setStyle("");
 		}
 
-		
+		if(date.getText().length() == 0 && language.getText().length() == 0){
+			KeyWord kw = new KeyWord(keyword.getText(), this.getTwitter());
+			int id_request = kw.startRequest();
+			ResultSet tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+			cleanTweetScreen(tweetList);
+			createTweets(tweetsResult, tweetList);
+
+		}
+		/*
 		case "tweets":
 			userList.setVisible(false);
 			tweetList.setVisible(true);

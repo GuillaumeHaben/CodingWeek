@@ -30,10 +30,10 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField id= "keyword" fx:id="keyword" GridPane.columnIndex="1" />
-                        <TextField id= "date" fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id= "localisation" fx:id="localisation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField id= "language" fx:id="language" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField id="keyword" fx:id="keyword" GridPane.columnIndex="1" />
+                        <TextField id="date" fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField id="localisation" fx:id="localisation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField id="language" fx:id="language" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="40.0" prefHeight="30.0" prefWidth="100.0" text="Date" textAlignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
@@ -62,7 +62,7 @@
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Search..." />
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleRequest" text="Search..." />
                      </children>
                   </GridPane>
                </children>
