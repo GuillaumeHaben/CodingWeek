@@ -11,6 +11,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -86,13 +87,12 @@ public class MainApp extends Application {
     public void showMainOverview() {
         try {
             // Load profile overview
-            FXMLLoader loader = new FXMLLoader();
+            
+        	FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/MainOverview.fxml"));
-            AnchorPane profileOverview = (AnchorPane) loader.load();
-            
-            //AnchorPane SimpleOverview = (AnchorPane) loader.load();
-            
-            rootLayout.setCenter(profileOverview);
+           
+            TabPane tab = (TabPane) loader.load();
+            rootLayout.setCenter(tab);
             
             MainController controller = loader.getController();
             controller.setMainApp(this);
