@@ -18,13 +18,9 @@
                     <MenuItem mnemonicParsing="false" onAction="#Reinit" text="Reset Database" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Export">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="CSV" />
-                  </items>
-                </Menu>
                 <Menu mnemonicParsing="false" text="?">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#Reinit" text="Help" />
                         <MenuItem mnemonicParsing="false" onAction="#Credit" text="Credits" />
                      </items></Menu>
               </menus>
