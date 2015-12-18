@@ -1,9 +1,5 @@
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
-
 import controllerFX.MainApp;
 
 /**
@@ -34,6 +30,7 @@ public class Main {
 			}
 		} catch (Exception exception) {
 			System.out.println("You haven't an Internet connection");
+			return;
 		}
 
 		// Launch the application in Console or Interface
