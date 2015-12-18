@@ -3,11 +3,11 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-import controller.Date;
-import controller.Language;
 import controller.User;
 import model.Database;
+import model.Date;
 import model.KeyWord;
+import model.Language;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
