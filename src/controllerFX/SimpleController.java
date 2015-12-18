@@ -96,7 +96,6 @@ public class SimpleController extends ControllerFX {
                                         
                                         String destFile[] = item.contentProperty().get().split("/");
                     					String destinationFile = destFile[4];
-                    					System.out.println("./SavedMedia/" + destinationFile);
                                         imageFile = new File("./SavedMedia/" + destinationFile);
                                         
                                         image = new Image(imageFile.toURI().toString());
@@ -113,7 +112,8 @@ public class SimpleController extends ControllerFX {
                                                 stage.close();
                                             }
                                         );
-                                        stage.getIcons().add(new Image("file:logo.png"));
+                        				stage.getIcons().add(new Image(getClass().getResource("../logo.png").toString()));   
+
                                         stage.showAndWait();
                                     }
                                 });

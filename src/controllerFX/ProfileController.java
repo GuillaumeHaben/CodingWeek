@@ -172,7 +172,6 @@ public class ProfileController extends ControllerFX {
                                         
                                         String destFile[] = item.contentProperty().get().split("/");
                     					String destinationFile = destFile[4];
-                    					System.out.println("./SavedMedia/" + destinationFile);
                                         imageFile = new File("./SavedMedia/" + destinationFile);
                                         
                                         image = new Image(imageFile.toURI().toString());
@@ -189,7 +188,7 @@ public class ProfileController extends ControllerFX {
                                                 stage.close();
                                             }
                                         );
-                                        stage.getIcons().add(new Image("file:logo.png"));
+                        				stage.getIcons().add(new Image(getClass().getResource("../logo.png").toString()));
                                         stage.showAndWait();
                                     }
                                 });
@@ -371,7 +370,7 @@ public class ProfileController extends ControllerFX {
 					alertUpdate.setHeaderText(null);
 					alertUpdate.setContentText("   Would do you like to update the Follower's list ?");
 
-					Image image = new Image("file:logo.png");
+					Image image = new Image(getClass().getResource("../logo.png").toString());   
 					ImageView img = new ImageView(image);
 					alertUpdate.setGraphic(img);
 					Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
@@ -419,7 +418,7 @@ public class ProfileController extends ControllerFX {
 					alertUpdate.setHeaderText(null);
 					alertUpdate.setContentText("   Would do you like to update the Following's list ?");
 
-					Image image = new Image("file:logo.png");
+					Image image = new Image(getClass().getResource("../logo.png").toString());   
 					ImageView img = new ImageView(image);
 					alertUpdate.setGraphic(img);
 					Stage stage = (Stage) alertUpdate.getDialogPane().getScene().getWindow();
@@ -472,7 +471,7 @@ public class ProfileController extends ControllerFX {
 				ImageView img = new ImageView(image);
 				alert.setGraphic(img);
 				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-				stage.getIcons().add(new Image("file:logo.png"));
+				stage.getIcons().add(new Image(getClass().getResource("../logo.png").toString()));   
 
 				alert.showAndWait();
 			}
