@@ -223,7 +223,7 @@ public class User {
 	 * Insert into DB new Tweet Object - Print
 	 * 
 	 * @param result
-	 *            : Tweet obtenus
+	 *            : Tweet obtained
 	 * @throws SQLException
 	 * @throws IOException
 	 */
