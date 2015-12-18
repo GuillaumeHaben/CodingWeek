@@ -183,7 +183,7 @@ public class ProfileController extends ControllerFX {
 
 			case "tweets":
 				User.setMore(true);
-				User.startRequest();
+				id_request = User.startRequest();
 
 				ResultSet tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
 				cleanTweetScreen(tweetList);
@@ -192,7 +192,7 @@ public class ProfileController extends ControllerFX {
 
 			case "likes":
 				User.setMore(true);
-				User.getLikes();
+				id_request = User.getLikes();
 
 				ResultSet likesResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
 				cleanTweetScreen(tweetList);

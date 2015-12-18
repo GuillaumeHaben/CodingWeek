@@ -141,11 +141,11 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public int getAutoIncRequest() throws SQLException{
-		String query = "SELECT last_insert_rowid() AS rowid FROM request LIMIT 1";
+		String query = "SELECT COUNT(*) AS rowid FROM request LIMIT 1";
 		ResultSet res = this.select_request(query);
 		if(!res.next())
 			return 1;
 
-		return res.getInt("rowid")+2;
+		return res.getInt("rowid")+1;
 	}
 }
