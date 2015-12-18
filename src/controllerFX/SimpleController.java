@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.KeyWord;
 import model.Language;
+import model.Multiparams;
 import model.Tweet;
 
 public class SimpleController extends ControllerFX {
@@ -206,5 +207,16 @@ public class SimpleController extends ControllerFX {
 			createTweets(tweetsResult, tweetList);
 			return;
 		}
+		
+		Multiparams mp = new Multiparams(keyword.getText(), language.getText(), date.getText(), this.getTwitter());
+		int id_request = mp.startRequest();
+		if(id_request == -1){
+			loader.setText("An error occured..");
+			return;
+		}
+		ResultSet tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+		cleanTweetScreen(tweetList);
+		createTweets(tweetsResult, tweetList);
+		return;
 	}
 }

@@ -4,11 +4,11 @@
  * @version 2.0
  */
 
-package controller;
+package model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Params;
 import twitter4j.Query;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -19,7 +19,6 @@ public class Multiparams extends Params {
 	private String keyword;
 	private String language = "";
 	private String date = "";
-	private String screen_name = "";
 	
 	/**
 	 * Constructor
@@ -29,12 +28,11 @@ public class Multiparams extends Params {
 	 * @param screen_name : author of the tweet
 	 * @param twitter : Twitter object
 	 */
-	public Multiparams(String keyword, String language, String date, String screen_name, Twitter twitter) {
+	public Multiparams(String keyword, String language, String date, Twitter twitter) {
 		super(twitter);
 		this.keyword = keyword;
 		this.language = language;
 		this.date = date;
-		this.screen_name = screen_name;
 	}
 
 	public String getLanguage() {
@@ -50,40 +48,40 @@ public class Multiparams extends Params {
 		return date;
 	}
 	
-	public String getScreen_Name() {
-		return screen_name;
-	}
-
 	/**
 	 *  Get Tweets from a keyword, a language, a date, an author
 	 */
-	public void startRequest() {
-		String q = "INSERT INTO request(type, reference) VALUES('user','" + keyword + ", multiparameters ')";
-		db.request(q);
-		
-		Query query = null;
-		assert keyword != "";
-		
-		if (keyword != "") {
-			String request = keyword;
-			if (screen_name != "")
-				request += " from:" + screen_name;
+	public int startRequest() {
+		try {
+			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '" 
+					+ keyword + "' AND req = 'params' LIMIT 1");
+			int id_request = -1;
 			
-			query = new Query(request);
+			if (tweetsResult.next()) {
+				id_request = tweetsResult.getInt("id");
+			} else {
+				id_request = db.getAutoIncRequest();
+				String qu = "INSERT INTO request VALUES(" + id_request + ", 'user','" + keyword + "', 'params')";
+				
+				if (db.request(qu) == -1)
+					return -1;
+			}		
+			
+			Query query = new Query(keyword);
 			if (language != "")
 				query.setLang(language);
 			
 			if (date != "")
 				query.setSince(date);
 			
-			try {
-				getObjectTweet(twitter.search(query));
-				
-			} catch (TwitterException | SQLException e) {
-				e.printStackTrace();
-			}
-		} else return;
-    }
+			getObjectTweet(twitter.search(query), id_request);
+			return id_request;
+
+		} catch (TwitterException | SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 
 	public void logConsole(Status status) {
 		System.out.println("\n@" + status.getUser().getScreenName() + " : " + status.getText());		
