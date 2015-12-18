@@ -24,7 +24,7 @@ public class RootController extends ControllerFX {
 		alert.setContentText("App made with love by Clémence MOULIN, Kilian CUNY, Quentin PAYET & Guillaume HABEN !");
 		
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(new Image("file:logo.png"));
+		stage.getIcons().add(new Image(getClass().getResource("../logo.png").toString()));   
 
 		alert.setGraphic(null);		
 		alert.showAndWait();

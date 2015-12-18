@@ -46,7 +46,7 @@ public class Language extends Params {
 	public int startRequest() {
 		try {
 			ResultSet tweetsResult = db.select_request("SELECT id_request as id FROM request WHERE reference = '" 
-					+ keyword + "' AND req = 'date' LIMIT 1");
+					+ keyword + "' AND req = 'lang' LIMIT 1");
 			int id_request = -1;
 			
 			if (tweetsResult.next()) {
@@ -54,7 +54,7 @@ public class Language extends Params {
 			} else {
 				id_request = db.getAutoIncRequest();
 				String qu = "INSERT INTO request VALUES(" + id_request + ", 'tweet','" + keyword
-						+ "', 'date')";
+						+ "', 'lang')";
 				
 				if (db.request(qu) == -1)
 					return -1;

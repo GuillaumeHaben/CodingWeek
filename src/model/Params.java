@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import defaultpackage.Main;
 import twitter4j.GeoLocation;
 import twitter4j.MediaEntity;
 import twitter4j.Place;
@@ -42,6 +43,10 @@ public abstract class Params implements Collect {
 		int compteur = 0;
 
 		for (Status status : result.getTweets()) {
+			
+			if (Main.isConsole()) {
+				logConsole(status);
+			}
 			
 			compteur++;
 			if(compteur > taille_tot - 20){

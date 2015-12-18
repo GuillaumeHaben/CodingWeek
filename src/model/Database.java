@@ -106,7 +106,7 @@ public class Database {
 		try {
 			init();
 			PreparedStatement ps = connection.prepareStatement(request);
-			System.out.println(request);
+			//System.out.println(request);
 			return ps.executeQuery();	
 			
 		} catch (SQLException e) {
@@ -125,7 +125,7 @@ public class Database {
 		try {
 			init();
 			PreparedStatement ps = connection.prepareStatement(request);
-			System.out.println(request);
+			//System.out.println(request);
 			return ps.executeUpdate();	
 			
 		} catch (SQLException e) {

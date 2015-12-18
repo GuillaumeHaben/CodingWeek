@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.KeyWord;
 import model.Language;
+import model.Multiparams;
 import model.Tweet;
 
 public class SimpleController extends ControllerFX {
@@ -75,6 +76,7 @@ public class SimpleController extends ControllerFX {
 
                             HBox box = new HBox();
                             box.setSpacing(10);
+
                             Date date = new Date(item.dateProperty().getValue());
                             VBox currentTweet;
                             Label tweetView = new Label("@" + item.screen_nameProperty().getValue() + " on " + date.toLocaleString() + "\n" + item.textProperty().getValue().replaceAll("(.{40} )", "$1\n"));     
@@ -94,7 +96,6 @@ public class SimpleController extends ControllerFX {
                                         
                                         String destFile[] = item.contentProperty().get().split("/");
                     					String destinationFile = destFile[4];
-                    					System.out.println("./SavedMedia/" + destinationFile);
                                         imageFile = new File("./SavedMedia/" + destinationFile);
                                         
                                         image = new Image(imageFile.toURI().toString());
@@ -111,7 +112,8 @@ public class SimpleController extends ControllerFX {
                                                 stage.close();
                                             }
                                         );
-                                        stage.getIcons().add(new Image("file:logo.png"));
+                        				stage.getIcons().add(new Image(getClass().getResource("../logo.png").toString()));   
+
                                         stage.showAndWait();
                                     }
                                 });
@@ -206,5 +208,16 @@ public class SimpleController extends ControllerFX {
 			createTweets(tweetsResult, tweetList);
 			return;
 		}
+		
+		Multiparams mp = new Multiparams(keyword.getText(), language.getText(), date.getText(), this.getTwitter());
+		int id_request = mp.startRequest();
+		if(id_request == -1){
+			loader.setText("An error occured..");
+			return;
+		}
+		ResultSet tweetsResult = db.select_request("SELECT * FROM tweet WHERE id_request = " + id_request);
+		cleanTweetScreen(tweetList);
+		createTweets(tweetsResult, tweetList);
+		return;
 	}
 }
