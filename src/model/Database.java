@@ -86,8 +86,8 @@ public class Database {
 			statement.executeUpdate("DELETE FROM tweet");
 			statement.executeUpdate("DELETE FROM user");
 			statement.executeUpdate("VACUUM");
+			Media.deleteMedia("./SavedMedia/");
 			new File("SavedMedia").mkdir(); 
-			Media.deleteMedia("./SavedMedia/");;
 			statement.close();
 			close();
 			
