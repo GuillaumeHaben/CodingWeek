@@ -121,7 +121,7 @@ public class MainApp extends Application {
     }
     
     
-    public static void main(String[] args) {
+    public void launchApp(String[] args) {
         launch(args);
     }
 }

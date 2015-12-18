@@ -30,13 +30,12 @@ public class Main_app {
 		
 		//twitter = TwitterFactory.getSingleton();
 		//twitter.setOAuthConsumer("qz06S2cROTQm1KYmuyNxFTEcr", "ki0GG0aNeU7hKziJpOEAk59saSXx7iggg64Bwp0vVorLJI2B7r");
-		
-		
+				
 		db = new Database();
 	}
 
 	@SuppressWarnings("unused")
-	public static void main(String[] args) {
+	public  void launchApp() {
 		
 		Main_app main_instance = new Main_app();
 		Scanner scan = new Scanner(System.in);
