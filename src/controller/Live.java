@@ -11,6 +11,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 import java.util.Set;
 
+import model.Collect;
 import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
 

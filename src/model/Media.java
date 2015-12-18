@@ -76,7 +76,7 @@ public class Media extends Params {
 	/**
 	 * Gets media from tweets for a given keyword
 	 */
-	public void startRequest() throws TwitterException {
+	public int startRequest() throws TwitterException {
 		Query query = new Query(keyword);
 		QueryResult result = twitter.search(query);
 		for (Status status : result.getTweets()) {
@@ -95,10 +95,10 @@ public class Media extends Params {
 						+ "\n MediaURL : " + mediaEntity[i].getMediaURL());
 			}
 		}
+		return -1;
 	}
 
 	public void logConsole(Status status) {
-
+		System.out.println("Coming Soon !");
 	}
-
 }
